@@ -12,6 +12,7 @@
 - [Code Generation Error Messages - COBOP](https://bit.ly/2V6RS72)
 - [Run-time System Error Messages - COBRT](https://bit.ly/3jLxUsW)
 - [COBOL Preprocessor Error Messages - COBCP](https://bit.ly/3yx5d7e)
+- [Installing Visual COBOL in an Offline Environment](https://bit.ly/3afsTE9)
 - [Native Or Managed Code](https://github.com/UNiXMIT/UNiXVC/blob/main/docs/NativeOrManaged.md)
 
 ## KB Articles
