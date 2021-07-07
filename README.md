@@ -4,15 +4,20 @@
 - [Visual Cobol 6.0 for Eclipse Documentation](https://bit.ly/3xp4YLl)
 
 - [Documentation](#Documentation)
+    - [Official](#Official)
+    - [Wiki](#Wiki)
 - [KB Articles](#KB-Articles)
 - [Docker](#Docker)
 
 ## Documentation
+### Official
 - [Syntax Checking Error Messages - COBCH](https://bit.ly/3ABkpC4)
 - [Code Generation Error Messages - COBOP](https://bit.ly/2V6RS72)
 - [Run-time System Error Messages - COBRT](https://bit.ly/3jLxUsW)
 - [COBOL Preprocessor Error Messages - COBCP](https://bit.ly/3yx5d7e)
 - [Installing Visual COBOL in an Offline Environment](https://bit.ly/3afsTE9)
+
+### Wiki
 - [Native Or Managed Code](https://github.com/UNiXMIT/UNiXVC/blob/main/docs/NativeOrManaged.md)
 
 ## KB Articles
