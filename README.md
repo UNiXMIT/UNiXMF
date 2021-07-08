@@ -19,6 +19,7 @@
 - [COBOL Preprocessor Error Messages - COBCP](https://bit.ly/3yx5d7e)
 - [Installing Visual COBOL in an Offline Environment](https://bit.ly/3afsTE9)
 - [Run-time System Files to Ship](https://bit.ly/3y2FuTW)
+- [Microsoft Package Dependencies](https://bit.ly/2UAvsL2)
 
 ### Wiki
 - [Native Or Managed Code](https://github.com/UNiXMIT/UNiXVC/blob/main/docs/NativeOrManaged.md)
