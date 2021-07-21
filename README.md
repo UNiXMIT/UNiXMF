@@ -2,6 +2,7 @@
 - [Visual Cobol 6.0 for Eclipse Documentation](https://bit.ly/3wwGIWt)
 - [Enterprise Developer 6.0 for Visual Studio Documentation](https://bit.ly/3xszFiE)
 - [Visual Cobol 6.0 for Eclipse Documentation](https://bit.ly/3xp4YLl)
+- [COBOL Server 6.0 Documentation](https://bit.ly/3eGzY29)
 - [VC Community](https://community.microfocus.com/cobol/visualcobol/)
 - [ED Community](https://community.microfocus.com/cobol/enterprisedeveloper/)
 
