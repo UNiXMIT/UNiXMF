@@ -6,7 +6,6 @@
 - [COBOL Server 7.0 for Linux/UNIX Documentation](https://bit.ly/3gb2c5M)
 - [VC Community](https://community.microfocus.com/cobol/visualcobol/)
 - [ED Community](https://community.microfocus.com/cobol/enterprisedeveloper/)
-
 - [Documentation](#Documentation)
     - [Official](#Official)
     - [Wiki](#Wiki)
