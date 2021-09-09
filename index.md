@@ -4,6 +4,7 @@
 - [Enterprise Developer 7.0 for Eclipse Documentation](https://bit.ly/3CVztvh)
 - [COBOL Server 7.0 for Windows Documentation](https://bit.ly/37QqVb6)
 - [COBOL Server 7.0 for Linux/UNIX Documentation](https://bit.ly/3gb2c5M)
+- [MF COBOL for Visual Studio Code](https://bit.ly/2WZX6TD)
 - [VC Community](https://community.microfocus.com/cobol/visualcobol/)
 - [ED Community](https://community.microfocus.com/cobol/enterprisedeveloper/)
 - [Documentation](#documentation)
