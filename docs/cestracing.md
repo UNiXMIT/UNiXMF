@@ -9,7 +9,9 @@ The tracing is enabled by adding the following line:
 daemontracelevel=7
 ```
 
-to the licensing configuration file ces.ini. This file is stored in:
+to the licensing configuration file ces.ini on the client machine (the machine requesting a license).  
+
+This file is stored in:
 
 ```
 Windows:    C:\ProgramData\MicroFocus
