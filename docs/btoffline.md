@@ -13,4 +13,7 @@
 
 4. Open mmc and import all certificates from C:\BToffline\certificates to "Trusted Root Certification Authorities" of computer (not current user)  
 
-5. C:\BToffline\vs_BuildTools.exe --noweb  
+5. Run the Build Tools installer in offline mode and follow the instructions:
+    ```
+    C:\BToffline\vs_buildtools.exe --noweb  
+    ```
