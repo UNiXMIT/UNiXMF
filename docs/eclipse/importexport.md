@@ -20,8 +20,6 @@
 
 ## Export
 
-To export an entire Eclipse project into an archive file, follow these steps.  
-
 1. Go to File -> Export... The following dialog will appear. 
 
     ![1](images/e-export-1.png) 
