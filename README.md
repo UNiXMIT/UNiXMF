@@ -26,7 +26,7 @@
 ### Wiki
 - [Native Or Managed Code](https://github.com/UNiXMIT/UNiXVC/blob/main/docs/NativeOrManaged.md)
 - [SafeNet License Information](https://github.com/UNiXMIT/UNiXVC/blob/main/docs/cestracing.md)
-- [Import/Export Project from Eclipse](https://github.com/UNiXMIT/UNiXVC/blob/main/docs/eclipse/import%2Bexport.md)
+- [Import/Export Project from Eclipse](https://github.com/UNiXMIT/UNiXVC/blob/main/docs/eclipse/importexport.md)
 
 ## KB Articles
 - [Install Error '0x8007000a - The environment is incorrect' at MS Tools download/install stage](https://bit.ly/3sYlS0m)
