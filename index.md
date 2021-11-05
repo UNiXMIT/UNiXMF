@@ -24,7 +24,7 @@
 - [Microsoft Package Dependencies](https://bit.ly/2UAvsL2)
 
 ### Wiki
-- [Native Or Managed Code](https://github.com/UNiXMIT/UNiXVC/blob/main/docs/NativeOrManaged.md)
+- [Native Or Managed Code](https://github.com/UNiXMIT/UNiXVC/blob/main/docs/vs/NativeOrManaged.md)
 - [SafeNet License Information](https://github.com/UNiXMIT/UNiXVC/blob/main/docs/cestracing.md)
 - [Import/Export Project from Eclipse](https://github.com/UNiXMIT/UNiXVC/blob/main/docs/eclipse/importexport.md)
 

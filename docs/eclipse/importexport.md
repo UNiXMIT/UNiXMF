@@ -1,5 +1,8 @@
 # Import/Export Project from Eclipse
 
+- [Import](#import)
+- [Export](#export)
+
 ## Import
 
 1. In the IDE, click File > Import.  
