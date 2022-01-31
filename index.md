@@ -7,7 +7,7 @@
 - [MF COBOL for Visual Studio Code](https://bit.ly/2WZX6TD)
 - [VC Community](https://community.microfocus.com/cobol/visualcobol/)
 - [ED Community](https://community.microfocus.com/cobol/enterprisedeveloper/)
-- [GitHub Repo](https://github.com/UNiXMIT/UNiXVC)
+- [GitHub Repo](https://github.com/UNiXMIT/UNiXMF)
 - [Documentation](#documentation)
     - [Official](#official)
     - [Wiki](#wiki)
@@ -25,9 +25,9 @@
 - [Microsoft Package Dependencies](https://bit.ly/2UAvsL2)
 
 ### Wiki
-- [Native Or Managed Code](https://github.com/UNiXMIT/UNiXVC/blob/main/docs/vs/NativeOrManaged.md)
-- [SafeNet License Information](https://github.com/UNiXMIT/UNiXVC/blob/main/docs/cestracing.md)
-- [Import/Export Project from Eclipse](https://github.com/UNiXMIT/UNiXVC/blob/main/docs/eclipse/importexport.md)
+- [Native Or Managed Code](https://github.com/UNiXMIT/UNiXMF/blob/main/docs/vs/NativeOrManaged.md)
+- [SafeNet License Information](https://github.com/UNiXMIT/UNiXMF/blob/main/docs/cestracing.md)
+- [Import/Export Project from Eclipse](https://github.com/UNiXMIT/UNiXMF/blob/main/docs/eclipse/importexport.md)
 
 ## KB Articles
 - [Install Error '0x8007000a - The environment is incorrect' at MS Tools download/install stage](https://bit.ly/3sYlS0m)

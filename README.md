@@ -7,7 +7,7 @@
 - [MF COBOL for Visual Studio Code](https://bit.ly/2WZX6TD)
 - [VC Community](https://community.microfocus.com/cobol/visualcobol/)
 - [ED Community](https://community.microfocus.com/cobol/enterprisedeveloper/)
-- [GitHub Repo](https://github.com/UNiXMIT/UNiXVC)
+- [GitHub Repo](https://github.com/UNiXMIT/UNiXMF)
 - [Documentation](#documentation)
     - [Official](#official)
     - [Wiki](#wiki)
