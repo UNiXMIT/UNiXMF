@@ -30,6 +30,8 @@ This feature was added in version 7.0 PU 3
 
 When the environment variable has been set on the client, you will no longer be able to use Fileshare with Data Explorer. To enable the use of Fileshare again you need to remove the environment variable and restart Data File Tools.  
 
+If you want to disable BINP on the client you have to delete the environment variable DT_ENABLE_BINP. It's not enough to set it to FALSE, It must be removed completely.
+
 **Security:**  
 
 Resources -> New Class  
