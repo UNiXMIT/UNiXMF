@@ -2,7 +2,7 @@
 
 This feature was added in version 7.0 PU 3  
 
-1. On the server, set 'MFES_BINPFH=true' in Region Configuration Information.  
+1. On the server, set 'MFES_BINPFH=true' in Region Configuration Information and start/restart the region.  
 
 ![1](images/binp-01.png)
 
