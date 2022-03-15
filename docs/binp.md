@@ -28,7 +28,7 @@ This feature was added in version 7.0 PU 3
 
 **NOTES:**  
 
-When the environment variable has been set on the client, you will no longer be able to use Fileshare with Data Explorer. To enable the use of Fileshare again you need to remove the environment variable restart Data File Tools.  
+When the environment variable has been set on the client, you will no longer be able to use Fileshare with Data Explorer. To enable the use of Fileshare again you need to remove the environment variable and restart Data File Tools.  
 
 **Security:**  
 
