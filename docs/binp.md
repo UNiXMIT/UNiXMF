@@ -18,7 +18,7 @@ This feature was added in version 7.0 PU 3
 
 ![4](images/binp-04.png)
 
-5. Expand the region you are working with and double click the data set/file you want to open. Make sure 'Use Fileshare' is unchecked and click OK.  
+5. Expand the region you are working with and double click the dataset you want to open. Make sure 'Use Fileshare' is unchecked and click OK.  
 
 ![5](images/binp-05.png)
 
