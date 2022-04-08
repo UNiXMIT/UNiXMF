@@ -7,7 +7,7 @@
       <mfStructVersion>26</mfStructVersion>
       <mfInstanceVersion>0</mfInstanceVersion>
       <mfUID>1.2.840.5043.01.025.1328810261.1</mfUID>
-      <mfServerStatus>Started</mfServerStatus>
+      <mfServerStatus>Stopped</mfServerStatus>
       <mfServerType>MFES</mfServerType>
       <cn>ACCT</cn>
       <description>Communications server for Web Services</description>
