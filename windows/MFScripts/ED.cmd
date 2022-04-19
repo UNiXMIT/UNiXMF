@@ -8,7 +8,7 @@ xcopy "C:\Users\Public\Documents\Micro Focus\Enterprise Developer\Samples\Mainfr
 curl -O https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/windows/MFScripts/ACCT.xml
 mfds -g 5 \temp\ACCT\ACCT.xml
 
-:: Setup JCL Diretories and ES Region
+:: Setup JCL Directories and ES Region
 md \temp\JCL
 cd \temp\JCL
 md \temp\JCL\system
