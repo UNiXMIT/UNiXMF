@@ -119,7 +119,7 @@ ESPROJ="C:\temp\ACCT"
           <mfUID>1.3.6.1.4.1.5043.06.005.1635262156.6</mfUID>
           <mfServerUID>1.2.840.5043.01.025.1328810261.1</mfServerUID>
           <mfInstance>1</mfInstance>
-          <mfServerStatus>Started</mfServerStatus>
+          <mfServerStatus>Stopped</mfServerStatus>
           <mfRequestedEndpoint>tcp:*:*</mfRequestedEndpoint>
           <mfActualEndpoint>tcp:10.0.2.15:59924</mfActualEndpoint>
           <mfActualEndpoint>tcp:[fe80::f8ee:99b:e8f9:fc59]:59924</mfActualEndpoint>
@@ -152,7 +152,7 @@ region=ACCT
               <mfUID>1.3.6.1.4.1.5043.02.018.1635262156.14</mfUID>
               <mfServerUID>1.3.6.1.4.1.5043.06.005.1635262156.6</mfServerUID>
               <cn>Web Services and J2EE</cn>
-              <mfListenerStatus>Started</mfListenerStatus>
+              <mfListenerStatus>Stopped</mfListenerStatus>
               <mfRequestedEndpoint>tcp:*:*</mfRequestedEndpoint>
               <mfActualEndpoint>tcp:10.0.2.15:59931</mfActualEndpoint>
               <mfActualEndpoint>tcp:[fe80::f8ee:99b:e8f9:fc59]:59931</mfActualEndpoint>
@@ -184,7 +184,7 @@ region=ACCT
               <mfUID>1.3.6.1.4.1.5043.02.018.1635262156.15</mfUID>
               <mfServerUID>1.3.6.1.4.1.5043.06.005.1635262156.6</mfServerUID>
               <cn>Web</cn>
-              <mfListenerStatus>Started</mfListenerStatus>
+              <mfListenerStatus>Stopped</mfListenerStatus>
               <mfRequestedEndpoint>tcp:*:*</mfRequestedEndpoint>
               <mfActualEndpoint>tcp:10.0.2.15:59936</mfActualEndpoint>
               <mfActualEndpoint>tcp:[fe80::f8ee:99b:e8f9:fc59]:59936</mfActualEndpoint>
@@ -224,7 +224,7 @@ uploads=*.txt *.car *.wsdl
               <mfUID>1.3.6.1.4.1.5043.02.018.1635262156.16</mfUID>
               <mfServerUID>1.3.6.1.4.1.5043.06.005.1635262156.6</mfServerUID>
               <cn>TN3270</cn>
-              <mfListenerStatus>Started</mfListenerStatus>
+              <mfListenerStatus>Stopped</mfListenerStatus>
               <mfRequestedEndpoint>tcp:*:5239</mfRequestedEndpoint>
               <mfActualEndpoint>tcp:10.0.2.15:5239</mfActualEndpoint>
               <mfActualEndpoint>tcp:[fe80::f8ee:99b:e8f9:fc59]:5239</mfActualEndpoint>
