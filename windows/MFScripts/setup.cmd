@@ -11,12 +11,12 @@ mfds -g 5 \tutorials\ACCT\ACCT.xml
 
 :: Setup JCL Demo Project and ES Region
 cd \tutorials
-md \tutorials\system
-md \tutorials\dataset
-md \tutorials\loadlib
 curl -O https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/windows/MFScripts/JCL.zip
 powershell -command "Expand-Archive -Force 'JCL.zip' 'JCL'"
 cd \tutorials\JCL
+md \tutorials\JCL\system
+md \tutorials\JCL\dataset
+md \tutorials\JCL\loadlib
 curl -O https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/windows/MFScripts/JCL.xml
 mfds -g 5 \tutorials\JCL\JCL.xml
 
