@@ -22,6 +22,9 @@ cd \tutorials
 curl -O https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/windows/MFScripts/BankDemo.zip
 powershell -command "Expand-Archive -Force 'BankDemo.zip' 'BankDemo'"
 cd \tutorials\BankDemo
+curl -O https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/windows/MFScripts/BANKDEMO.xml
 mfds -g 5 \tutorials\BankDemo\BANKDEMO.xml
 
 cd \tutorials
+del BankDemo.zip
+del JCL.zip
