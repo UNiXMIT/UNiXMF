@@ -16,7 +16,7 @@
       <mfESEnableNotRespondingScript>Disabled</mfESEnableNotRespondingScript>
       <mfESRetries>1</mfESRetries>
       <mfCustomConfiguration>[ES-Environment]
-ESP=C:\MFETDUSER\BankDemo\System
+ESP=C:\tutorials\BankDemo\System
 MF_CHARSET=E</mfCustomConfiguration>
       <mfServerExtendedConfiguration>
         <mfServerCASConfiguration>

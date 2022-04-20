@@ -16,7 +16,7 @@
       <mfESEnableNotRespondingScript>Disabled</mfESEnableNotRespondingScript>
       <mfESRetries>1</mfESRetries>
       <mfCustomConfiguration>[ES-Environment]
-ESPROJ="C:\temp\ACCT"
+ESPROJ="C:\tutorials\ACCT"
 </mfCustomConfiguration>
       <mfServerExtendedConfiguration>
         <mfServerCASConfiguration>
@@ -31,7 +31,7 @@ ESPROJ="C:\temp\ACCT"
             <mfCASLocalTraceSize>341</mfCASLocalTraceSize>
             <mfCASTraceMaxSize>0</mfCASTraceMaxSize>
             <mfCASRequestedLicenses>10</mfCASRequestedLicenses>
-            <mfCASSysDir>C:\temp\ACCT\System</mfCASSysDir>
+            <mfCASSysDir>C:\tutorials\ACCT\System</mfCASSysDir>
             <mfCASHSFEnabled>0</mfCASHSFEnabled>
             <mfCASHSFWriteToDisk>0</mfCASHSFWriteToDisk>
             <mfCASHSFMaxFileSize>0</mfCASHSFMaxFileSize>
