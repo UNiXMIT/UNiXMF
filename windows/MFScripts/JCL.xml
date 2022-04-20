@@ -9,7 +9,7 @@
       <mfServerStatus>Stopped</mfServerStatus>
       <mfServerType>MFES</mfServerType>
       <cn>JCL</cn>
-      <description>AJCL</description>
+      <description>Template region for JCL applications</description>
       <mfESEnableStartScript>Disabled</mfESEnableStartScript>
       <mfESEnableStopScript>Disabled</mfESEnableStopScript>
       <mfESEnableNotRespondingScript>Disabled</mfESEnableNotRespondingScript>
@@ -77,7 +77,7 @@
           <mfServerBatchConfiguration>
             <mfCASJCLMainframePollInterval>0</mfCASJCLMainframePollInterval>
             <mfCASJCLPATH>C:\tutorials\JCL\loadlib</mfCASJCLPATH>
-            <mfCASMFSYSCAT>C:\tutorials\JCL\catalog.dat</mfCASMFSYSCAT>
+            <mfCASMFSYSCAT>C:\tutorials\JCL\catalog\catalog.dat</mfCASMFSYSCAT>
             <mfCASJCLALLOCLOC>C:\tutorials\JCL\dataset</mfCASJCLALLOCLOC>
             <mfCASJCLSYSPROCLIB>SYS1.PROCLIB;CA.PROCLIB;</mfCASJCLSYSPROCLIB>
           </mfServerBatchConfiguration>
