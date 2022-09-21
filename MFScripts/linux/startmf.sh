@@ -7,6 +7,7 @@ tmux new -s mfds /opt/microfocus/EnterpriseDeveloper/bin/escwa --BasicConfig.MfR
 sleep 5
 tmux new -s mfds /opt/microfocus/EnterpriseDeveloper/bin/mfds -d
 sleep 5
+# export CCITCPS_FSSERVER=MFPORT:55500
 tmux new -s fs /opt/microfocus/EnterpriseDeveloper/bin/fs -s FSSERVER
 sleep 5
 tmux ls
