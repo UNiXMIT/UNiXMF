@@ -1,6 +1,6 @@
 #!/bin/bash
 # Setup Intructions
-# sudo (apt/yum/zypper) install -y curl tmux
+# sudo (apt/yum/zypper) install -y curl
 # curl -s https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/MFScripts/linux/setupmf.sh | bash 
 
 user=support
