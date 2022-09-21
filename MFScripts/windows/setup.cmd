@@ -17,9 +17,6 @@ curl -O https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/MFScripts/windows/
 powershell -command "Expand-Archive -Force 'JCL.zip' 'JCL'"
 cd \tutorials\JCL
 cacls \tutorials\JCL /e /p Everyone:f
-md \tutorials\JCL\system
-md \tutorials\JCL\dataset
-md \tutorials\JCL\loadlib
 curl -O https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/MFScripts/windows/JCL.xml
 mfds -g 5 \tutorials\JCL\JCL.xml
 
