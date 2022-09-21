@@ -17,7 +17,7 @@ mkdir tutorials
 
 # Setup JCL Demo Project and ES Region
 cd /home/$user/tutorials
-curl -O https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/MFScripts/linux/JCL.tar.gz
+curl -O https://github.com/UNiXMIT/UNiXMF/raw/main/MFScripts/linux/JCL.tar.gz
 tar -zxf JCL.tar.gz
 cd /tutorials/JCL
 curl -O https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/MFScripts/linux/JCL.xml
