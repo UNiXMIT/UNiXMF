@@ -25,9 +25,7 @@ kill_mf()
 
 start_mf()
 {
-    sudo tmux new -d -s mfds
-    sudo tmux send-keys -t mfds ". $COBDIR/bin/cobsetenv" C-m
-    sudo tmux send-keys -t mfds "$COBDIR/bin/mfds" C-m
+    sudo tmux new -d -s mfds ". $COBDIR/bin/cobsetenv && $COBDIR/bin/mfds -d"
     sleep 1
     tmux new -d -s escwa $COBDIR/bin/escwa --BasicConfig.MfRequestedEndpoint="tcp:*:10086" --write=true
     sleep 1
@@ -39,15 +37,11 @@ start_mf()
 
 start_mffs()
 {
-    sudo tmux new -d -s mfds
-    sudo tmux send-keys -t mfds ". $COBDIR/bin/cobsetenv" C-m
-    sudo tmux send-keys -t mfds "$COBDIR/bin/mfds" C-m
+    sudo tmux new -d -s mfds ". $COBDIR/bin/cobsetenv && $COBDIR/bin/mfds -d"
     sleep 1
     tmux new -d -s escwa $COBDIR/bin/escwa --BasicConfig.MfRequestedEndpoint="tcp:*:10086" --write=true
     sleep 1
-    tmux new -d -s fs
-    tmux send-keys -t fs "export CCITCPS_FSSERVER=MFPORT:$MFOP" C-m
-    tmux send-keys -t fs "$COBDIR/bin/fs -s FSSERVER" C-m
+    tmux new -d -s fs "export CCITCPS_FSSERVER=MFPORT:$MFOP && $COBDIR/bin/fs -s FSSERVER"
     sleep 1
     tmux ls
     sudo tmux ls
