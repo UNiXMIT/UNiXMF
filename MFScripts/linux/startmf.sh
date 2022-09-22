@@ -18,25 +18,30 @@ Usage:
 
 kill_mf()
 {
-    tmux kill-ses -t mfds
+    sudo -E $COBDIR/bin/mfds -s 2
     tmux kill-ses -t escwa
     tmux kill-ses -t fs
 }
 
 start_mf()
 {
-    tmux new -d -s mfds sudo -E $COBDIR/bin/mfds -d
+    sudo tmux new -d -s mfds
+    sudo tmux send-keys -t mfds ". $COBDIR/bin/cobsetenv" C-m
+    sudo tmux send-keys -t mfds "$COBDIR/bin/mfds" C-m
     sleep 1
     tmux new -d -s escwa $COBDIR/bin/escwa --BasicConfig.MfRequestedEndpoint="tcp:*:10086" --write=true
     sleep 1
     tmux new -d -s fs $COBDIR/bin/fs -s FSSERVER
     sleep 1
     tmux ls
+    sudo tmux ls
 }
 
 start_mffs()
 {
-    tmux new -d -s mfds sudo -E $COBDIR/bin/mfds -d
+    sudo tmux new -d -s mfds
+    sudo tmux send-keys -t mfds ". $COBDIR/bin/cobsetenv" C-m
+    sudo tmux send-keys -t mfds "$COBDIR/bin/mfds" C-m
     sleep 1
     tmux new -d -s escwa $COBDIR/bin/escwa --BasicConfig.MfRequestedEndpoint="tcp:*:10086" --write=true
     sleep 1
@@ -45,6 +50,7 @@ start_mffs()
     tmux send-keys -t fs "$COBDIR/bin/fs -s FSSERVER" C-m
     sleep 1
     tmux ls
+    sudo tmux ls
 }
 
 MFOP=$1
