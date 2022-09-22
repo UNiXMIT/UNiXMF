@@ -4,9 +4,8 @@
 # curl -s https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/MFScripts/linux/setupmf.sh | bash 
 
 user=support
-. /opt/microfocus/EnterpriseDeveloper/bin/cobsetenv
 
-# Setup JCL Demo Project and ES Region
+# Setup JCL ES Region
 cd /home/$user/MFSupport/MFSamples
 [ ! -d "JCL" ] && mkdir JCL
 cd JCL
