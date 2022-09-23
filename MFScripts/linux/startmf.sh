@@ -13,7 +13,7 @@ Usage:
  Example:
   startmf.sh                Start MF Services
   startmf.sh stop           Stop MF Services
-  startmf.sh 55500          Start MF Services and set Fileshare to use port 55500"
+  startmf.sh 55555          Start MF Services and set Fileshare to use port 55500"
 }
 
 kill_mf()
