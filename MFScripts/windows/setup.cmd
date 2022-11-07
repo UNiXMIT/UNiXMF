@@ -2,6 +2,7 @@
 call "C:\Program Files (x86)\Micro Focus\Enterprise Developer\createenv.bat"
 md \tutorials
 cacls \tutorials /e /p Everyone:f
+powershell -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "$o = new-object -com shell.application;$o.Namespace('c:\tutorials').Self.InvokeVerb('pintohome');"
 
 :: Setup ACCT Demo Project and ES Region
 md \tutorials\ACCT
