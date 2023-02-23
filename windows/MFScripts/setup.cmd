@@ -9,25 +9,25 @@ md \tutorials\ACCT
 cd \tutorials\ACCT
 cacls \tutorials\ACCT /e /p Everyone:f
 xcopy "C:\Users\Public\Documents\Micro Focus\Enterprise Developer\Samples\Mainframe\CICS\Classic\ACCT" \tutorials\ACCT /E /H /C /I
-curl -O https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/MFScripts/windows/ACCT.xml
+curl -O https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/windows/MFScripts/ACCT.xml
 mfds -g 5 \tutorials\ACCT\ACCT.xml
 
 :: Setup JCL Demo Project and ES Region
 cd \tutorials
-curl -O https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/MFScripts/windows/JCL.zip
+curl -O https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/windows/MFScripts/JCL.zip
 powershell -command "Expand-Archive -Force 'JCL.zip' 'JCL'"
 cd \tutorials\JCL
 cacls \tutorials\JCL /e /p Everyone:f
-curl -O https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/MFScripts/windows/JCL.xml
+curl -O https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/windows/MFScripts/JCL.xml
 mfds -g 5 \tutorials\JCL\JCL.xml
 
 :: Setup BankDemo Project and ES Region
 cd \tutorials
-curl -O https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/MFScripts/windows/BankDemo.zip
+curl -O https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/windows/MFScripts/BankDemo.zip
 powershell -command "Expand-Archive -Force 'BankDemo.zip' 'BankDemo'"
 cd \tutorials\BankDemo
 cacls \tutorials\BankDemo /e /p Everyone:f
-curl -O https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/MFScripts/windows/BANKDEMO.xml
+curl -O https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/windows/MFScripts/BANKDEMO.xml
 mfds -g 5 \tutorials\BankDemo\BANKDEMO.xml
 
 cd \tutorials
