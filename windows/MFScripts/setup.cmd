@@ -14,13 +14,13 @@ curl -O https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/windows/MFScripts/
 mfds -g 5 \tutorials\ACCT\ACCT.xml
 
 :: Setup JCL Demo Project and ES Region
-cd \tutorials
+cd \MFSamples
 curl -O https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/windows/MFScripts/JCL.zip
 powershell -command "Expand-Archive -Force 'JCL.zip' 'JCL'"
-cd \tutorials\JCL
-cacls \tutorials\JCL /e /p Everyone:f
+cd \MFSamples\JCL
+cacls \MFSamples\JCL /e /p Everyone:f
 curl -O https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/windows/MFScripts/JCL.xml
-mfds -g 5 \tutorials\JCL\JCL.xml
+mfds -g 5 \MFSamples\JCL\JCL.xml
 
 :: Setup BankDemo Project and ES Region
 cd \tutorials
