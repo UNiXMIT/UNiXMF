@@ -14,15 +14,6 @@ curl -O https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/windows/MFScripts/
 mfds -g 5 \tutorials\ACCT\ACCT.xml
 
 :: Setup JCL Demo Project and ES Region
-<<<<<<< HEAD
-cd \MFSamples
-curl -O https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/MFScripts/windows/JCL.zip
-powershell -command "Expand-Archive -Force 'JCL.zip' 'JCL'"
-cd \MFSamples\JCL
-cacls \MFSamples\JCL /e /p Everyone:f
-curl -O https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/MFScripts/windows/JCL.xml
-mfds -g 5 \MFSamples\JCL\JCL.xml
-=======
 cd \tutorials
 curl -O https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/windows/MFScripts/JCL.zip
 powershell -command "Expand-Archive -Force 'JCL.zip' 'JCL'"
@@ -30,7 +21,6 @@ cd \tutorials\JCL
 cacls \tutorials\JCL /e /p Everyone:f
 curl -O https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/windows/MFScripts/JCL.xml
 mfds -g 5 \tutorials\JCL\JCL.xml
->>>>>>> 630abd2b0ac88609e42fc79d4ef314cecef50820
 
 :: Setup BankDemo Project and ES Region
 cd \tutorials
