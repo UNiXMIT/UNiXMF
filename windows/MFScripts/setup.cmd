@@ -2,7 +2,8 @@
 call "C:\Program Files (x86)\Micro Focus\Enterprise Developer\createenv.bat"
 md \tutorials
 cacls \tutorials /e /p Everyone:f
-powershell -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "$o = new-object -com shell.application;$o.Namespace('c:\tutorials').Self.InvokeVerb('pintohome');"
+md \MFSamples
+cacls \MFSamples /e /p Everyone:f
 
 :: Setup ACCT Demo Project and ES Region
 md \tutorials\ACCT
@@ -13,13 +14,13 @@ curl -O https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/MFScripts/windows/
 mfds -g 5 \tutorials\ACCT\ACCT.xml
 
 :: Setup JCL Demo Project and ES Region
-cd \tutorials
+cd \MFSamples
 curl -O https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/MFScripts/windows/JCL.zip
 powershell -command "Expand-Archive -Force 'JCL.zip' 'JCL'"
-cd \tutorials\JCL
-cacls \tutorials\JCL /e /p Everyone:f
+cd \MFSamples\JCL
+cacls \MFSamples\JCL /e /p Everyone:f
 curl -O https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/MFScripts/windows/JCL.xml
-mfds -g 5 \tutorials\JCL\JCL.xml
+mfds -g 5 \MFSamples\JCL\JCL.xml
 
 :: Setup BankDemo Project and ES Region
 cd \tutorials
