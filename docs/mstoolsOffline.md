@@ -3,11 +3,9 @@
 To install in an offline environment, an administrator with internet access must prepare by ensuring that all of the required installers, certificates, and licenses are available to the offline machine. For Enterprise Developer/Visual COBOL for Eclipse, this includes the Visual Studio Build Tools and some Microsoft certificates.  
 
 ## Create Offline Install Cache
-On a machine with internet access, first download Microsoft's Visual Studio Build Tools 2017:  
+On a machine with internet access, first download [Microsoft's Visual Studio Build Tools 2017](https://my.visualstudio.com/Downloads?q=build%20tools%202017&wt.mc_id=o~msft~vscom~older-downloads)  
 
-https://my.visualstudio.com/Downloads?q=build%20tools%202017&wt.mc_id=o~msft~vscom~older-downloads  
-
-Use the downloaded Visual Studio Build Tools installer to download the required layout files for the offline installation of Enterprise Developer/Visual COBOL for Eclipse.  
+Use the downloaded Visual Studio Build Tools installer to download the required layout files for the offline installation of Enterprise Developer/Visual COBOL.  
 
 ```
 vs_BuildTools.exe --layout c:\VSBuildToolsOffline --add Microsoft.VisualStudio.Workload.VCTools Microsoft.VisualStudio.Component.Windows10SDK.17763 --lang en-US  
