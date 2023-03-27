@@ -1,7 +1,7 @@
 # AD LDS ESF Configuration
 
-LDIF Files to Import: MS-USER.LDF
-CMD Script: es-ldap-setup.cmd
+LDIF Files to Import: MS-USER.LDF  
+CMD Script: es-ldap-setup.cmd  
 
 Module: mldap_esm  
 Connection Path: localhost:389  
