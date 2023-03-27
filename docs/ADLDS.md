@@ -1,5 +1,8 @@
 # AD LDS ESF Configuration
 
+LDIF Files to Import: MS-USER.LDF
+CMD Script: es-ldap-setup.cmd
+
 Module: mldap_esm  
 Connection Path: localhost:389  
 Authorized ID: CN=MFReader,CN=ADAM Users,CN=Micro Focus,CN=Program Data,DC=local  
