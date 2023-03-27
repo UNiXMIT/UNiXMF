@@ -1,5 +1,6 @@
-# AD LDS ESF Configuration
+# ADLDS ESF Configuration
 
+Application Directory Partition: CN=Micro Focus,CN=Program Data,DC=local  
 LDIF Files to Import: MS-USER.LDF  
 CMD Script: es-ldap-setup.cmd  
 
