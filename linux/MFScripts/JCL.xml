@@ -15,7 +15,9 @@
       <mfESEnableStopScript>Disabled</mfESEnableStopScript>
       <mfESEnableNotRespondingScript>Disabled</mfESEnableNotRespondingScript>
       <mfESRetries>1</mfESRetries>
-      <mfCustomConfiguration>[ES-Environment]</mfCustomConfiguration>
+      <mfCustomConfiguration>[ES-Environment]
+ESPROJ="/home/support/MFSupport/MFSamples/JCL"
+</mfCustomConfiguration>
       <mfServerExtendedConfiguration>
         <mfServerCASConfiguration>
           <mfCASStructVersion>33</mfCASStructVersion>
@@ -77,10 +79,10 @@
           <mfServerMTOConfiguration/>
           <mfServerBatchConfiguration>
             <mfCASJCLMainframePollInterval>0</mfCASJCLMainframePollInterval>
-            <mfCASJCLPATH>/home/support/MFSupport/MFSamples/JCL/loadlib</mfCASJCLPATH>
-            <mfCASMFSYSCAT>/home/support/MFSupport/MFSamples/JCL/catalog/catalog.dat</mfCASMFSYSCAT>
-            <mfCASJCLALLOCLOC>/home/support/MFSupport/MFSamples/JCL/dataset</mfCASJCLALLOCLOC>
-            <mfCASJCLSYSPROCLIB>SYS1.PROCLIB;CA.PROCLIB;</mfCASJCLSYSPROCLIB>
+            <mfCASJCLPATH>$ESPROJ/loadlib</mfCASJCLPATH>
+            <mfCASMFSYSCAT>$ESPROJ/catalog/catalog.dat</mfCASMFSYSCAT>
+            <mfCASJCLALLOCLOC>$ESPROJ/dataset</mfCASJCLALLOCLOC>
+            <mfCASJCLSYSPROCLIB>SYS1.PROCLIB</mfCASJCLSYSPROCLIB>
           </mfServerBatchConfiguration>
           <mfServerIMSConfiguration>
             <mfCASIMSCodesetBias>A</mfCASIMSCodesetBias>

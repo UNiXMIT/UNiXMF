@@ -16,7 +16,7 @@
       <mfESEnableNotRespondingScript>Disabled</mfESEnableNotRespondingScript>
       <mfESRetries>1</mfESRetries>
       <mfCustomConfiguration>[ES-Environment]
-ESP=C:\tutorials\BankDemo\System
+ESPROJ=C:\MFSamples\BankDemo\System
 MF_CHARSET=E</mfCustomConfiguration>
       <mfServerExtendedConfiguration>
         <mfServerCASConfiguration>
@@ -31,7 +31,7 @@ MF_CHARSET=E</mfCustomConfiguration>
             <mfCASLocalTraceSize>341</mfCASLocalTraceSize>
             <mfCASTraceMaxSize>0</mfCASTraceMaxSize>
             <mfCASRequestedLicenses>10</mfCASRequestedLicenses>
-            <mfCASSysDir>$ESP\LOGS</mfCASSysDir>
+            <mfCASSysDir>$ESPROJ\LOGS</mfCASSysDir>
             <mfCASHSFEnabled>0</mfCASHSFEnabled>
             <mfCASHSFWriteToDisk>0</mfCASHSFWriteToDisk>
             <mfCASHSFMaxFileSize>0</mfCASHSFMaxFileSize>
@@ -78,16 +78,16 @@ MF_CHARSET=E</mfCustomConfiguration>
           </mfServerCASTraceOptions>
           <mfServerMTOConfiguration>
             <mfCASCICSSIT>BNKCICV</mfCASCICSSIT>
-            <mfCASTXTRANP>$ESP\Loadlib;$ESP\SysLoadlib</mfCASTXTRANP>
-            <mfCASTXFILEP>$ESP\catalog\Data</mfCASTXFILEP>
-            <mfCASTXMAPP>$ESP\Loadlib;$ESP\SysLoadlib</mfCASTXMAPP>
-            <mfCASTXRDTP>$ESP\RDEF</mfCASTXRDTP>
+            <mfCASTXTRANP>$ESPROJ\Loadlib;$ESPROJ\SysLoadlib</mfCASTXTRANP>
+            <mfCASTXFILEP>$ESPROJ\catalog\Data</mfCASTXFILEP>
+            <mfCASTXMAPP>$ESPROJ\Loadlib;$ESPROJ\SysLoadlib</mfCASTXMAPP>
+            <mfCASTXRDTP>$ESPROJ\RDEF</mfCASTXRDTP>
           </mfServerMTOConfiguration>
           <mfServerBatchConfiguration>
             <mfCASJCLMainframePollInterval>0</mfCASJCLMainframePollInterval>
-            <mfCASJCLPATH>$ESP\Loadlib;$ESP\SysLoadlib</mfCASJCLPATH>
-            <mfCASMFSYSCAT>$ESP\catalog\CATALOG.DAT</mfCASMFSYSCAT>
-            <mfCASJCLALLOCLOC>$ESP\Data</mfCASJCLALLOCLOC>
+            <mfCASJCLPATH>$ESPROJ\Loadlib;$ESPROJ\SysLoadlib</mfCASJCLPATH>
+            <mfCASMFSYSCAT>$ESPROJ\catalog\CATALOG.DAT</mfCASMFSYSCAT>
+            <mfCASJCLALLOCLOC>$ESPROJ\Data</mfCASJCLALLOCLOC>
             <mfCASJCLSYSPROCLIB>SYS1.PROCLIB</mfCASJCLSYSPROCLIB>
           </mfServerBatchConfiguration>
           <mfServerIMSConfiguration>

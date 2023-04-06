@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<mfDirectoryServerRepository mfDirectoryServerVersion="1.26.69" mfRepositoryLocation="c:\MFSamples\export" mfXMLReposVersion="2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="mfds1.26.69.xsd">
+<mfDirectoryServerRepository mfDirectoryServerVersion="1.26.69" mfRepositoryLocation="C:\ProgramData\Micro Focus\Enterprise Developer\" mfXMLReposVersion="2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="mfds1.26.69.xsd">
 
   <mfServerList>
     <mfServer>
@@ -14,7 +14,9 @@
       <mfESEnableStopScript>Disabled</mfESEnableStopScript>
       <mfESEnableNotRespondingScript>Disabled</mfESEnableNotRespondingScript>
       <mfESRetries>1</mfESRetries>
-      <mfCustomConfiguration>[ES-Environment]</mfCustomConfiguration>
+      <mfCustomConfiguration>[ES-Environment]
+ESPROJ="C:\MFSamples\JCL"
+</mfCustomConfiguration>
       <mfCustomConfiguration/>
       <mfServerExtendedConfiguration>
         <mfServerCASConfiguration>
@@ -29,7 +31,7 @@
             <mfCASLocalTraceSize>341</mfCASLocalTraceSize>
             <mfCASTraceMaxSize>0</mfCASTraceMaxSize>
             <mfCASRequestedLicenses>10</mfCASRequestedLicenses>
-            <mfCASSysDir>C:\MFSamples\JCL\system</mfCASSysDir>
+            <mfCASSysDir>$ESPROJ\system</mfCASSysDir>
             <mfCASHSFEnabled>0</mfCASHSFEnabled>
             <mfCASHSFWriteToDisk>0</mfCASHSFWriteToDisk>
             <mfCASHSFMaxFileSize>0</mfCASHSFMaxFileSize>
@@ -77,10 +79,10 @@
           <mfServerMTOConfiguration/>
           <mfServerBatchConfiguration>
             <mfCASJCLMainframePollInterval>0</mfCASJCLMainframePollInterval>
-            <mfCASJCLPATH>C:\MFSamples\JCL\loadlib</mfCASJCLPATH>
-            <mfCASMFSYSCAT>C:\MFSamples\JCL\catalog\catalog.dat</mfCASMFSYSCAT>
-            <mfCASJCLALLOCLOC>C:\MFSamples\JCL\dataset</mfCASJCLALLOCLOC>
-            <mfCASJCLSYSPROCLIB>SYS1.PROCLIB;CA.PROCLIB;</mfCASJCLSYSPROCLIB>
+            <mfCASJCLPATH>$ESPROJ\loadlib</mfCASJCLPATH>
+            <mfCASMFSYSCAT>$ESPROJ\catalog\catalog.dat</mfCASMFSYSCAT>
+            <mfCASJCLALLOCLOC>$ESPROJ\dataset</mfCASJCLALLOCLOC>
+            <mfCASJCLSYSPROCLIB>SYS1.PROCLIB</mfCASJCLSYSPROCLIB>
           </mfServerBatchConfiguration>
           <mfServerIMSConfiguration>
             <mfCASIMSCodesetBias>A</mfCASIMSCodesetBias>
