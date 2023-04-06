@@ -25,7 +25,7 @@ kill_mf()
 
 start_mf()
 {
-    sudo tmux new -d -s mfds ". $COBDIR/bin/cobsetenv && $COBDIR/bin/mfds --listen-all && $COBDIR/bin/mfds"
+    sudo tmux new -d -s mfds ". $COBDIR/bin/cobsetenv && $COBDIR/bin/mfds --UI-on && $COBDIR/bin/mfds --listen-all && $COBDIR/bin/mfds"
     sleep 1
     tmux new -d -s escwa $COBDIR/bin/escwa --BasicConfig.MfRequestedEndpoint="tcp:*:10086" --write=true
     sleep 1
@@ -37,7 +37,7 @@ start_mf()
 
 start_mffs()
 {
-    sudo tmux new -d -s mfds ". $COBDIR/bin/cobsetenv && $COBDIR/bin/mfds --listen-all && $COBDIR/bin/mfds"
+    sudo tmux new -d -s mfds ". $COBDIR/bin/cobsetenv && $COBDIR/bin/mfds --UI-on && $COBDIR/bin/mfds --listen-all && $COBDIR/bin/mfds"
     sleep 1
     tmux new -d -s escwa $COBDIR/bin/escwa --BasicConfig.MfRequestedEndpoint="tcp:*:10086" --write=true
     sleep 1
