@@ -16,7 +16,7 @@
       <mfESEnableNotRespondingScript>Disabled</mfESEnableNotRespondingScript>
       <mfESRetries>1</mfESRetries>
       <mfCustomConfiguration>[ES-Environment]
-ESPROJ="C:\MFSamples\ACCT"
+ESPROJ=C:\MFSamples\ACCT
 </mfCustomConfiguration>
       <mfServerExtendedConfiguration>
         <mfServerCASConfiguration>

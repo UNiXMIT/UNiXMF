@@ -16,7 +16,7 @@
       <mfESEnableNotRespondingScript>Disabled</mfESEnableNotRespondingScript>
       <mfESRetries>1</mfESRetries>
       <mfCustomConfiguration>[ES-Environment]
-ESPROJ="/home/support/MFSupport/MFSamples/JCL"
+ESPROJ=/home/support/MFSupport/MFSamples/JCL
 </mfCustomConfiguration>
       <mfServerExtendedConfiguration>
         <mfServerCASConfiguration>
