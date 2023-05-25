@@ -10,7 +10,7 @@ RUN curl -o /usr/bin/systemctl https://raw.githubusercontent.com/gdraheim/docker
 RUN mkdir -m 775 /openldap
 COPY containerFiles/ /openldap
 ENV SLAPPASS=strongPassword
-RUN /usr/bin/systemctl start slapd ; \
+RUN /usr/bin/systemctl start slapd; \
     secret=$(/usr/sbin/slappasswd -s $SLAPPASS); \
     # /usr/bin/sed -i "/olcRootPW:.*/c\olcRootPW: $secret" /openldap/chrootpwd.ldif; \
     # /usr/bin/sed -i '/CRC.*/d' /etc/openldap/slapd.d/cn=config/olcDatabase={0}config.ldif; \
