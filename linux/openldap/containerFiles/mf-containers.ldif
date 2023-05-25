@@ -1,0 +1,15 @@
+dn: cn=Micro Focus,dc=secldap,dc=com
+cn: Micro Focus
+objectClass: container
+
+dn: cn=Enterprise Server Resources,cn=Micro Focus,dc=secldap,dc=com
+cn: Enterprise Server Resources
+objectClass: container
+
+dn: cn=Enterprise Server Users,cn=Micro Focus,dc=secldap,dc=com
+cn: Enterprise Server Users
+objectClass: container
+
+dn: cn=Enterprise Server User Groups,cn=Micro Focus,dc=secldap,dc=com
+cn: Enterprise Server User Groups
+objectClass: container

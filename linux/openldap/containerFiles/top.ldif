@@ -1,0 +1,6 @@
+dn: dc=secldap,dc=com
+objectClass: dcObject
+objectClass: organization
+dc: secldap
+description: secldap domain
+o: MFSECLDAP

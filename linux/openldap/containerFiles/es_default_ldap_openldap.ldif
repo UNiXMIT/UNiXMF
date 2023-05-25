@@ -1,0 +1,2861 @@
+################################################################
+###                                                          ###
+### Default users, groups, and resources for ES              ###
+### Version for OpenLDAP servers                             ###
+###                                                          ###
+### Revision History                                         ###
+### $Revision: 190486 $                                      ###
+###                                                          ###
+################################################################
+
+#
+# Import this using the ldapadd command. The command line will be something
+# along the lines of:
+#
+#    sed 's/DC=X/{your-DN}/' es_default_openldap.ldf |
+#       ldapadd -c -D '{user-DN}' -w '{password}' -v
+#
+# where:
+# - {your-DN} is the distinguished name of the container in your LDAP
+#   repository where you put your Micro Focus data container
+#   (this might be something like "CN=Micro Focus,DC=mycompany,DC=com")
+# - {user-DN} is the distinguished name of a user with administrative
+#   access to the LDAP repository
+# - {password} is the password for that user
+#
+# You can also use the ldapmodify command with the -a option. See the
+# ldapmodify or ldapadd man page for more information.
+#
+# You will probably want to redirect the output from that command to a file,
+# or run the "script" command first, so that you have a record of the
+# results.
+#
+# If you have already added some of these resources, you will get errors
+# for the commands for those resources, but ldapadd will continue (this is
+# the function of the "-c" option).
+#
+
+#####################
+# RACF SYSADM group #
+#####################
+dn: cn=SYSADM,CN=Enterprise Server User Groups,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Group
+microfocus-MFDS-UID: mfuid
+description: ES System administrators group
+microfocus-MFDS-Group-Member: SYSAD
+
+########################
+# RACF DEVGROUP group #
+########################
+dn: cn=DEVGROUP,CN=Enterprise Server User Groups,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Group
+microfocus-MFDS-UID: mfuid
+description: ES Developer group
+microfocus-MFDS-Group-Member: CICSUSER
+microfocus-MFDS-Group-Member: SAFU
+microfocus-MFDS-Group-Member: SYSAD
+
+########################
+# RACF OPERATOR group  #
+########################
+dn: cn=OPERATOR,CN=Enterprise Server User Groups,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Group
+microfocus-MFDS-UID: mfuid
+description: ES Operators group
+microfocus-MFDS-Group-Member: SYSAD
+
+########################
+# RACF INTERCOM group  #
+########################
+dn: cn=INTERCOM,CN=Enterprise Server User Groups,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Group
+microfocus-MFDS-UID: mfuid
+description: ES Inter system communications group
+microfocus-MFDS-Group-Member: SYSAD
+
+########################
+# RACF ALLUSER group #
+########################
+dn: cn=ALLUSER,CN=Enterprise Server User Groups,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Group
+microfocus-MFDS-UID: mfuid
+description: ES Allusers group
+microfocus-MFDS-Group-Member: SYSAD
+microfocus-MFDS-Group-Member: CICSUSER
+microfocus-MFDS-Group-Member: mfuser
+microfocus-MFDS-Group-Member: PLTPISUR
+microfocus-MFDS-Group-Member: SAFU
+
+##############
+# RACF USERS #
+##############
+dn: CN=CICSUSER,CN=Enterprise Server Users,DC=X
+changetype: add
+objectClass: microfocus-MFDS-User
+microfocus-MFDS-UID: mfuid
+microfocus-MFDS-User-MTO-Priority: 0
+microfocus-MFDS-User-MTO-Timeout: 0
+microfocus-MFDS-User-MTO-OperatorClass: 0
+microfocus-MFDS-User-AllowLogon: TRUE
+description: Default CICS User
+
+dn: CN=CICSUSER,CN=Enterprise Server Users,DC=X
+changetype: modify
+replace: microfocus-MFDS-User-DefaultGroup
+microfocus-MFDS-User-DefaultGroup: ALLUSER
+-
+
+dn: CN=JESUSER,CN=Enterprise Server Users,DC=X
+changetype: add
+objectClass: microfocus-MFDS-User
+microfocus-MFDS-UID: mfuid
+microfocus-MFDS-User-MTO-Priority: 0
+microfocus-MFDS-User-MTO-Timeout: 0
+microfocus-MFDS-User-MTO-OperatorClass: 0
+microfocus-MFDS-User-AllowLogon: TRUE
+description: Default JCL user
+
+dn: CN=JESUSER,CN=Enterprise Server Users,DC=X
+changetype: modify
+replace: microfocus-MFDS-User-DefaultGroup
+microfocus-MFDS-User-DefaultGroup: ALLUSER
+-
+
+dn: CN=IMSUSER,CN=Enterprise Server Users,DC=X
+changetype: add
+objectClass: microfocus-MFDS-User
+microfocus-MFDS-UID: mfuid
+microfocus-MFDS-User-MTO-Priority: 0
+microfocus-MFDS-User-MTO-Timeout: 0
+microfocus-MFDS-User-MTO-OperatorClass: 0
+microfocus-MFDS-User-AllowLogon: TRUE
+description: Default IMS user
+
+dn: CN=IMSUSER,CN=Enterprise Server Users,DC=X
+changetype: modify
+replace: microfocus-MFDS-User-DefaultGroup
+microfocus-MFDS-User-DefaultGroup: ALLUSER
+-
+
+dn: CN=mfuser,CN=Enterprise Server Users,DC=X
+changetype: add
+objectClass: microfocus-MFDS-User
+microfocus-MFDS-UID: mfuid
+microfocus-MFDS-User-MTO-Priority: 0
+microfocus-MFDS-User-MTO-Timeout: 0
+microfocus-MFDS-User-MTO-OperatorClass: 0
+microfocus-MFDS-User-AllowLogon: TRUE
+description: Default ESMAC user
+
+dn: CN=mfuser,CN=Enterprise Server Users,DC=X
+changetype: modify
+replace: microfocus-MFDS-User-DefaultGroup
+microfocus-MFDS-User-DefaultGroup: ALLUSER
+-
+
+#####################
+# RACF NORMAL USERS #
+#####################
+
+#
+# The SYSAD user is usually added by importing mfds_users.ldf, so it's
+# commented out here, to avoid an error while importing this file.
+#
+
+# dn: CN=SYSAD,CN=Enterprise Server Users,DC=X
+# changetype: add
+# objectClass: microfocus-MFDS-User
+# microfocus-MFDS-UID: mfuid
+# microfocus-MFDS-User-CreateToken: self
+# microfocus-MFDS-User-MTO-Priority: 0
+# microfocus-MFDS-User-MTO-Timeout: 0
+# microfocus-MFDS-User-MTO-OperatorClass: 0
+# microfocus-MFDS-User-AllowLogon: TRUE
+# microfocus-MFDS-User-Pwd: literal:SYSAD
+# microfocus-MFDS-User-UseToken: self
+# description: ES Administrator user
+
+dn: CN=SYSAD,CN=Enterprise Server Users,DC=X
+changetype: modify
+replace: microfocus-MFDS-User-DefaultGroup
+microfocus-MFDS-User-DefaultGroup: SYSADM
+-
+
+dn: CN=PLTPISUR,CN=Enterprise Server Users,DC=X
+changetype: add
+objectClass: microfocus-MFDS-User
+microfocus-MFDS-UID: mfuid
+microfocus-MFDS-User-MTO-Priority: 0
+microfocus-MFDS-User-MTO-Timeout: 0
+microfocus-MFDS-User-MTO-OperatorClass: 0
+microfocus-MFDS-User-DefaultGroup: OPERATOR
+microfocus-MFDS-User-AllowLogon: TRUE
+microfocus-MFDS-User-Pwd: literal:PLTPISUR
+description: CICS User for PLTPI
+
+dn: CN=SAFU,CN=Enterprise Server Users,DC=X
+changetype: add
+objectClass: microfocus-MFDS-User
+microfocus-MFDS-UID: mfuid
+microfocus-MFDS-User-MTO-Priority: 0
+microfocus-MFDS-User-MTO-Timeout: 0
+microfocus-MFDS-User-MTO-OperatorClass: 0
+microfocus-MFDS-User-DefaultGroup: DEVGROUP
+microfocus-MFDS-User-AllowLogon: TRUE
+microfocus-MFDS-User-Pwd: literal:test
+description: Test security user
+
+################
+# RACF CLASSES #
+################
+
+#########################
+# RACF Class = TCICSTRN #
+#########################
+dn: CN=TCICSTRN,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: top
+objectClass: container
+
+#########################
+# RACF Class = ACICSPCT #
+#########################
+dn: CN=ACICSPCT,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: top
+objectClass: container
+
+#########################
+# RACF Class = CCICSCMD #
+#########################
+dn: CN=CCICSCMD,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: top
+objectClass: container
+
+#########################
+###### Entity : PROGRAM #
+#########################
+dn: CN=PROGRAM,CN=CCICSCMD,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: CCICSCMD
+microfocus-MFDS-Resource-ACE: allow:PLTPISUR:control
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:control
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: PROGRAM entity for EXEC CICS SET/ENABLE/DISABLE commands
+
+######################
+###### Entity : FILE #
+######################
+dn: CN=FILE,CN=CCICSCMD,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: CCICSCMD
+microfocus-MFDS-Resource-ACE: allow:PLTPISUR:control
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:control
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: FILE entity for EXEC CICS SET commands
+
+#############################
+###### Entity : EXITPROGRAM #
+#############################
+dn: CN=EXITPROGRAM,CN=CCICSCMD,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: CCICSCMD
+microfocus-MFDS-Resource-ACE: allow:PLTPISUR:control
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:control
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: EXITPROGRAM entity for EXEC CICS SET/ENABLE/DISABLE commands
+
+#############################
+###### Entity : TRANSACTION #
+#############################
+dn: CN=TRANSACTION,CN=CCICSCMD,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: CCICSCMD
+microfocus-MFDS-Resource-ACE: allow:PLTPISUR:control
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:control
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: TRANSACTION entity for EXEC CICS SET/ENABLE/DISABLE commands
+
+##########################
+###### Entity : ENQMODEL #
+##########################
+dn: CN=ENQMODEL,CN=CCICSCMD,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: CCICSCMD
+microfocus-MFDS-Resource-ACE: allow:PLTPISUR:control
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:control
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: ENQMODEL entity for EXEC CICS SET/ENABLE/DISABLE commands
+
+#########################
+###### Entity : TSMODEL #
+#########################
+dn: CN=TSMODEL,CN=CCICSCMD,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: CCICSCMD
+microfocus-MFDS-Resource-ACE: allow:PLTPISUR:control
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:control
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: TSMODEL entity for EXEC CICS SET/ENABLE/DISABLE commands
+
+#########################
+# RACF Class = DCICSDCT #
+#########################
+dn: CN=DCICSDCT,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: top
+objectClass: container
+
+#########################
+# RACF Class = FCICSFCT #
+#########################
+dn: CN=FCICSFCT,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: top
+objectClass: container
+
+#########################
+# RACF Class = JCICSJCT #
+#########################
+dn: CN=JCICSJCT,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: top
+objectClass: container
+
+#########################
+# RACF Class = MCICSPPT #
+#########################
+dn: CN=MCICSPPT,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: top
+objectClass: container
+
+#########################
+# RACF Class = SCICSTST #
+#########################
+dn: CN=SCICSTST,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: top
+objectClass: container
+
+#########################
+# RACF Class = PCICSPSB #
+############################
+# NOTE: Not used currently #
+############################
+dn: CN=PCICSPSB,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: top
+objectClass: container
+
+#########################
+# RACF Class = DB2ENTRY #
+############################
+# NOTE: Not used currently #
+############################
+dn: CN=DB2ENTRY,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: top
+objectClass: container
+
+#########################
+# RACF Class = SURROGAT #
+#########################
+dn: CN=SURROGAT,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: top
+objectClass: container
+
+#########################
+# RACF Class = OPERCMDS #
+#########################
+dn: CN=OPERCMDS,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: top
+objectClass: container
+
+#########################
+# RACF Class = RCICSRES #
+#########################
+dn: CN=RCICSRES,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: top
+objectClass: container
+description: Class for CWI Resources DOCTEMPLATES, etc.
+
+#################################
+###### SURROGAT USER : PLTPISUR #
+#################################
+dn: CN=PLTPISUR,CN=SURROGAT,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: SURROGAT
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:read
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: SAF SURROGAT user for PLTPI. Add all users that can start ES to it.
+
+################################
+# CICS CATEGORY 1 TRANSACTIONS #
+################################
+
+################################
+# CICS CATEGORY 2 TRANSACTIONS #
+################################
+
+#############
+# ALL USERS #
+#############
+
+###################
+###### PCT : CSGM #
+###################
+dn: CN=CSGM,CN=TCICSTRN,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: TCICSTRN
+microfocus-MFDS-Resource-ACE: allow:ALLUSER group:read
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: CICS Goodmorning Transaction
+
+###################
+###### PCT : CMAP #
+###################
+dn: CN=CMAP,CN=TCICSTRN,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: TCICSTRN
+microfocus-MFDS-Resource-ACE: allow:ALLUSER group:read
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: Map display transaction
+
+###################
+###### PCT : CENV #
+###################
+dn: CN=CENV,CN=TCICSTRN,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: TCICSTRN
+microfocus-MFDS-Resource-ACE: allow:ALLUSER group:read
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: Environment Variable Display
+
+###################
+###### PCT : /CIC #
+###################
+dn: CN=/CIC,CN=TCICSTRN,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: TCICSTRN
+microfocus-MFDS-Resource-ACE: allow:ALLUSER group:read
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: Switch 3270 session to CICS
+
+###################
+###### PCT : /IMS #
+###################
+dn: CN=/IMS,CN=TCICSTRN,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: TCICSTRN
+microfocus-MFDS-Resource-ACE: allow:ALLUSER group:read
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: Switch 3270 session to IMS
+
+###################
+###### PCT : ACCT #
+###################
+dn: CN=ACCT,CN=TCICSTRN,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: TCICSTRN
+microfocus-MFDS-Resource-ACE: allow:ALLUSER group:read
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: CICS primer transaction
+
+###################
+###### PCT : AC01 #
+###################
+dn: CN=AC01,CN=TCICSTRN,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: TCICSTRN
+microfocus-MFDS-Resource-ACE: allow:ALLUSER group:read
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: CICS primer internal tran-code
+
+###################
+###### PCT : AC02 #
+###################
+dn: CN=AC02,CN=TCICSTRN,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: TCICSTRN
+microfocus-MFDS-Resource-ACE: allow:ALLUSER group:read
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: CICS primer internal tran-code
+
+###################
+###### PCT : AC03 #
+###################
+dn: CN=AC03,CN=TCICSTRN,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: TCICSTRN
+microfocus-MFDS-Resource-ACE: allow:ALLUSER group:read
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: CICS primer internal tran-code
+
+###################
+###### PCT : ACEL #
+###################
+dn: CN=ACEL,CN=TCICSTRN,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: TCICSTRN
+microfocus-MFDS-Resource-ACE: allow:ALLUSER group:read
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: CICS primer internal tran-code
+
+###################
+###### PCT : ACLG #
+###################
+dn: CN=ACLG,CN=TCICSTRN,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: TCICSTRN
+microfocus-MFDS-Resource-ACE: allow:ALLUSER group:read
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: CICS primer internal tran-code
+
+###################
+###### PCT : AC04 #
+###################
+dn: CN=AC04,CN=TCICSTRN,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: TCICSTRN
+microfocus-MFDS-Resource-ACE: allow:ALLUSER group:read
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: CICS primer internal tran-code
+
+###################
+###### PCT : AC05 #
+###################
+dn: CN=AC05,CN=TCICSTRN,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: TCICSTRN
+microfocus-MFDS-Resource-ACE: allow:ALLUSER group:read
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: CICS primer internal tran-code
+
+###################
+###### PCT : AC06 #
+###################
+dn: CN=AC06,CN=TCICSTRN,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: TCICSTRN
+microfocus-MFDS-Resource-ACE: allow:ALLUSER group:read
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: CICS primer internal tran-code
+
+###################
+###### PCT : MENU #
+###################
+dn: CN=MENU,CN=TCICSTRN,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: TCICSTRN
+microfocus-MFDS-Resource-ACE: allow:ALLUSER group:read
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: COBOL FILEA sample
+
+###################
+###### PCT : ADDS #
+###################
+dn: CN=ADDS,CN=TCICSTRN,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: TCICSTRN
+microfocus-MFDS-Resource-ACE: allow:ALLUSER group:read
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: COBOL FILEA sample
+
+###################
+###### PCT : BRWS #
+###################
+dn: CN=BRWS,CN=TCICSTRN,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: TCICSTRN
+microfocus-MFDS-Resource-ACE: allow:ALLUSER group:read
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: COBOL FILEA sample
+
+###################
+###### PCT : INQY #
+###################
+dn: CN=INQY,CN=TCICSTRN,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: TCICSTRN
+microfocus-MFDS-Resource-ACE: allow:ALLUSER group:read
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: COBOL FILEA sample
+
+###################
+###### PCT : OREN #
+###################
+dn: CN=OREN,CN=TCICSTRN,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: TCICSTRN
+microfocus-MFDS-Resource-ACE: allow:ALLUSER group:read
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: COBOL FILEA sample
+
+###################
+###### PCT : OREQ #
+###################
+dn: CN=OREQ,CN=TCICSTRN,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: TCICSTRN
+microfocus-MFDS-Resource-ACE: allow:ALLUSER group:read
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: COBOL FILEA sample
+
+###################
+###### PCT : REPT #
+###################
+dn: CN=REPT,CN=TCICSTRN,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: TCICSTRN
+microfocus-MFDS-Resource-ACE: allow:ALLUSER group:read
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: COBOL FILEA sample
+
+###################
+###### PCT : UPDT #
+###################
+dn: CN=UPDT,CN=TCICSTRN,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: TCICSTRN
+microfocus-MFDS-Resource-ACE: allow:ALLUSER group:read
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: COBOL FILEA sample
+
+#######################
+###### FCT : ACCTFIL  #
+#######################
+dn: CN=ACCTFIL,CN=FCICSFCT,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: FCICSFCT
+microfocus-MFDS-Resource-ACE: allow:ALLUSER group:update
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: ACCT Demo file
+
+###################
+###### PCT : EZPI #
+###################
+dn: CN=EZPI,CN=TCICSTRN,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: TCICSTRN
+microfocus-MFDS-Resource-ACE: allow:ALLUSER group:read
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: EZASOKET Client test program
+
+###################
+###### PCT : EZPO #
+###################
+dn: CN=EZPO,CN=TCICSTRN,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: TCICSTRN
+microfocus-MFDS-Resource-ACE: allow:ALLUSER group:read
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: EZASOKET Server test program
+
+######################################################################
+###### CICSUSER can run all transactions without more-specific rules #
+######################################################################
+dn: CN=*,CN=TCICSTRN,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: TCICSTRN
+microfocus-MFDS-Resource-ACE: allow:CICSUSER:read
+microfocus-MFDS-UID: mfuid
+description: Generic access for CICSUSER
+
+#############
+# OPERATORS #
+#############
+
+###################
+###### PCT : CWTO #
+###################
+dn: CN=CWTO,CN=TCICSTRN,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: TCICSTRN
+microfocus-MFDS-Resource-ACE: allow:OPERATOR group:read
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:read
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: Writes to console operator
+
+###################
+###### PCT : CRTE #
+###################
+dn: CN=CRTE,CN=TCICSTRN,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: TCICSTRN
+microfocus-MFDS-Resource-ACE: allow:OPERATOR group:read
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:read
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: Provides start transaction routing
+
+###################
+###### PCT : CMAX #
+###################
+dn: CN=CMAX,CN=TCICSTRN,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: TCICSTRN
+microfocus-MFDS-Resource-ACE: allow:OPERATOR group:read
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:read
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: Dynamically alter AMAX
+
+###################
+###### PCT : CFMT #
+###################
+dn: CN=CFMT,CN=TCICSTRN,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: TCICSTRN
+microfocus-MFDS-Resource-ACE: allow:OPERATOR group:read
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:read
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: File Master Terminal
+
+###################
+###### PCT : CPMT #
+###################
+dn: CN=CPMT,CN=TCICSTRN,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: TCICSTRN
+microfocus-MFDS-Resource-ACE: allow:OPERATOR group:read
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:read
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: Program Master Terminal
+
+###################
+###### PCT : CTRA #
+###################
+dn: CN=CTRA,CN=TCICSTRN,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: TCICSTRN
+microfocus-MFDS-Resource-ACE: allow:OPERATOR group:read
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:read
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: Trace operation control
+
+###################
+###### PCT : CFCP #
+###################
+dn: CN=CFCP,CN=TCICSTRN,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: TCICSTRN
+microfocus-MFDS-Resource-ACE: allow:OPERATOR group:read
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:read
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: File Copy Utility
+
+###################
+###### PCT : CINQ #
+###################
+dn: CN=CINQ,CN=TCICSTRN,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: TCICSTRN
+microfocus-MFDS-Resource-ACE: allow:OPERATOR group:read
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:read
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: Terminal Environment Inquiry
+
+###################
+###### PCT : CEMT #
+###################
+dn: CN=CEMT,CN=TCICSTRN,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: TCICSTRN
+microfocus-MFDS-Resource-ACE: allow:OPERATOR group:read
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:read
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: CICS master terminal operation
+
+###################
+###### PCT : CQIT #
+###################
+dn: CN=CQIT,CN=TCICSTRN,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: TCICSTRN
+microfocus-MFDS-Resource-ACE: allow:OPERATOR group:read
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:read
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: CICS region shutdown
+
+###################
+###### PCT : CNCL #
+###################
+dn: CN=CNCL,CN=TCICSTRN,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: TCICSTRN
+microfocus-MFDS-Resource-ACE: allow:OPERATOR group:read
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:read
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: CICS program cancel/release
+
+###################
+###### PCT : CLOG #
+###################
+dn: CN=CLOG,CN=TCICSTRN,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: TCICSTRN
+microfocus-MFDS-Resource-ACE: allow:OPERATOR group:read
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:read
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: Console log viewing utility
+
+###################
+###### PCT : CFLS #
+###################
+dn: CN=CFLS,CN=TCICSTRN,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: TCICSTRN
+microfocus-MFDS-Resource-ACE: allow:OPERATOR group:read
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:read
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: CICS File Editor (complete)
+
+###################
+###### PCT : CFLE #
+###################
+dn: CN=CFLE,CN=TCICSTRN,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: TCICSTRN
+microfocus-MFDS-Resource-ACE: allow:OPERATOR group:read
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:read
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: CICS File Editor (view & edit)
+
+###################
+###### PCT : CRCN #
+###################
+dn: CN=CRCN,CN=TCICSTRN,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: TCICSTRN
+microfocus-MFDS-Resource-ACE: allow:OPERATOR group:read
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:read
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: XA connections monitoring transaction
+
+#######################
+###### PPT : DFHZCHLP #
+#######################
+dn: CN=DFHZCHLP,CN=MCICSPPT,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: MCICSPPT
+microfocus-MFDS-Resource-ACE: allow:OPERATOR group:control
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:control
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: CFLE Help program
+
+#######################
+###### PPT : DFHZCRCN #
+#######################
+dn: CN=DFHZCRCN,CN=MCICSPPT,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: MCICSPPT
+microfocus-MFDS-Resource-ACE: allow:OPERATOR group:control
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:control
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: CRCN XA connections monitoring program
+
+#######################
+###### PPT : DFHZDFDM #
+#######################
+dn: CN=DFHZDFDM,CN=MCICSPPT,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: MCICSPPT
+microfocus-MFDS-Resource-ACE: allow:OPERATOR group:control
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:control
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: CFLE utility root program
+
+#######################
+###### PPT : DFHZKEDA #
+#######################
+dn: CN=DFHZKEDA,CN=MCICSPPT,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: MCICSPPT
+microfocus-MFDS-Resource-ACE: allow:OPERATOR group:control
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:control
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: CFLE KSDS utility program
+
+#######################
+###### PPT : DFHZEEDA #
+#######################
+dn: CN=DFHZEEDA,CN=MCICSPPT,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: MCICSPPT
+microfocus-MFDS-Resource-ACE: allow:OPERATOR group:control
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:control
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: CFLE ESDS utility program
+
+#######################
+###### PPT : DFHZREDA #
+#######################
+dn: CN=DFHZREDA,CN=MCICSPPT,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: MCICSPPT
+microfocus-MFDS-Resource-ACE: allow:OPERATOR group:control
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:control
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: CFLE RRDS utility program
+
+#######################
+###### PPT : DFHZSEDA #
+#######################
+dn: CN=DFHZSEDA,CN=MCICSPPT,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: MCICSPPT
+microfocus-MFDS-Resource-ACE: allow:OPERATOR group:control
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:control
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: CFLE SEQ utility program
+
+#######################
+###### PPT : DFHZMSKA #
+#######################
+dn: CN=DFHZMSKA,CN=MCICSPPT,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: MCICSPPT
+microfocus-MFDS-Resource-ACE: allow:OPERATOR group:control
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:control
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: CFLE MASK utility program
+
+#######################
+###### PPT : DFHZCSET #
+#######################
+dn: CN=DFHZCSET,CN=MCICSPPT,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: MCICSPPT
+microfocus-MFDS-Resource-ACE: allow:OPERATOR group:control
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:control
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: CFLE config program
+
+#######################
+###### PPT : DFHZFSEL #
+#######################
+dn: CN=DFHZFSEL,CN=MCICSPPT,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: MCICSPPT
+microfocus-MFDS-Resource-ACE: allow:OPERATOR group:control
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:control
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: CFLE selection program
+
+#######################
+###### PPT : DFHZFCPY #
+#######################
+dn: CN=DFHZFCPY,CN=MCICSPPT,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: MCICSPPT
+microfocus-MFDS-Resource-ACE: allow:OPERATOR group:control
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:control
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: CFLE copy program
+
+#######################
+###### PPT : DFHZCPYA #
+#######################
+dn: CN=DFHZCPYA,CN=MCICSPPT,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: MCICSPPT
+microfocus-MFDS-Resource-ACE: allow:OPERATOR group:control
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:control
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: CFLE utility program
+
+#######################
+###### PPT : ECI2OPER #
+#######################
+dn: CN=ECI2OPER,CN=MCICSPPT,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: MCICSPPT
+microfocus-MFDS-Resource-ACE: allow:ALLUSER group:control
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: ECI demo program
+
+#######################
+###### PPT : DFHZHLP4 #
+#######################
+dn: CN=DFHZHLP4,CN=MCICSPPT,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: MCICSPPT
+microfocus-MFDS-Resource-ACE: allow:OPERATOR group:control
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:control
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: CFLE help utility program
+
+#######################
+###### PPT : DFHZCSPG #
+#######################
+dn: CN=DFHZCSPG,CN=MCICSPPT,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: MCICSPPT
+microfocus-MFDS-Resource-ACE: allow:OPERATOR group:control
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:control
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: BMS paging utility program
+
+#######################
+###### FCT : DFHZHELP #
+#######################
+dn: CN=DFHZHELP,CN=FCICSFCT,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: FCICSFCT
+microfocus-MFDS-Resource-ACE: allow:OPERATOR group:update
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:update
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: CFLE help file
+
+###################
+###### PCT : CFLI #
+###################
+dn: CN=CFLI,CN=TCICSTRN,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: TCICSTRN
+microfocus-MFDS-Resource-ACE: allow:OPERATOR group:read
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:read
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: CICS File Editor (view only)
+
+###################
+###### PCT : CZMG #
+###################
+dn: CN=CZMG,CN=TCICSTRN,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: TCICSTRN
+microfocus-MFDS-Resource-ACE: allow:OPERATOR group:read
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:read
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: CICS message to all terminals
+
+###################
+###### PCT : CINS #
+###################
+dn: CN=CINS,CN=TCICSTRN,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: TCICSTRN
+microfocus-MFDS-Resource-ACE: allow:OPERATOR group:read
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:read
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: Resource group install
+
+###################
+###### PCT : CFCR #
+###################
+dn: CN=CFCR,CN=TCICSTRN,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: TCICSTRN
+microfocus-MFDS-Resource-ACE: allow:OPERATOR group:read
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:read
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: VSAM file base cluster create
+
+###################
+###### PCT : EZAC #
+###################
+dn: CN=EZAC,CN=TCICSTRN,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: TCICSTRN
+microfocus-MFDS-Resource-ACE: allow:OPERATOR group:read
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:read
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: EZASOKET Configure the socket interface
+
+###################
+###### PCT : EZAO #
+###################
+dn: CN=EZAO,CN=TCICSTRN,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: TCICSTRN
+microfocus-MFDS-Resource-ACE: allow:OPERATOR group:read
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:read
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: EZASOKET Enable the socket interface
+
+############
+# DEVGROUP #
+############
+
+###################
+###### PCT : CEBR #
+###################
+dn: CN=CEBR,CN=TCICSTRN,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: TCICSTRN
+microfocus-MFDS-Resource-ACE: allow:DEVGROUP group:read
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: Browse temporary storage
+
+###################
+###### PCT : CDBG #
+###################
+dn: CN=CDBG,CN=TCICSTRN,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: TCICSTRN
+microfocus-MFDS-Resource-ACE: allow:DEVGROUP group:read
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: Debug server control
+
+###################
+###### PCT : CRUN #
+###################
+dn: CN=CRUN,CN=TCICSTRN,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: TCICSTRN
+microfocus-MFDS-Resource-ACE: allow:DEVGROUP group:read
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: Generic program invocation
+
+#############
+# INTERCOM  #
+#############
+
+###################
+###### PCT : CSMI #
+###################
+dn: CN=CSMI,CN=TCICSTRN,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: TCICSTRN
+microfocus-MFDS-Resource-ACE: allow:INTERCOM group:read
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: Provides ISC mirror transaction
+
+###################
+###### PCT : CPMI #
+###################
+dn: CN=CPMI,CN=TCICSTRN,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: TCICSTRN
+microfocus-MFDS-Resource-ACE: allow:INTERCOM group:read
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: Provides CICS OS/2 LU6.2 mirror
+
+###################
+###### PCT : CVMI #
+###################
+dn: CN=CVMI,CN=TCICSTRN,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: TCICSTRN
+microfocus-MFDS-Resource-ACE: allow:INTERCOM group:read
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: Provides LU6.2 synclevel 1 mirror
+
+###################
+###### PCT : CRSR #
+###################
+dn: CN=CRSR,CN=TCICSTRN,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: TCICSTRN
+microfocus-MFDS-Resource-ACE: allow:INTERCOM group:read
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: ISC internal system comms
+
+###################
+###### PCT : CTIN #
+###################
+dn: CN=CTIN,CN=TCICSTRN,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: TCICSTRN
+microfocus-MFDS-Resource-ACE: allow:INTERCOM group:read
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: Universal Client 3270 Install
+
+###########################
+# CICS Internal resources #
+###########################
+
+############ # MQSeries #
+############
+
+###################
+###### PCT : CKTI #
+###################
+dn: CN=CKTI,CN=ACICSPCT,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: ACICSPCT
+microfocus-MFDS-Resource-ACE: allow:PLTPISUR:read
+microfocus-MFDS-Resource-ACE: allow:OPERATOR group:read
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:read
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: MQSeries Trigger Monitor
+
+############
+# EZASOKET #
+############
+
+###################
+###### PCT : CSOC #
+###################
+dn: CN=CSOC,CN=ACICSPCT,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: ACICSPCT
+microfocus-MFDS-Resource-ACE: allow:PLTPISUR:read
+microfocus-MFDS-Resource-ACE: allow:OPERATOR group:read
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:read
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: EZASOKET internal transaction
+
+###################
+###### PCT : CSKL #
+###################
+dn: CN=CSKL,CN=TCICSTRN,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: TCICSTRN
+microfocus-MFDS-Resource-ACE: allow:PLTPISUR:read
+microfocus-MFDS-Resource-ACE: allow:OPERATOR group:read
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:read
+microfocus-MFDS-Resource-ACE: allow:*:read
+microfocus-MFDS-UID: mfuid
+description: EZASOKET default listener
+
+#######################
+###### PPT : EZACIC01 #
+#######################
+dn: CN=EZACIC01,CN=MCICSPPT,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: MCICSPPT
+microfocus-MFDS-Resource-ACE: allow:*:control
+microfocus-MFDS-UID: mfuid
+description: EZASOKET enablement program
+
+#######################
+###### PPT : EZACIC20 #
+#######################
+dn: CN=EZACIC20,CN=MCICSPPT,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: MCICSPPT
+microfocus-MFDS-Resource-ACE: allow:*:control
+microfocus-MFDS-UID: mfuid
+description: EZASOKET PLTPI/PLTSD
+
+#######################
+###### PPT : EZACIC21 #
+#######################
+dn: CN=EZACIC21,CN=MCICSPPT,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: MCICSPPT
+microfocus-MFDS-Resource-ACE: allow:*:control
+microfocus-MFDS-UID: mfuid
+description: EZASOKET auto start listeners
+
+#######################
+###### PPT : EZACIC22 #
+#######################
+dn: CN=EZACIC22,CN=MCICSPPT,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: MCICSPPT
+microfocus-MFDS-Resource-ACE: allow:*:control
+microfocus-MFDS-UID: mfuid
+description: EZASOKET auto shutdown listeners
+
+###################
+###### DCT : TCPM #
+###################
+dn: CN=TCPM,CN=DCICSDCT,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: DCICSDCT
+microfocus-MFDS-Resource-ACE: allow:*:update
+microfocus-MFDS-UID: mfuid
+description: EZASOKET default TDQueue
+
+#######################
+###### FCT : EZACONFG #
+#######################
+dn: CN=EZACONFG,CN=FCICSFCT,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: FCICSFCT
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:update
+microfocus-MFDS-Resource-ACE: allow:OPERATOR group:update
+microfocus-MFDS-UID: mfuid
+description: EZASOKET Configuration file
+
+################
+# ES commands  #
+################
+
+###################
+###### casstart  ##
+###################
+dn: CN=casstart,CN=OPERCMDS,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: OPERCMDS
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:alter
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: casstart command to start an ES region
+
+###################
+###### casstop   ##
+###################
+dn: CN=casstop,CN=OPERCMDS,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: OPERCMDS
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:alter
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: casstop command to stop an ES region
+
+###################
+###### casfile   ##
+###################
+dn: CN=casfile,CN=OPERCMDS,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: OPERCMDS
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:alter
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: Change CICS file status
+
+###################
+###### castran   ##
+###################
+dn: CN=castran,CN=OPERCMDS,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: OPERCMDS
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:alter
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: Change CICS transaction status
+
+###################
+###### cassub    ##
+###################
+dn: CN=cassub,CN=OPERCMDS,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: OPERCMDS
+microfocus-MFDS-Resource-ACE: allow:ALLUSER group:alter
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: Submit JCL
+
+###################
+###### casout   ##
+###################
+dn: CN=casout,CN=OPERCMDS,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: OPERCMDS
+microfocus-MFDS-Resource-ACE: allow:ALLUSER group:alter
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: JCL utility
+
+###################
+###### jesalias  ##
+###################
+dn: CN=jesalias,CN=OPERCMDS,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: OPERCMDS
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:alter
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: Access rules for restricting/allowing users to JES Alias page
+
+###################
+###### DIAGS     ##
+###################
+dn: CN=DIAGS,CN=OPERCMDS,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: OPERCMDS
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:alter
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: Access rules for ESMAC console/trace/dump pages
+
+
+#########################
+# RACF Class = DATASET #
+#########################
+dn: CN=DATASET,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: top
+objectClass: container
+
+
+#############################
+###### ** Any dataset      ##
+#############################
+dn: CN=**,CN=DATASET,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: DATASET
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:alter
+microfocus-MFDS-UID: mfuid
+description: Access rules for ** datasets
+
+#######################
+######  EZACONFG ######
+#######################
+dn: CN=**EZACONFG,CN=DATASET,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: DATASET
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:update
+microfocus-MFDS-Resource-ACE: allow:OPERATOR group:update
+microfocus-MFDS-UID: mfuid
+description: EZASOKET Configuration file used by CICS open
+
+#######################
+###### ACCTFIL  #######
+#######################
+dn: CN=**ACCTFIL,CN=DATASET,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: DATASET
+microfocus-MFDS-Resource-ACE: allow:ALLUSER group:update
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: ACCT Demo file used by CICS open
+
+#######################
+###### DFHZHELP #######
+#######################
+dn: CN=**DFHZHELP,CN=DATASET,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: DATASET
+microfocus-MFDS-Resource-ACE: allow:OPERATOR group:update
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:update
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: CFLE help file used by CICS open
+
+
+# RPI 1120667 introduced support in ESMAC for controlling access to dataset
+# data (the DATASET class) and dataset metadata (the DCB, controlled by the
+# DCBINFO class) separately.
+#
+# The DCB contains information such as the file attributes and path.
+#
+# DCBINFO rules are applied only after DATASET rules grant permission for
+# the corresponding dataset. That is, ESMAC checks to see if the user has
+# access to the dataset; if so, and the user is trying to view or modify the
+# DCB, then a second check is made against DCBINFO.
+
+########################
+# RACF Class = DCBINFO #
+########################
+dn: CN=DCBINFO,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: top
+objectClass: container
+description: ESMAC Class for controlling access to DCBs
+
+
+#########################
+###### ** Any DCB      ##
+#########################
+dn: CN=**,CN=DCBINFO,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: DCBINFO
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:alter
+microfocus-MFDS-UID: mfuid
+description: Access rule for all DCBs
+
+
+#########################
+# RACF Class = MQADMIN  #
+#########################
+dn: CN=MQADMIN,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: top
+objectClass: container
+description: MQSeries class for security switches
+
+########################
+# RACF Class = MQCONN  #
+########################
+dn: CN=MQCONN,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: top
+objectClass: container
+description: MQSeries Profiles used for connection security
+
+#########################
+# RACF Class = MQQUEUE  #
+#########################
+dn: CN=MQQUEUE,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: top
+objectClass: container
+description: MQSeries Profiles used in queue resource security
+
+########################
+# RACF Class = MQPROC  #
+########################
+dn: CN=MQPROC,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: top
+objectClass: container
+description: MQSeries Profiles used in process resource security
+
+##############################
+# NO.SUBSYS.SECURITY example #
+##############################
+#dn: CN=QM_example.NO.SUBSYS.SECURITY,CN=MQADMIN,CN=Enterprise Server Resources,DC=X
+#changetype: add
+#objectClass: microfocus-MFDS-Resource
+#microfocus-MFDS-Resource-Class: MQADMIN
+#microfocus-MFDS-UID: mfuid
+#description: Disable all security on MQSeries for QMGR QM_example
+
+###############################
+# YES.SUBSYS.SECURITY example #
+###############################
+dn: CN=QM_example.YES.SUBSYS.SECURITY,CN=MQADMIN,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: MQADMIN
+microfocus-MFDS-UID: mfuid
+description: Enable security on MQSeries for QMGR QM_example
+
+##################################
+# Switch for YES.CONNECT.CHECKS  #
+##################################
+dn: CN=QM_example.YES.CONNECT.CHECKS,CN=MQADMIN,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: MQADMIN
+microfocus-MFDS-UID: mfuid
+description: Enable connection security on MQCONN for QMGR QM_example
+
+###########################
+# MQCONN QM_example.BATCH #
+###########################
+dn: CN=QM_example.BATCH,CN=MQCONN,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: MQCONN
+microfocus-MFDS-Resource-ACE: allow:SAFU:read
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:read
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: Enable security on MQCONN subsystem BATCH for QMGR QM_example
+
+##########################
+# MQCONN QM_example.CICS #
+##########################
+dn: CN=QM_example.CICS,CN=MQCONN,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: MQCONN
+microfocus-MFDS-Resource-ACE: allow:SAFU:read
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:read
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: Enable security on MQCONN subsystem CICS for QMGR QM_example
+
+##################
+# QUEUE SAMPLE.Q #
+##################
+dn: CN=QM_example.SAMPLE.Q,CN=MQQUEUE,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: MQQUEUE
+microfocus-MFDS-Resource-ACE: allow:SAFU:read
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:read
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: Enable security on queue SAMPLE.Q (QMGR QM_example)
+
+####################
+# Transaction MQ5T #
+####################
+dn: CN=MQ5T,CN=TCICSTRN,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: TCICSTRN
+microfocus-MFDS-Resource-ACE: allow:SAFU:read
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:read
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: MQSeries CICS transaction for tests
+
+########################
+# RACF Class = MFESMAC #
+########################
+
+dn: CN=MFESMAC,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: top
+objectClass: container
+
+
+#######################
+###### BAT*          ##
+#######################
+dn: CN=BAT*,CN=MFESMAC,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: MFESMAC
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:alter
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: Allow full access any ESMAC BAT Screen
+
+
+#######################
+###### BDL*          ##
+#######################
+dn: CN=BDL*,CN=MFESMAC,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: MFESMAC
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:alter
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: Allow full access any ESMAC BUNDLE Screen
+
+
+#######################
+###### DCT*          ##
+#######################
+dn: CN=DCT*,CN=MFESMAC,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: MFESMAC
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:alter
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: Allow full access any ESMAC DCT Screen
+
+
+#######################
+###### ENQM*         ##
+#######################
+dn: CN=ENQM*,CN=MFESMAC,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: MFESMAC
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:alter
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: Allow full access any ESMAC ENQM Screen
+
+
+#######################
+###### ENV*          ##
+#######################
+dn: CN=ENV*,CN=MFESMAC,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: MFESMAC
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:read
+microfocus-MFDS-UID: mfuid
+description: Allow access to Environment variable ESMAC page
+
+
+#######################
+###### FCT*          ##
+#######################
+dn: CN=FCT*,CN=MFESMAC,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: MFESMAC
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:alter
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: Allow full access any ESMAC FCT Screen
+
+
+#######################
+###### GRP*          ##
+#######################
+dn: CN=GRP*,CN=MFESMAC,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: MFESMAC
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:alter
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: Allow full access any ESMAC GRP Screen
+
+
+#######################
+###### ICE*          ##
+#######################
+dn: CN=ICE*,CN=MFESMAC,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: MFESMAC
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:alter
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: Allow full access any ESMAC ICE Screen
+
+
+#######################
+###### IMS*          ##
+#######################
+dn: CN=IMS*,CN=MFESMAC,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: MFESMAC
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:alter
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: Allow full access any ESMAC IMS Screen
+
+
+#######################
+###### JCL*          ##
+#######################
+dn: CN=JCL*,CN=MFESMAC,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: MFESMAC
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:alter
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: Allow full access any ESMAC JCL Screen
+
+
+#######################
+###### JCT*          ##
+#######################
+dn: CN=JCT*,CN=MFESMAC,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: MFESMAC
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:alter
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: Allow full access any ESMAC JCT Screen
+
+
+#######################
+###### MPR*          ##
+#######################
+dn: CN=MPR*,CN=MFESMAC,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: MFESMAC
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:alter
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: Allow full access any ESMAC MPR Screen
+
+
+#######################
+###### MQL*          ##
+#######################
+dn: CN=MQL*,CN=MFESMAC,CN=Enterprise Server Resources,DC=X
+changetype: add
+cn: MQL*
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: MFESMAC
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:alter
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: Allow full access any ESMAC MQ Listeners Screen
+
+
+#######################
+###### PCT*          ##
+#######################
+dn: CN=PCT*,CN=MFESMAC,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: MFESMAC
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:alter
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: Allow full access any ESMAC PCT Screen
+
+
+#######################
+###### PIP*          ##
+#######################
+dn: CN=PIP*,CN=MFESMAC,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: MFESMAC
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:alter
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: Allow full access any ESMAC PIPELINE Screen
+
+
+#######################
+###### PLT*          ##
+#######################
+dn: CN=PLT*,CN=MFESMAC,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: MFESMAC
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:alter
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: Allow full access any ESMAC PLT Screen
+
+
+#######################
+###### PPT*          ##
+#######################
+dn: CN=PPT*,CN=MFESMAC,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: MFESMAC
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:alter
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: Allow full access any ESMAC PPT Screen
+
+
+#######################
+###### SIT*          ##
+#######################
+dn: CN=SIT*,CN=MFESMAC,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: MFESMAC
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:alter
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: Allow full access any ESMAC SIT Screen
+
+
+#######################
+###### SNT*          ##
+#######################
+dn: CN=SNT*,CN=MFESMAC,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: MFESMAC
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:alter
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: Allow full access any ESMAC SNT Screen
+
+
+#######################
+###### SUP*          ##
+#######################
+dn: CN=SUP*,CN=MFESMAC,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: MFESMAC
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:alter
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: Allow full access any ESMAC SUP Screen
+
+
+#######################
+###### SYS6*          ##
+#######################
+dn: CN=SYS6*,CN=MFESMAC,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: MFESMAC
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:alter
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: Allow full access any ESMAC SYS6 Screen
+
+
+#######################
+###### SYSC*          ##
+#######################
+dn: CN=SYSC*,CN=MFESMAC,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: MFESMAC
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:alter
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: Allow full access any ESMAC SYSC Screen
+
+
+#######################
+###### TABLE*          ##
+#######################
+dn: CN=TABLE*,CN=MFESMAC,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: MFESMAC
+microfocus-MFDS-Resource-ACE: allow:ALLUSER group:alter
+microfocus-MFDS-Resource-ACE: allow:DEVGROUP group:alter
+microfocus-MFDS-Resource-ACE: allow:OPERATOR group:alter
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:alter
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: Allow full access any ESMAC TABLE Screen
+
+
+#######################
+###### TCLS*         ##
+#######################
+dn: CN=TCLS*,CN=MFESMAC,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: MFESMAC
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:alter
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: Allow full access any ESMAC TCLS Screen
+
+
+#######################
+###### TCT*          ##
+#######################
+dn: CN=TCT*,CN=MFESMAC,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: MFESMAC
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:alter
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: Allow full access any ESMAC TCT Screen
+
+
+#######################
+###### TERM*          ##
+#######################
+dn: CN=TERM*,CN=MFESMAC,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: MFESMAC
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:alter
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: Allow full access any ESMAC TERM Screen
+
+
+#######################
+###### TSM*          ##
+#######################
+dn: CN=TSM*,CN=MFESMAC,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: MFESMAC
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:alter
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: Allow full access any ESMAC TSM Screen
+
+
+#######################
+###### TST*          ##
+#######################
+dn: CN=TST*,CN=MFESMAC,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: MFESMAC
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:alter
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: Allow full access any ESMAC TST Screen
+
+
+#######################
+###### TTYPE*          ##
+#######################
+dn: CN=TTYPE*,CN=MFESMAC,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: MFESMAC
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:alter
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: Allow full access any ESMAC TTYPE Screen
+
+
+#######################
+###### WEB*          ##
+#######################
+dn: CN=WEB*,CN=MFESMAC,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: MFESMAC
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:alter
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: Allow full access any ESMAC WEBSERVICE Screen
+
+
+#######################
+###### XAT*          ##
+#######################
+dn: CN=XAT*,CN=MFESMAC,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: MFESMAC
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:alter
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: Allow full access any ESMAC XAT Screen
+
+
+#######################
+###### XLT*          ##
+#######################
+dn: CN=XLT*,CN=MFESMAC,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: MFESMAC
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:alter
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: Allow full access any ESMAC XLT Screen
+
+
+#########################
+# RACF Class = JESINPUT #
+#########################
+dn: CN=JESINPUT,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: top
+objectClass: container
+
+
+###################
+###### STCINRDR  ##
+###################
+dn: CN=STCINRDR,CN=JESINPUT,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: JESINPUT
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:read
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: Access rules JES Job Submission to internal reader by CICS and IMS programs
+
+
+###################
+###### INTRDR    ##
+###################
+dn: CN=INTRDR,CN=JESINPUT,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: JESINPUT
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:read
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: Access rules JES Job Submission to internal reader by batch program
+
+
+###################
+###### TSUINRDR  ##
+###################
+dn: CN=TSUINRDR,CN=JESINPUT,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: JESINPUT
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:read
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: Access rules JES Job Submission to internal reader by ESMAC and CASSUB
+
+
+#########################
+# RACF Class = JESJOBS #
+#########################
+dn: CN=JESJOBS,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: top
+objectClass: container
+
+
+###################
+###### CANCEL.** ##
+###################
+dn: CN=CANCEL.**,CN=JESJOBS,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: JESJOBS
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:alter
+microfocus-MFDS-Resource-ACE: allow:ALLUSER group:alter
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: Allow job cancellation for SYSADM and ALLUSER groups
+
+
+###################
+###### SUBMIT.** ##
+###################
+dn: CN=SUBMIT.**,CN=JESJOBS,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: JESJOBS
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:alter
+microfocus-MFDS-Resource-ACE: allow:ALLUSER group:alter
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: No Limit on Job Submissions by Jobname, Jobnumber, etc.
+
+
+#########################
+# RACF Class = JESSPOOL #
+#########################
+dn: CN=JESSPOOL,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: top
+objectClass: container
+
+
+#####################
+###### **           #
+#####################
+dn: CN=**,CN=JESSPOOL,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: JESSPOOL
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:alter
+microfocus-MFDS-UID: mfuid
+description: Allow SYSADM group to access any Spool Datasets.
+
+
+
+#######################
+###### *.*           ##
+#######################
+dn: CN=*.*,CN=SURROGAT,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: SURROGAT
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: Deny surrogate job submission to everyone
+
+
+
+#
+# As of Enterprise Server 3.0, the JES engine checks to see whether the
+# PHYSFILE (physical file) class is defined. If it is, it checks each DD
+# allocation that refers to a filesystem file to see if the user has the
+# necessary permission to use that file.
+#
+# That means that if PHYSFILE is defined in the security used by a JCL-
+# enabled region, there must be at least one rule in it, or most JCL jobs
+# will be rejected.
+#
+# Older versions of this file defined the PHYSFILE class but no rules for
+# it. Customers with such a configuration can delete the PHYSFILE
+# container from their LDAP repository, or add a generic "allow everything"
+# rule like this:
+#   dn: CN=**,CN=PHYSFILE,CN=Enterprise Server Resources,DC=X
+#   changetype: add
+#   objectClass: microfocus-MFDS-Resource
+#   microfocus-MFDS-Resource-Class: PHYSFILE
+#   microfocus-MFDS-Resource-ACE: allow:*:alter
+#   microfocus-MFDS-UID: mfuid
+#   description: Allow all access to all physical files by everyone
+#
+# See the product documentation for more information and sample rules.
+#
+
+### #########################
+### # RACF Class = PHYSFILE #
+### #########################
+### dn: CN=PHYSFILE,CN=Enterprise Server Resources,DC=X
+### changetype: add
+### objectClass: top
+### objectClass: container
+### description: Restrict JES access to files by physical file path
+
+
+####################
+# RACF IMS CLASSES #
+####################
+
+#####################
+# RACF Class = TIMS #
+#####################
+dn: CN=TIMS,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: top
+objectClass: container
+
+#####################
+# RACF Class = CIMS #
+#####################
+dn: CN=CIMS,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: top
+objectClass: container
+
+#####################
+# RACF Class = FIMS #
+#####################
+dn: CN=FIMS,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: top
+objectClass: container
+
+#####################
+# RACF Class = IIMS #
+#####################
+dn: CN=IIMS,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: top
+objectClass: container
+
+#####################
+# RACF Class = LIMS #
+#####################
+dn: CN=LIMS,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: top
+objectClass: container
+
+#####################
+# RACF Class = PIMS #
+#####################
+dn: CN=PIMS,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: top
+objectClass: container
+
+#####################
+# RACF Class = SIMS #
+#####################
+dn: CN=SIMS,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: top
+objectClass: container
+
+#####################
+# RACF Class = OIMS #
+#####################
+dn: CN=OIMS,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: top
+objectClass: container
+
+#####################
+# RACF IVPGRP group #
+#####################
+dn: cn=IVPGRP,CN=Enterprise Server User Groups,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Group
+microfocus-MFDS-UID: mfuid
+description: ES System IMS IVP Users group
+microfocus-MFDS-Group-Member: SAFUIMS
+
+##################
+# RACF IMS USERS #
+###################
+
+dn: CN=SAFUIMS,CN=Enterprise Server Users,DC=X
+changetype: add
+objectClass: microfocus-MFDS-User
+microfocus-MFDS-UID: mfuid
+microfocus-MFDS-User-CreateToken: self
+microfocus-MFDS-User-MTO-Priority: 0
+microfocus-MFDS-User-MTO-Timeout: 0
+microfocus-MFDS-User-MTO-OperatorClass: 0
+microfocus-MFDS-User-DefaultGroup: IVPGRP
+microfocus-MFDS-User-AllowLogon: TRUE
+microfocus-MFDS-User-Pwd: literal:test
+microfocus-MFDS-User-UseToken: self
+description: ES IMS User
+
+###################################################
+###### IMS CMD Security check for /LOCK command ### 
+###################################################
+dn: CN=LOC,CN=CIMS,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: CIMS
+microfocus-MFDS-Resource-ACE: allow:IVPGRP group:read
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: disable /LOCK command for users not in IVPGRP
+
+################################
+###### IMS transaction: MFDEMO #
+################################
+dn: CN=MFDEMO,CN=TIMS,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: TIMS
+microfocus-MFDS-Resource-ACE: allow:IVPGRP group:read
+microfocus-MFDS-Resource-ACE: allow:SAFU:read
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: IMS IVP MFDEMO trancode
+
+##################################
+###### IMS transaction: TESTMENU #
+##################################
+dn: CN=TESTMENU,CN=TIMS,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: TIMS
+microfocus-MFDS-Resource-ACE: allow:IVPGRP group:read
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: IMS IVP TESTMENU trancode
+
+
+##################################
+###### IMS transaction: TESTMAIN #
+##################################
+dn: CN=TESTMAIN,CN=TIMS,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: TIMS
+microfocus-MFDS-Resource-ACE: allow:IVPGRP group:read
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: IMS IVP TESTMAIN trancode
+
+##################################
+###### IMS IVP Database DEMO03DD #
+##################################
+dn: CN=DEMO03DD,CN=PIMS,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: PIMS
+microfocus-MFDS-Resource-ACE: allow:IVPGRP group:update
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: IMS IVP database DEMO03DD
+
+#############################
+###### IMS IVP PSB DEMO001T #
+#############################
+dn: CN=DEMO001T,CN=IIMS,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: IIMS
+microfocus-MFDS-Resource-ACE: allow:IVPGRP group:update
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: IMS IVP PSB DEMO001T
+
+#############################
+###### IMS IVP PSB TEST001T #
+#############################
+dn: CN=TEST001T,CN=IIMS,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: IIMS
+microfocus-MFDS-Resource-ACE: allow:IVPGRP group:update
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: IMS IVP PSB TEST001T
+
+#############################
+###### IMS IVP PSB DEMO001T #
+#############################
+dn: CN=TEST002T,CN=IIMS,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: IIMS
+microfocus-MFDS-Resource-ACE: allow:IVPGRP group:update
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: IMS IVP PSB DEMO001T 
+
+#################################
+###### IMS IVP segment DEMOHDRS # 
+#################################
+dn: CN=DEMOHDRS,CN=SIMS,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: SIMS
+microfocus-MFDS-Resource-ACE: allow:IVPGRP group:update
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: IMS IVP segment DEMOHDRS
+
+#################################
+###### IMS IVP segment DEMOELES # 
+#################################
+dn: CN=DEMOELES,CN=SIMS,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: SIMS
+microfocus-MFDS-Resource-ACE: allow:IVPGRP group:update
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: IMS IVP segment DEMOELES
+
+###############################
+###### IMS IVP field SEQFIELD # 
+###############################
+dn: CN=SEQFIELD,CN=FIMS,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: FIMS
+microfocus-MFDS-Resource-ACE: allow:IVPGRP group:update
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: IMS IVP field SEQFIELD
+
+#############
+###### URI* #
+#############
+dn: CN=URI*,CN=MFESMAC,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: MFESMAC
+microfocus-MFDS-Resource-ACE: allow:SYSAD:alter
+microfocus-MFDS-Resource-ACE: allow:ESMAC:alter
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: Allow full access to any ESMAC URI Screen
+
+#############
+###### TCP* #
+#############
+dn: CN=TCP*,CN=MFESMAC,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: MFESMAC
+microfocus-MFDS-Resource-ACE: allow:SYSAD:alter
+microfocus-MFDS-Resource-ACE: allow:ESMAC:alter
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: Allow full access to any ESMAC TCP Screen
+
+#############
+###### DOC* #
+#############
+dn: CN=DOC*,CN=MFESMAC,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: MFESMAC
+microfocus-MFDS-Resource-ACE: allow:SYSAD:alter
+microfocus-MFDS-Resource-ACE: allow:ESMAC:alter
+microfocus-MFDS-Resource-ACE: deny:*:execute
+microfocus-MFDS-UID: mfuid
+description: Allow full access to any ESMAC DOC Screen
+
+#################################
+# Communications Server Classes #
+#################################
+
+#########################
+# Communications Server #
+#########################
+dn: CN=Communications Server,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: top
+objectClass: container
+description: Class for controlling access to resources through the Communications Server
+
+#################################
+# Enterprise Server Console Log #
+#################################
+dn: CN=Enterprise Server Console Log,CN=Communications Server,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: Communications Server
+microfocus-MFDS-Resource-ACE: allow:*:read
+microfocus-MFDS-UID: mfuid
+description: Allow access to Enterprise Server's console log via the web
+
+#############################
+# Communications Server Log #
+#############################
+dn: CN=Communications Server Log,CN=Communications Server,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: Communications Server
+microfocus-MFDS-Resource-ACE: allow:*:read
+microfocus-MFDS-UID: mfuid
+description: Allow access to the Communications Server log via the web
+
+####################################
+# Communications Server Statistics #
+####################################
+dn: CN=Statistics,CN=Communications Server,CN=Enterprise Server Resources,Data,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: Communications Server
+microfocus-MFDS-Resource-ACE: allow:*:read
+microfocus-MFDS-UID: mfuid
+description: Allow access to the Communications Server statistics page via the web
+
+
+######################
+# Service Deployment #
+######################
+dn: CN=Enterprise Server Web,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: top
+objectClass: container
+description: Access to resources via the Web listener, particularly COBOL service deployment
+
+########################################
+# Deployment service program directory #
+########################################
+dn: CN=cgi,CN=Enterprise Server Web,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: Enterprise Server Web
+microfocus-MFDS-Resource-ACE: allow:DEVGROUP group:execute,add
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:execute,add
+microfocus-MFDS-UID: mfuid
+description: Permit POST and CGI program execution in the cgi virtual directory for developers and administrators
+
+#######################################
+# Deployment service upload directory #
+#######################################
+dn: CN=uploads,CN=Enterprise Server Web,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: Enterprise Server Web
+microfocus-MFDS-Resource-ACE: allow:DEVGROUP group:read
+microfocus-MFDS-Resource-ACE: allow:SYSADM group:read
+microfocus-MFDS-UID: mfuid
+description: Permit GET in the uploads virtual directory for developers and administrators
+
+#####################################
+# Common Web Administration Classes #
+#####################################
+
+#############################
+# Common Web Administration #
+#############################
+dn: CN=Common Web Administration,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: top
+objectClass: container
+description: Class for controlling access to resources through the Common Web Administration Server
+
+#########
+# Logon #
+#########
+dn: CN=Logon,CN=Common Web Administration,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: Common Web Administration
+microfocus-MFDS-Resource-ACE: allow:*:execute
+microfocus-MFDS-UID: mfuid
+description: Allow logging on to the Common Web Administration Server
+
+#################
+# Configuration #
+#################
+dn: CN=Configuration,CN=Common Web Administration,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: Common Web Administration
+microfocus-MFDS-Resource-ACE: allow:*:read
+microfocus-MFDS-Resource-ACE: allow:#DSAdmin group:update,add,delete
+microfocus-MFDS-UID: mfuid
+description: Allow access to configuration properties for the Common Web Administration Server
+
+#######################
+# ESCWA Configuration #
+#######################
+dn: CN=ESCWA Configuration,CN=Common Web Administration,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: Common Web Administration
+microfocus-MFDS-Resource-ACE: allow:*:read
+microfocus-MFDS-Resource-ACE: allow:#DSAdmin group:update,add,delete
+microfocus-MFDS-UID: mfuid
+description: Allow access to general configuration properties for the Common Web Administration Server
+
+##########################
+# Security Configuration #
+##########################
+dn: CN=Security Configuration,CN=Common Web Administration,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: Common Web Administration
+microfocus-MFDS-Resource-ACE: allow:*:read
+microfocus-MFDS-Resource-ACE: allow:#DSAdmin group:update,add,delete
+microfocus-MFDS-UID: mfuid
+description: Allow access to security configuration properties for the Common Web Administration Server
+
+######################
+# MFDS Configuration #
+######################
+dn: CN=MFDS Configuration,CN=Common Web Administration,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: Common Web Administration
+microfocus-MFDS-Resource-ACE: allow:*:read
+microfocus-MFDS-Resource-ACE: allow:#DSAdmin group:update,add,delete
+microfocus-MFDS-UID: mfuid
+description: Allow access to MFDS configuration properties for the Common Web Administration Server
+
+###########################
+# Scale-out Configuration #
+###########################
+dn: CN=Scale-out Configuration,CN=Common Web Administration,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: Common Web Administration
+microfocus-MFDS-Resource-ACE: allow:*:read
+microfocus-MFDS-Resource-ACE: allow:#DSAdmin group:update,add,delete
+microfocus-MFDS-UID: mfuid
+description: Allow access to scale-out configuration properties for the Common Web Administration Server
+
+#####################
+# K8s Configuration #
+#####################
+dn: CN=K8s Configuration,CN=Common Web Administration,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: Common Web Administration
+microfocus-MFDS-Resource-ACE: allow:*:read
+microfocus-MFDS-Resource-ACE: allow:#DSAdmin group:update,add,delete
+microfocus-MFDS-UID: mfuid
+description: Allow access to kubernetes configuration properties for the Common Web Administration Server
+
+###########
+# Control #
+###########
+dn: CN=Control,CN=Common Web Administration,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: Common Web Administration
+microfocus-MFDS-Resource-ACE: allow:#DSAdmin group:execute
+microfocus-MFDS-UID: mfuid
+description: Allow control of the Common Web Administration Server
+
+#######################
+# User Administration #
+#######################
+dn: CN=User Administration,CN=Common Web Administration,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: Common Web Administration
+microfocus-MFDS-Resource-ACE: allow:#DSAdmin group:read,update,add,delete
+microfocus-MFDS-UID: mfuid
+description: Allow access to user administration via the Common Web Administration Server
+
+#############################
+# Communications Server Log #
+#############################
+dn: CN=Communications Server Log,CN=Common Web Administration,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: Common Web Administration
+microfocus-MFDS-Resource-ACE: allow:#DSAdmin group:read
+microfocus-MFDS-UID: mfuid
+description: Allow access to Communications Server Log for the Common Web Administration Server
+
+#################
+# Native Access #
+#################
+dn: CN=Native Access,CN=Common Web Administration,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: Common Web Administration
+microfocus-MFDS-Resource-ACE: allow:*:read,update,add,delete,execute
+microfocus-MFDS-UID: mfuid
+description: Allow access to Native functionality via the Common Web Administration Server
+
+##################
+# Managed Access #
+##################
+dn: CN=Managed Access,CN=Common Web Administration,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: Common Web Administration
+microfocus-MFDS-Resource-ACE: allow:*:read,update,add,delete,execute
+microfocus-MFDS-UID: mfuid
+description: Allow access to Managed functionality via the Common Web Administration Server
+
+###################
+# Security Access #
+###################
+dn: CN=Security Access,CN=Common Web Administration,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: Common Web Administration
+microfocus-MFDS-Resource-ACE: allow:*:read,update,add,delete,execute
+microfocus-MFDS-UID: mfuid
+description: Allow access to Security functionality via the Common Web Administration Server
+
+###############################
+# Server Configuration Access #
+###############################
+dn: CN=Server Configuration Access,CN=Common Web Administration,CN=Enterprise Server Resources,DC=X
+changetype: add
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-Resource-Class: Common Web Administration
+microfocus-MFDS-Resource-ACE: allow:*:read,update,add,delete,execute
+microfocus-MFDS-UID: mfuid
+description: Allow access to Enterprise Server Administration Configuration functionality via the Common Web Administration Server

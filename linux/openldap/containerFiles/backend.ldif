@@ -1,0 +1,19 @@
+dn: cn=module,cn=config
+objectClass: olcModuleList
+cn: module
+olcModulepath: /usr/lib64/openldap
+olcModuleload: back_mdb
+
+dn: olcDatabase=mdb,cn=config
+objectClass: olcDatabaseConfig
+objectClass: olcMdbConfig
+olcDatabase: {1}mdb
+olcDbDirectory: /var/lib/ldap
+olcDbIndex: objectClass eq,pres
+olcDbIndex: ou,cn,mail,surname,givenname eq,pres,sub
+olcSuffix: dc=secldap,dc=com
+olcRootDN: cn=Manager,dc=secldap,dc=com
+olcRootPW: {SSHA}xxxxxxxxxxxxxxxxxxxxxxxx
+olcAccess: {0}to attrs=userPassword,shadowLastChange by dn="cn=Manager,dc=secldap,dc=com" write by anonymous auth by self write by * none
+olcAccess: {1}to dn.base="" by * read
+olcAccess: {2}to * by dn="cn=Manager,dc=secldap,dc=com" write by * read
