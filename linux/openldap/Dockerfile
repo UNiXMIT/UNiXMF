@@ -50,5 +50,5 @@ RUN /usr/bin/systemctl start slapd; \
     /usr/bin/ldapadd -D "cn=Manager,dc=secldap,dc=com" -w $SLAPPASS -f /openldap/mfds-users.ldif -h localhost:389 -c; \
     /usr/bin/sed 's/DC=X/CN=Micro Focus,dc=secldap,dc=com/' /openldap/es_default_ldap_openldap.ldif; \
     /usr/bin/ldapadd -D "cn=Manager,dc=secldap,dc=com" -w $SLAPPASS -f /openldap/es_default_ldap_openldap.ldif -h localhost:389 -c; \
-    /usr/bin/ldapsearch -h localhost:389 -x -b "cn=subschema" -s base + > /openldap/log/schema.log
+    /usr/bin/ldapsearch -h localhost:389 -x -b "cn=subschema" -s base +
 ENTRYPOINT ["/usr/bin/systemctl", "start", "slapd"]
