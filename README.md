@@ -45,3 +45,5 @@
 - [Redis](https://unixmit.github.io/UNiXextend/docker/redis.txt)
 - [APLS](https://unixmit.github.io/UNiXextend/docker/apls.txt)
 - [NODE](https://unixmit.github.io/UNiXextend/docker/node.txt)
+- [Squid](https://unixmit.github.io/UNiXextend/docker/squid.txt)
+- [OpenLDAP](https://unixmit.github.io/UNiXextend/docker/openldap.txt)
