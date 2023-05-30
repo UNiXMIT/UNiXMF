@@ -55,4 +55,4 @@ checkContainerRuntime() {
 ##############
 
 checkContainerRuntime
-"${CONTAINER_RUNTIME}" build --tag mf/openldap .
+"${CONTAINER_RUNTIME}" build --tag mf/openldap -f Dockerfile

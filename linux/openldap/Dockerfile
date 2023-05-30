@@ -1,16 +1,14 @@
 FROM rockylinux:9
-EXPOSE 389
-EXPOSE 636
+EXPOSE 389 636
+COPY containerFiles/ /openldap
+ENV SLAPPASS=strongPassword
 RUN dnf install 'dnf-command(config-manager)' -y; \
     dnf config-manager --set-enabled plus; \
     dnf install openldap-servers openldap-clients python3 openssl -y; \
-    dnf clean all
-RUN curl -o /usr/bin/systemctl https://raw.githubusercontent.com/gdraheim/docker-systemctl-replacement/master/files/docker/systemctl3.py; \
-    chmod +x /usr/bin/systemctl
-RUN mkdir -m 775 /openldap
-COPY containerFiles/ /openldap
-ENV SLAPPASS=strongPassword
-RUN /usr/bin/systemctl start slapd; \
+    dnf clean all; \
+    curl -o /usr/bin/systemctl https://raw.githubusercontent.com/gdraheim/docker-systemctl-replacement/master/files/docker/systemctl3.py; \
+    chmod +x /usr/bin/systemctl; \
+    /usr/bin/systemctl start slapd; \
     secret=$(/usr/sbin/slappasswd -s $SLAPPASS); \
     # /usr/bin/sed -i "/olcRootPW:.*/c\olcRootPW: $secret" /openldap/chrootpwd.ldif; \
     # /usr/bin/sed -i '/CRC.*/d' /etc/openldap/slapd.d/cn=config/olcDatabase={0}config.ldif; \
