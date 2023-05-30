@@ -1,7 +1,7 @@
 FROM rockylinux:9
 EXPOSE 389 636
 COPY containerFiles/ /openldap
-ENV SLAPPASS=strongPassword
+ENV SLAPPASS=strongPassword123
 RUN dnf install 'dnf-command(config-manager)' -y; \
     dnf config-manager --set-enabled plus; \
     dnf install openldap-servers openldap-clients python3 openssl -y; \
