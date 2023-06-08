@@ -3,17 +3,17 @@
 ## Windows
 ### Enterprise Developer
 ```
-more %COBDIR%\etc\edver
+more "C:\Program Files (x86)\Micro Focus\Enterprise Developer\etc\edver"
 ```
 
 ### Visual COBOL
 ```
-more %COBDIR%\etc\vsver
+more "C:\Program Files (x86)\Micro Focus\Visual COBOL\etc\vsver"
 ```
 
 ### COBOL Server
 ```
-more %COBDIR%\etc\csver
+more "C:\Program Files (x86)\Micro Focus\COBOL Server\etc\csver"
 ```
 
 ## Linux
