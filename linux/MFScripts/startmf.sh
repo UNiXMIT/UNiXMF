@@ -12,7 +12,7 @@ Usage:
  -h                         Usage
  Example:
   startmf.sh                Start MF Services
-  startmf.sh loop           Stop MF Services with Loopback enabled
+  startmf.sh open           Start MF Services with loopback disabled
   startmf.sh stop           Stop MF Services
   startmf.sh 55555          Start MF Services and set Fileshare to use port 55555"
 }
@@ -26,19 +26,7 @@ kill_mf()
 
 start_mf()
 {
-    sudo tmux new -d -s mfds ". $COBDIR/bin/cobsetenv && $COBDIR/bin/mfds --UI-on && $COBDIR/bin/mfds --listen-all && $COBDIR/bin/mfds"
-    sleep 1
-    tmux new -d -s escwa $COBDIR/bin/escwa --BasicConfig.MfRequestedEndpoint="tcp:*:10086" --write=true
-    sleep 1
-    tmux new -d -s fs $COBDIR/bin/fs -s FSSERVER
-    sleep 1
-    tmux ls
-    sudo tmux ls
-}
-
-start_mfloopback()
-{
-    sudo tmux new -d -s mfds ". $COBDIR/bin/cobsetenv && $COBDIR/bin/mfds --UI-on && $COBDIR/bin/mfds"
+    sudo tmux new -d -s mfds ". $COBDIR/bin/cobsetenv && $COBDIR/bin/mfds"
     sleep 1
     tmux new -d -s escwa $COBDIR/bin/escwa
     sleep 1
@@ -48,11 +36,23 @@ start_mfloopback()
     sudo tmux ls
 }
 
-start_mffs()
+start_mfopen()
 {
     sudo tmux new -d -s mfds ". $COBDIR/bin/cobsetenv && $COBDIR/bin/mfds --UI-on && $COBDIR/bin/mfds --listen-all && $COBDIR/bin/mfds"
     sleep 1
     tmux new -d -s escwa $COBDIR/bin/escwa --BasicConfig.MfRequestedEndpoint="tcp:*:10086" --write=true
+    sleep 1
+    tmux new -d -s fs $COBDIR/bin/fs -s FSSERVER
+    sleep 1
+    tmux ls
+    sudo tmux ls
+}
+
+start_mffs()
+{
+    sudo tmux new -d -s mfds ". $COBDIR/bin/cobsetenv && $COBDIR/bin/mfds"
+    sleep 1
+    tmux new -d -s escwa $COBDIR/bin/escwa
     sleep 1
     tmux new -d -s fs "export CCITCPS_FSSERVER=MFPORT:$MFOP && $COBDIR/bin/fs -s FSSERVER"
     sleep 1
@@ -71,8 +71,8 @@ else
         if [[ $MFOP =~ $re ]]; then
             start_mffs
         else
-            if [[ "$MFOP" == "loop" ]] ; then
-                start_mfloopback
+            if [[ "$MFOP" == "open" ]] ; then
+                start_mfopen
             else
                 if [[ -z "$MFOP" ]] ; then
                     start_mf
