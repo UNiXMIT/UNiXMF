@@ -39,7 +39,7 @@
 - [Oracle](https://unixmit.github.io/UNiXextend/docker/oracle.txt)
 - [PostgreSQL](https://unixmit.github.io/UNiXextend/docker/postgres.txt)
 - [Informix](https://unixmit.github.io/UNiXextend/docker/informix.txt)
-- [DB2](https://unixmit.github.io/UNiXextend/docker/db2.txt)
+- [DB2](https://unixmit.github.io/UNiXextend/docker/db2.md)
 - [MySQL](https://unixmit.github.io/UNiXextend/docker/mysql.txt)
 - [Sybase](https://unixmit.github.io/UNiXextend/docker/sybase.txt)
 - [IBM MQ](https://unixmit.github.io/UNiXextend/docker/mq.txt)
