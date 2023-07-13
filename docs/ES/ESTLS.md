@@ -5,6 +5,16 @@ For example:
 ```
 minica --domains '*.eu-west-2.compute.amazonaws.com,support'
 ```
+#### Change Machine Name
+Windows:  
+```
+wmic computersystem where name="%computername%" call rename name="support"
+shutdown /r
+```
+Linux:  
+```
+sudo hostnamectl set-hostname support
+```
 
 ### Environment Variables
 ```
@@ -13,6 +23,7 @@ MFDS_DNS_RESOLVE=Y
 ```
 
 ### cci.ini
+[cci.ini Documentation](https://www.microfocus.com/documentation/enterprise-developer/ed-latest/ED-VS2022/BKCCCCIINI.html)
 ```
 [ccitrace-base]
 
@@ -26,6 +37,9 @@ ssl_display_destination=/tmp/ssltrc.txt
 ```
 
 ### mf-server.dat
+#### Location
+Windows: %COBDIR%\bin  
+LINUX: $COBDIR/etc  
 ```
 [JCL/SSL/passphrases]
 certificate=""
@@ -41,6 +55,9 @@ keyfile=""
 ```
 
 ### mf-client.dat
+#### Location
+Windows: %COBDIR%\bin  
+LINUX: $COBDIR/etc  
 ```
 root=RootCA.pem
 ```
