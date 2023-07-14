@@ -1,6 +1,6 @@
 # ES TLS Setup
 ### TLS Certificate/Key
-Include the machine name as a SAN.  
+Include the machine name as a Subject Alternative Name (SAN).  
 For example:  
 ```
 minica --domains '*.eu-west-2.compute.amazonaws.com,support'
@@ -63,4 +63,9 @@ Windows: %COBDIR%\bin
 LINUX: $COBDIR/etc  
 ```
 root=RootCA.pem
+```
+
+### Display the contents of a certificate
+```
+openssl x509 -in cert.pem -noout -text
 ```
