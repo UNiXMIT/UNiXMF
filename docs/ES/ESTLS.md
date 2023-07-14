@@ -9,11 +9,14 @@ minica --domains '*.eu-west-2.compute.amazonaws.com,support'
 Windows:  
 ```
 wmic computersystem where name="%computername%" call rename name="support"
+echo 127.0.1.1  support >> %WINDIR%\System32\drivers\etc\hosts
 shutdown /r
 ```
 Linux:  
 ```
 sudo hostnamectl set-hostname support
+sudo echo "127.0.1.1   support" >> /etc/hosts
+sudor reboot
 ```
 
 ### Environment Variables
