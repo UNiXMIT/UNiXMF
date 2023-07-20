@@ -63,6 +63,7 @@ keyfile=""
 Windows: %COBDIR%\bin  
 LINUX: $COBDIR/etc  
 ```
+[TLS]
 root=RootCA.pem
 ```
 
