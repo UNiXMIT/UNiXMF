@@ -23,6 +23,7 @@ sudor reboot
 ```
 MF_ROOT_CERT=RootCA.pem  
 MFDS_DNS_RESOLVE=Y  
+MFDS_EXTERNAL_ADDR=
 ```
 
 ### cci.ini
