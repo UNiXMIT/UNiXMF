@@ -86,11 +86,16 @@ dbfhadmin -createdb -usedb:%USEDB% -provider:ss -type:region -name:MYPAC -file:C
 dbfhadmin -script -type:crossregion -provider:ss -file:C:\MFSamples\PAC\VSAMDB\CreateCrossRegion.sql
 dbfhadmin -createdb -usedb:%USEDB% -provider:ss -type:crossregion -file:C:\MFSamples\PAC\VSAMDB\CreateCrossRegion.sql -user:%USERID% -password:%USERPASSWD%
 
+timeout /T 5
+
 :: Redis
-START \MFSamples\PAC\VSAMDB\redis-server \MFSamples\PAC\VSAMDB\redis.conf
+SET USEREDIS=127.0.0.1
+SET /p "USEREDIS=Redis Hostname or IP Address [127.0.0.1]: "
+SET REDISPORT=6379
+SET /p "REDISPORT=Redis Port [6379]: "
 
 :: ESCWA - Add SOR and PAC
-curl -s -X "POST" "http://localhost:10086/server/v1/config/groups/sors" -H "accept: application/json" -H "X-Requested-With: API" -H "Content-Type: application/json" -H "Origin: http://localhost:10086" -d "{\"SorName\": \"Redis\", \"SorDescription\": \"Redis SOR\", \"SorType\": \"redis\", \"SorConnectPath\": \"127.0.0.1:6379,[::1]:6379,localhost:6379\", \"TLS\": false}"
+curl -s -X "POST" "http://localhost:10086/server/v1/config/groups/sors" -H "accept: application/json" -H "X-Requested-With: API" -H "Content-Type: application/json" -H "Origin: http://localhost:10086" -d "{\"SorName\": \"Redis\", \"SorDescription\": \"Redis SOR\", \"SorType\": \"redis\", \"SorConnectPath\": \"%USEREDIS%:%REDISPORT%\", \"TLS\": false}"
 
 FOR /F "tokens=* USEBACKQ" %%g IN (`curl -s -X "GET" "http://localhost:10086/server/v1/config/groups/sors" -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: http://localhost:10086" ^| jq -r .[0].Uid`) do (SET "SORUID=%%g")
 
