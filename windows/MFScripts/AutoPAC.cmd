@@ -1,5 +1,8 @@
 @ECHO OFF
 
+:: REQUIREMENTS
+:: jq - https://jqlang.github.io/jq/download/
+
 >nul 2>&1 "%SYSTEMROOT%\system32\cacls.exe" "%SYSTEMROOT%\system32\config\system"
 if '%ERRORLEVEL%' NEQ '0' (
     ECHO "Admin privileges are required!"
@@ -83,7 +86,12 @@ dbfhadmin -createdb -usedb:%USEDB% -provider:ss -type:crossregion -file:C:\MFSam
 :: Redis
 START \MFSamples\PAC\VSAMDB\redis-server \MFSamples\PAC\VSAMDB\redis.conf
 
-SET /p DUMMY2=Hit ENTER to continue when you have created the SOR and PAC in ESCWA...
+:: ESCWA - Add SOR and PAC
+curl -s -X "POST" "http://localhost:10086/server/v1/config/groups/sors" -H "accept: application/json" -H "X-Requested-With: API" -H "Content-Type: application/json" -H "Origin: http://localhost:10086" -d "{\"SorName\": \"Redis\", \"SorDescription\": \"Redis SOR\", \"SorType\": \"redis\", \"SorConnectPath\": \"127.0.0.1:6379,[::1]:6379,localhost:6379\", \"TLS\": false}"
+
+FOR /F "tokens=* USEBACKQ" %%g IN (`curl -s -X "GET" "http://localhost:10086/server/v1/config/groups/sors" -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: http://localhost:10086" ^| jq -r .[0].Uid`) do (SET "SORUID=%%g")
+
+curl -s -X "POST" "http://localhost:10086/server/v1/config/groups/pacs" -H "accept: application/json" -H "X-Requested-With: API" -H "Content-Type: application/json" -H "Origin: http://localhost:10086" -d "{\"PacName\": \"AutoPAC\", \"PacDescription\": \"AutoPAC\", \"PacResourceSorUid\": \"%SORUID%\"}"
 
 :: Cold start regions
 casstart /rMFDBFH1 /s:c
