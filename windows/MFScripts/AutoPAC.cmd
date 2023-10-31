@@ -55,6 +55,8 @@ del JCL.zip
 del MFBSI.zip
 del PAC.zip
 
+timeout /T 5
+
 :: Create Databases
 SET USEDB=127.0.0.1
 SET /p "USEDB=Database Hostname or Ip Address [127.0.0.1]: "
