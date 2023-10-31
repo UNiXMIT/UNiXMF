@@ -47,7 +47,7 @@ curl -O https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/windows/MFScripts/
 powershell -command "Expand-Archive -Force 'PAC.zip' 'PAC'"
 cd \MFSamples\PAC
 cacls \MFSamples\PAC /e /p Everyone:f
-mfds -g 5 \MFSamples\PAC\ALLSERVERS.xml O
+mfds -g 5 \MFSamples\PAC\ALLSERVERS.xml
 
 :: CleanUp
 cd \MFSamples
@@ -57,7 +57,7 @@ del PAC.zip
 
 :: Create Databases
 SET USEDB=127.0.0.1
-SET /p "USEDB=Database Hostname/Ip Address [127.0.0.1]: "
+SET /p "USEDB=Database Hostname or Ip Address [127.0.0.1]: "
 SET USERID=sa
 SET /p "USERID=Database User ID [sa]: "
 SET USERPASSWD=strongPassword123
