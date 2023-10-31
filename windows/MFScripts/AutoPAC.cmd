@@ -50,6 +50,7 @@ mfds -g 5 \MFSamples\PAC\ALLSERVERS.xml O
 cd \MFSamples
 del JCL.zip
 del MFBSI.zip
+del PAC.zip
 
 :: Create Databases
 SET USEDB=127.0.0.1
