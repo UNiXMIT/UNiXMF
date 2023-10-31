@@ -41,7 +41,7 @@ cd \MFSamples\MFBSI
 cacls \MFSamples\MFBSI /e /p Everyone:f
 mfds -g 5 \MFSamples\MFBSI\MFBSI.xml
 
-:: Setup MFBSI Demo Project and ES Region
+:: Setup PAC Demo Project and ES Region
 cd \MFSamples
 curl -O https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/windows/MFScripts/PAC.zip
 powershell -command "Expand-Archive -Force 'PAC.zip' 'PAC'"
@@ -66,14 +66,15 @@ SET DRIVERNAME="{ODBC Driver 17 for SQL Server}"
 
 :: Create the MFDBFH.cfg
 IF EXIST \MFSamples\PAC\VSAMDB\MFDBFH.cfg DEL /F \MFSamples\PAC\VSAMDB\MFDBFH.cfg
+set MFDBFH_CONFIG=C:\MFSamples\PAC\VSAMDB\MFDBFH.cfg
 dbfhconfig -add -file:C:\MFSamples\PAC\VSAMDB\MFDBFH.cfg -server:MYSERVER -provider:ss -comment:"MSSQL"
 dbfhconfig -add -file:C:\MFSamples\PAC\VSAMDB\MFDBFH.cfg -server:MYSERVER -dsn:SS.MASTER -type:database -name:master -connect:Driver=%DRIVERNAME%;Server=%USEDB%;Database=master;UID=%USERID%;PWD=%USERPASSWD%;
 dbfhconfig -add -file:C:\MFSamples\PAC\VSAMDB\MFDBFH.cfg -server:MYSERVER -dsn:SS.VSAMDATA -type:datastore -name:VSAMDATA -connect:Driver=%DRIVERNAME%;Server=%USEDB%;Database=VSAMDATA;UID=%USERID%;PWD=%USERPASSWD%;
 dbfhconfig -add -file:C:\MFSamples\PAC\VSAMDB\MFDBFH.cfg -server:MYSERVER -dsn:SS.MYPAC -type:region -name:MYPAC -connect:Driver=%DRIVERNAME%;Server=%USEDB%;Database=MYPAC;UID=%USERID%;PWD=%USERPASSWD%;
-dbfhconfig -add -file:C:\MFSamples\PAC\VSAMDB\MFDBFH.cfg -server:MYSERVER -dsn:SS.CROSSREGION -type:crossRegion -connect:Driver=%DRIVERNAME%;Server=%USEDB%;Database=CrossRegion;UID=%USERID%;PWD=%USERPASSWD%;
+dbfhconfig -add -file:C:\MFSamples\PAC\VSAMDB\MFDBFH.cfg -server:MYSERVER -dsn:SS.CROSSREGION -type:crossRegion -connect:Driver=%DRIVERNAME%;Server=%USEDB%;Database=_$XREGN$;UID=%USERID%;PWD=%USERPASSWD%;
 
 :: Create the datastore
-dbfhdeploy data create sql://MYSERVER/VSAMDATA
+dbfhdeploy -configfile:C:\MFSamples\PAC\VSAMDB\MFDBFH.cfg data create sql://MYSERVER/VSAMDATA
 
 :: Create the region database
 dbfhadmin -script -type:region -provider:ss -name:MYPAC -file:C:\MFSamples\PAC\VSAMDB\createRegion.sql
