@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mfDirectoryServerRepository mfDirectoryServerVersion="1.24.65" mfRepositoryLocation="C:\MFSamples\MFBSI" mfXMLReposVersion="2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="mfds1.24.65.xsd">
+
+  <mfServerList>
+    <mfServer>
+      <objectclass>mfServer</objectclass>
+      <mfStructVersion>26</mfStructVersion>
+      <mfUID>1.2.840.5043.01.026.1523978273.1</mfUID>
+      <mfServerStatus>Stopped</mfServerStatus>
+      <mfServerType>MFES</mfServerType>
+      <cn>MFBSI</cn>
+      <description>Micro Focus Enterprise Server</description>
+      <mfESEnableStartScript>Disabled</mfESEnableStartScript>
+      <mfESEnableStopScript>Disabled</mfESEnableStopScript>
+      <mfESEnableNotRespondingScript>Disabled</mfESEnableNotRespondingScript>
+      <mfESRetries>1</mfESRetries>
+      <mfCustomConfiguration>[ES-Environment]
+MFBSI_DIR=C:\MFSamples\MFBSI\MFBSI
+ES_EMP_EXIT_1=MFBSIEMX</mfCustomConfiguration>
+      <mfServerExtendedConfiguration>
+        <mfServerCASConfiguration>
+          <mfCASStructVersion>33</mfCASStructVersion>
+          <mfServerCASStartupOptions>
+            <mfCASShMemPages>512</mfCASShMemPages>
+            <mfCASSICount>2</mfCASSICount>
+            <mfCASShMemCushion>32</mfCASShMemCushion>
+            <mfCASTraceTableSize>341</mfCASTraceTableSize>
+            <mfCASLocalTraceSize>341</mfCASLocalTraceSize>
+            <mfCASTraceMaxSize>0</mfCASTraceMaxSize>
+            <mfCASRequestedLicenses>10</mfCASRequestedLicenses>
+            <mfCASSysDir>C:\MFsamples\MFBSI\jcl\system</mfCASSysDir>
+            <mfCASHSFEnabled>0</mfCASHSFEnabled>
+            <mfCASHSFWriteToDisk>0</mfCASHSFWriteToDisk>
+            <mfCASHSFMaxFileSize>0</mfCASHSFMaxFileSize>
+            <mfCASHSFMaxDisplayRecords>256</mfCASHSFMaxDisplayRecords>
+            <mfCASHSFCreateJCLFileRecords>0</mfCASHSFCreateJCLFileRecords>
+            <mfCASConsoleLogSize>0</mfCASConsoleLogSize>
+            <mfCASDefaultSysDir/>
+            <mfLogPath/>
+            <mfCASDumpOnAbend>1</mfCASDumpOnAbend>
+            <mfCASColdStartTrace>1</mfCASColdStartTrace>
+            <mfCASAuxiliaryTrace>0</mfCASAuxiliaryTrace>
+            <mfCASShowConsole>0</mfCASShowConsole>
+            <mfCASRemoteDebug>0</mfCASRemoteDebug>
+            <mfCASIRDSWarmStart>0</mfCASIRDSWarmStart>
+            <mfCASIRDSFileName/>
+            <mfCASIRDSMaxSize>32</mfCASIRDSMaxSize>
+            <mfCASIRDSBufferQueueCount>1</mfCASIRDSBufferQueueCount>
+            <mfCASStartOnSystemStart>0</mfCASStartOnSystemStart>
+            <mfCASCICSEZASOKET>0</mfCASCICSEZASOKET>
+            <mfCAS64Bit>0</mfCAS64Bit>
+            <mfCASPurgeLogs>0</mfCASPurgeLogs>
+            <mfCASPerformanceMonitor>0</mfCASPerformanceMonitor>
+            <mfCASEventLogInformational>0</mfCASEventLogInformational>
+            <mfCASEventLogWarning>0</mfCASEventLogWarning>
+            <mfCASEventLogError>0</mfCASEventLogError>
+            <mfCASEventLogSevere>0</mfCASEventLogSevere>
+            <mfCASMTOEnabled>1</mfCASMTOEnabled>
+            <mfCASCICSPersonality>1</mfCASCICSPersonality>
+            <mfCASBatchEnabled>1</mfCASBatchEnabled>
+            <mfCASIMSEnabled>0</mfCASIMSEnabled>
+            <mfCASPLIEnabled>0</mfCASPLIEnabled>
+            <mfMQLEnabled>0</mfMQLEnabled>
+          </mfServerCASStartupOptions>
+          <mfServerCASTraceOptions>
+            <mfCASTraceFlagsTaskControl>1</mfCASTraceFlagsTaskControl>
+            <mfCASTraceFlagsStorageControl>0</mfCASTraceFlagsStorageControl>
+            <mfCASTraceFlagsTableManagement>0</mfCASTraceFlagsTableManagement>
+            <mfCASTraceFlagsApplicationContainer>0</mfCASTraceFlagsApplicationContainer>
+            <mfCASTraceFlagsRequestHandler>0</mfCASTraceFlagsRequestHandler>
+            <mfCASTraceFlagsRMInterface>0</mfCASTraceFlagsRMInterface>
+            <mfCASTraceFlagsCommunications>0</mfCASTraceFlagsCommunications>
+            <mfCASTraceFlagsApplication>1</mfCASTraceFlagsApplication>
+            <mfCASTraceFlagsExit>0</mfCASTraceFlagsExit>
+          </mfServerCASTraceOptions>
+          <mfServerMTOConfiguration/>
+          <mfServerBatchConfiguration>
+            <mfCASJCLMainframePollInterval>0</mfCASJCLMainframePollInterval>
+            <mfCASJCLPATH>C:\MFsamples\MFBSI\jcl\loadlib</mfCASJCLPATH>
+            <mfCASMFSYSCAT>C:\MFsamples\MFBSI\jcl\loadlib\CATALOG.DAT</mfCASMFSYSCAT>
+            <mfCASJCLALLOCLOC>C:\MFsamples\MFBSI\jcl\loadlib\dataset</mfCASJCLALLOCLOC>
+            <mfCASJCLSYSPROCLIB>sys1.proclib</mfCASJCLSYSPROCLIB>
+          </mfServerBatchConfiguration>
+          <mfServerIMSConfiguration>
+            <mfCASIMSCodesetBias>A</mfCASIMSCodesetBias>
+            <mfCASIMSMFSAttributeBias>B</mfCASIMSMFSAttributeBias>
+            <mfCASIMSMFSNullChar>x'1A'</mfCASIMSMFSNullChar>
+            <mfCASIMSKeypointFrequency>64</mfCASIMSKeypointFrequency>
+            <mfCASIMSDefaultMQName>1</mfCASIMSDefaultMQName>
+            <mfCASIMSTrailingSpace>1</mfCASIMSTrailingSpace>
+            <mfCASIMSDBLockedResourceTimeout>30</mfCASIMSDBLockedResourceTimeout>
+            <mfCASIMSDBKeyCompression>1</mfCASIMSDBKeyCompression>
+            <mfCASIMSDBIRLMLocking>0</mfCASIMSDBIRLMLocking>
+            <mfCASIMSDBDumpOnLockTimeout>0</mfCASIMSDBDumpOnLockTimeout>
+            <mfCASIMSDBDumpOnDeadlock>0</mfCASIMSDBDumpOnDeadlock>
+            <mfCASIMSDBRollforwardRecovery>0</mfCASIMSDBRollforwardRecovery>
+            <mfCASIMSDBDataCompression>1</mfCASIMSDBDataCompression>
+            <mfCASIMSTMTransThreshold>0</mfCASIMSTMTransThreshold>
+            <mfCASIMSTMMQMaxBlocks>32</mfCASIMSTMMQMaxBlocks>
+            <mfCASIMSTMMQBufferCount>2</mfCASIMSTMMQBufferCount>
+            <mfCASIMSTMMQColdStart>N</mfCASIMSTMMQColdStart>
+            <mfCASIMSTMMQPersistColdStart>0</mfCASIMSTMMQPersistColdStart>
+          </mfServerIMSConfiguration>
+          <mfServerPLIConfiguration>
+            <mfCASPLIUseJavaDebug>0</mfCASPLIUseJavaDebug>
+            <mfCASPLIPromptPLITEST>0</mfCASPLIPromptPLITEST>
+          </mfServerPLIConfiguration>
+        </mfServerCASConfiguration>
+      </mfServerExtendedConfiguration>
+      <mfCommsProcessList>
+        <mfCommsProcess>
+          <objectclass>mfCommsServer</objectclass>
+          <mfStructVersion>4</mfStructVersion>
+          <mfUID>1.2.840.5043.06.004.1523978273.1</mfUID>
+          <mfServerUID>1.2.840.5043.01.026.1523978273.1</mfServerUID>
+          <mfInstance>1</mfInstance>
+          <mfServerStatus>Stopped</mfServerStatus>
+          <mfRequestedEndpoint>tcp:*:*</mfRequestedEndpoint>
+          <mfActualEndpoint>tcp:NWB-KIMH.microfocus.com:56602</mfActualEndpoint>
+          <mfSSLCertificate/>
+          <mfSSLKeyfile/>
+          <mfSSLClientOption>1</mfSSLClientOption>
+          <mfSSLMaxKeyLength>1024</mfSSLMaxKeyLength>
+          <mfSSLAllowNULLCipher>No</mfSSLAllowNULLCipher>
+          <mfSSLCARootfile/>
+          <mfSSLAllowCertCNIPMismatch>No</mfSSLAllowCertCNIPMismatch>
+          <mfSSLCheckCertRevocation>Yes</mfSSLCheckCertRevocation>
+          <mfSSLCheckCertPublishersRevocation>No</mfSSLCheckCertPublishersRevocation>
+          <mfSSLHonorServerCipherList>Yes</mfSSLHonorServerCipherList>
+          <mfTLSProtocols/>
+          <mfTLSCipherSuites/>
+          <mfTLSDHMinimumGroupSize>0</mfTLSDHMinimumGroupSize>
+          <mfTLSECCCurves/>
+          <mfSSLServerCARootfile/>
+          <mfLogPath/>
+          <mfAutoStart>1</mfAutoStart>
+          <mfCustomConfiguration>[soap]
+region=MFBSI
+</mfCustomConfiguration>
+          <mfListenerList>
+            <mfListener>
+              <objectclass>mflistener</objectclass>
+              <mfStructVersion>17</mfStructVersion>
+              <mfUID>1.2.840.5043.02.017.1523978273.1</mfUID>
+              <mfServerUID>1.2.840.5043.06.004.1523978273.1</mfServerUID>
+              <cn>Web Services and J2EE</cn>
+              <mfListenerStatus>Stopped</mfListenerStatus>
+              <mfRequestedEndpoint>tcp:*:*</mfRequestedEndpoint>
+              <mfActualEndpoint>tcp:NWB-KIMH.microfocus.com:56616</mfActualEndpoint>
+              <mfConnector>mfcs-mp::mfcs-mp</mfConnector>
+              <mfError>OK</mfError>
+              <description>SOAP/REST Web Services and J2EE</description>
+              <mfSSLCertificate/>
+              <mfSSLKeyfile/>
+              <mfSSLClientOption>1</mfSSLClientOption>
+              <mfSSLMaxKeyLength>0</mfSSLMaxKeyLength>
+              <mfSSLAllowNULLCipher>No</mfSSLAllowNULLCipher>
+              <mfSSLCARootfile/>
+              <mfSSLAllowCertCNIPMismatch>No</mfSSLAllowCertCNIPMismatch>
+              <mfSSLCheckCertRevocation>No</mfSSLCheckCertRevocation>
+              <mfSSLCheckCertPublishersRevocation>No</mfSSLCheckCertPublishersRevocation>
+              <mfSSLHonorServerCipherList>Yes</mfSSLHonorServerCipherList>
+              <mfTLSProtocols/>
+              <mfTLSCipherSuites/>
+              <mfTLSDHMinimumGroupSize>0</mfTLSDHMinimumGroupSize>
+              <mfTLSECCCurves/>
+              <mfSSLServerCARootfile/>
+              <mfCustomConfiguration/>
+            </mfListener>
+            <mfListener>
+              <objectclass>mflistener</objectclass>
+              <mfStructVersion>17</mfStructVersion>
+              <mfUID>1.2.840.5043.02.017.1523978273.2</mfUID>
+              <mfServerUID>1.2.840.5043.06.004.1523978273.1</mfServerUID>
+              <cn>Web</cn>
+              <mfListenerStatus>Stopped</mfListenerStatus>
+              <mfRequestedEndpoint>tcp:*:*</mfRequestedEndpoint>
+              <mfActualEndpoint>tcp:NWB-KIMH.microfocus.com:56618</mfActualEndpoint>
+              <mfConnector>http-switch::http-switch</mfConnector>
+              <mfError>DF0416W Warning: Insecure deployment listener. Consider disabling listener or setting the endpoint to "127.0.0.1:*"</mfError>
+              <description>Basic HTTP web server</description>
+              <mfSSLCertificate/>
+              <mfSSLKeyfile/>
+              <mfSSLClientOption>1</mfSSLClientOption>
+              <mfSSLMaxKeyLength>0</mfSSLMaxKeyLength>
+              <mfSSLAllowNULLCipher>No</mfSSLAllowNULLCipher>
+              <mfSSLCARootfile/>
+              <mfSSLAllowCertCNIPMismatch>No</mfSSLAllowCertCNIPMismatch>
+              <mfSSLCheckCertRevocation>No</mfSSLCheckCertRevocation>
+              <mfSSLCheckCertPublishersRevocation>No</mfSSLCheckCertPublishersRevocation>
+              <mfSSLHonorServerCipherList>Yes</mfSSLHonorServerCipherList>
+              <mfTLSProtocols/>
+              <mfTLSCipherSuites/>
+              <mfTLSDHMinimumGroupSize>0</mfTLSDHMinimumGroupSize>
+              <mfTLSECCCurves/>
+              <mfSSLServerCARootfile/>
+              <mfCustomConfiguration>[virtual paths]
+cgi=&lt;ES&gt;/bin
+uploads=&lt;ES&gt;/deploy
+docs=&lt;ES&gt;/help
+
+[allow]
+cgi=mfdeploy.exe
+uploads=*.txt *.car *.wsdl
+</mfCustomConfiguration>
+            </mfListener>
+          </mfListenerList>
+        </mfCommsProcess>
+      </mfCommsProcessList>
+      <mfHandlerList>
+        <mfHandler>
+          <objectclass>mfHandler</objectclass>
+          <mfStructVersion>2</mfStructVersion>
+          <mfUID>1.2.840.5043.05.002.1523978273.1</mfUID>
+          <mfServerUID>1.2.840.5043.01.026.1523978273.1</mfServerUID>
+          <cn>MFRHBINP</cn>
+          <mfHandlerStatus>Enabled</mfHandlerStatus>
+          <description>Handles J2EE requests</description>
+          <mfCustomConfiguration/>
+          <mfHandlerPath/>
+        </mfHandler>
+        <mfHandler>
+          <objectclass>mfHandler</objectclass>
+          <mfStructVersion>2</mfStructVersion>
+          <mfUID>1.2.840.5043.05.002.1523978273.2</mfUID>
+          <mfServerUID>1.2.840.5043.01.026.1523978273.1</mfServerUID>
+          <cn>MFRHSOAP</cn>
+          <mfHandlerStatus>Enabled</mfHandlerStatus>
+          <description>Handles SOAP requests</description>
+          <mfCustomConfiguration/>
+          <mfHandlerPath/>
+        </mfHandler>
+        <mfHandler>
+          <objectclass>mfHandler</objectclass>
+          <mfStructVersion>2</mfStructVersion>
+          <mfUID>1.2.840.5043.05.002.1523978273.3</mfUID>
+          <mfServerUID>1.2.840.5043.01.026.1523978273.1</mfServerUID>
+          <cn>MFRHJCL</cn>
+          <mfHandlerStatus>Enabled</mfHandlerStatus>
+          <description>Handles batch requests</description>
+          <mfCustomConfiguration/>
+          <mfHandlerPath/>
+        </mfHandler>
+        <mfHandler>
+          <objectclass>mfHandler</objectclass>
+          <mfStructVersion>2</mfStructVersion>
+          <mfUID>1.2.840.5043.05.002.1523978273.4</mfUID>
+          <mfServerUID>1.2.840.5043.01.026.1523978273.1</mfServerUID>
+          <cn>MFRHJSON</cn>
+          <mfHandlerStatus>Enabled</mfHandlerStatus>
+          <description>Handles REST requests</description>
+          <mfCustomConfiguration/>
+          <mfHandlerPath/>
+        </mfHandler>
+      </mfHandlerList>
+      <mfServiceList>
+        <mfService>
+          <objectclass>mfService</objectclass>
+          <mfStructVersion>16</mfStructVersion>
+          <mfUID>1.2.840.5043.03.016.1523978273.1</mfUID>
+          <mfServerUID>1.2.840.5043.01.026.1523978273.1</mfServerUID>
+          <cn>Deployer</cn>
+          <mfSearchOrder>1</mfSearchOrder>
+          <mfServiceStatus>Available</mfServiceStatus>
+          <mfServiceClass>MF deployment</mfServiceClass>
+          <description>Deployment file-upload service</description>
+          <mfTRMode>Unknown</mfTRMode>
+          <mfLogMode>Off</mfLogMode>
+          <mfError/>
+          <mfCustomConfiguration>[MF client]
+scheme=http
+URL=/cgi/mfdeploy.exe/uploads
+accept=application/x-zip-compressed
+
+[destination]
+listener=Web Services and J2EE
+</mfCustomConfiguration>
+          <mfListenerUID>
+            <mfUID>1.2.840.5043.02.017.1523978273.2</mfUID>
+          </mfListenerUID>
+        </mfService>
+        <mfService>
+          <objectclass>mfService</objectclass>
+          <mfStructVersion>16</mfStructVersion>
+          <mfUID>1.2.840.5043.03.016.1523978273.2</mfUID>
+          <mfServerUID>1.2.840.5043.01.026.1523978273.1</mfServerUID>
+          <cn>ES</cn>
+          <mfSearchOrder>1</mfSearchOrder>
+          <mfServiceStatus>Available</mfServiceStatus>
+          <mfServiceClass>MF ES</mfServiceClass>
+          <description>ES utility service</description>
+          <mfTRMode>Unknown</mfTRMode>
+          <mfLogMode>Off</mfLogMode>
+          <mfError/>
+          <mfCustomConfiguration/>
+          <mfListenerUID>
+            <mfUID>1.2.840.5043.02.017.1523978273.1</mfUID>
+          </mfListenerUID>
+        </mfService>
+        <mfService>
+          <objectclass>mfService</objectclass>
+          <mfStructVersion>16</mfStructVersion>
+          <mfUID>1.2.840.5043.03.016.1523978273.3</mfUID>
+          <mfServerUID>1.2.840.5043.01.026.1523978273.1</mfServerUID>
+          <cn>CICS</cn>
+          <mfSearchOrder>1</mfSearchOrder>
+          <mfServiceStatus>Available</mfServiceStatus>
+          <mfServiceClass>MF CICS</mfServiceClass>
+          <description>CICS utility service</description>
+          <mfTRMode>Unknown</mfTRMode>
+          <mfLogMode>Off</mfLogMode>
+          <mfError/>
+          <mfCustomConfiguration/>
+          <mfListenerUID>
+            <mfUID>1.2.840.5043.02.017.1523978273.1</mfUID>
+          </mfListenerUID>
+        </mfService>
+        <mfService>
+          <objectclass>mfService</objectclass>
+          <mfStructVersion>16</mfStructVersion>
+          <mfUID>1.2.840.5043.03.016.1523978273.4</mfUID>
+          <mfServerUID>1.2.840.5043.01.026.1523978273.1</mfServerUID>
+          <cn>JES</cn>
+          <mfSearchOrder>1</mfSearchOrder>
+          <mfServiceStatus>Available</mfServiceStatus>
+          <mfServiceClass>MF JES</mfServiceClass>
+          <description>Job Entry Subsystem service</description>
+          <mfTRMode>Unknown</mfTRMode>
+          <mfLogMode>Off</mfLogMode>
+          <mfError/>
+          <mfCustomConfiguration/>
+          <mfListenerUID>
+            <mfUID>1.2.840.5043.02.017.1523978273.1</mfUID>
+          </mfListenerUID>
+        </mfService>
+      </mfServiceList>
+      <mfPackageList/>
+      <mfXRMList/>
+      <mfJESInitiatorList/>
+      <mfJESPrinterList/>
+      <mfIMSMPRList/>
+      <mfMQListenerList/>
+    </mfServer>
+  </mfServerList>
+
+</mfDirectoryServerRepository>

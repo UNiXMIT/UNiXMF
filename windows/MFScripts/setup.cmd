@@ -33,4 +33,5 @@ mfds -g 5 \tutorials\BankDemo\BANKDEMO.xml
 
 cd \tutorials
 del BankDemo.zip
+cd \MFSamples
 del JCL.zip
