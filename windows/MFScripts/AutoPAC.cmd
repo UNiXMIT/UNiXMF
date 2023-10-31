@@ -68,20 +68,20 @@ SET DRIVERNAME="{ODBC Driver 17 for SQL Server}"
 IF EXIST \MFSamples\PAC\VSAMDB\MFDBFH.cfg DEL /F \MFSamples\PAC\VSAMDB\MFDBFH.cfg
 dbfhconfig -add -file:C:\MFSamples\PAC\VSAMDB\MFDBFH.cfg -server:MYSERVER -provider:ss -comment:"MSSQL"
 dbfhconfig -add -file:C:\MFSamples\PAC\VSAMDB\MFDBFH.cfg -server:MYSERVER -dsn:SS.MASTER -type:database -name:master -connect:Driver=%DRIVERNAME%;Server=%USEDB%;Database=master;UID=%USERID%;PWD=%USERPASSWD%;
-dbfhconfig -add -file:C:\MFSamples\PAC\VSAMDB\MFDBFH.cfg -server:MYSERVER -dsn:SS.VSAMDATA -type:datastore -name:VSAMDATA -connect:Driver=%DRIVERNAME%;Server=%USEDB%;Database=MicroFocus$SEE$Files$VSAMDATA;UID=%USERID%;PWD=%USERPASSWD%;
-dbfhconfig -add -file:C:\MFSamples\PAC\VSAMDB\MFDBFH.cfg -server:MYSERVER -dsn:SS.MYPAC -type:region -name:MYPAC -connect:Driver=%DRIVERNAME%;Server=%USEDB%;Database=MicroFocus$CAS$Region$MYPAC;UID=%USERID%;PWD=%USERPASSWD%;
-dbfhconfig -add -file:C:\MFSamples\PAC\VSAMDB\MFDBFH.cfg -server:MYSERVER -dsn:SS.CROSSREGION -type:crossRegion -connect:Driver=%DRIVERNAME%;Server=%USEDB%;Database=MicroFocus$CAS$CrossRegion;UID=%USERID%;PWD=%USERPASSWD%;
+dbfhconfig -add -file:C:\MFSamples\PAC\VSAMDB\MFDBFH.cfg -server:MYSERVER -dsn:SS.VSAMDATA -type:datastore -name:VSAMDATA -connect:Driver=%DRIVERNAME%;Server=%USEDB%;Database=VSAMDATA;UID=%USERID%;PWD=%USERPASSWD%;
+dbfhconfig -add -file:C:\MFSamples\PAC\VSAMDB\MFDBFH.cfg -server:MYSERVER -dsn:SS.MYPAC -type:region -name:MYPAC -connect:Driver=%DRIVERNAME%;Server=%USEDB%;Database=MYPAC;UID=%USERID%;PWD=%USERPASSWD%;
+dbfhconfig -add -file:C:\MFSamples\PAC\VSAMDB\MFDBFH.cfg -server:MYSERVER -dsn:SS.CROSSREGION -type:crossRegion -connect:Driver=%DRIVERNAME%;Server=%USEDB%;Database=CrossRegion;UID=%USERID%;PWD=%USERPASSWD%;
 
 :: Create the datastore
 dbfhdeploy data create sql://MYSERVER/VSAMDATA
 
 :: Create the region database
-dbfhadmin -script -type:region -provider:ss -name:MYPAC -file:C:\MFSamples\PAC\VSAMDB\create_region_MYPAC_ss.sql
-dbfhadmin -createdb -usedb:%USEDB% -provider:ss -type:region -name:MYPAC -file:C:\MFSamples\PAC\VSAMDB\create_region_MYPAC_ss.sql -user:%USERID% -password:%USERPASSWD%
+dbfhadmin -script -type:region -provider:ss -name:MYPAC -file:C:\MFSamples\PAC\VSAMDB\createRegion.sql
+dbfhadmin -createdb -usedb:%USEDB% -provider:ss -type:region -name:MYPAC -file:C:\MFSamples\PAC\VSAMDB\createRegion.sql -user:%USERID% -password:%USERPASSWD%
 
 :: Create the crossregion database
-dbfhadmin -script -type:crossregion -provider:ss -file:C:\MFSamples\PAC\VSAMDB\create_crossregion_ss.sql
-dbfhadmin -createdb -usedb:%USEDB% -provider:ss -type:crossregion -file:C:\MFSamples\PAC\VSAMDB\create_crossregion_ss.sql -user:%USERID% -password:%USERPASSWD%
+dbfhadmin -script -type:crossregion -provider:ss -file:C:\MFSamples\PAC\VSAMDB\CreateCrossRegion.sql
+dbfhadmin -createdb -usedb:%USEDB% -provider:ss -type:crossregion -file:C:\MFSamples\PAC\VSAMDB\CreateCrossRegion.sql -user:%USERID% -password:%USERPASSWD%
 
 :: Redis
 START \MFSamples\PAC\VSAMDB\redis-server \MFSamples\PAC\VSAMDB\redis.conf
