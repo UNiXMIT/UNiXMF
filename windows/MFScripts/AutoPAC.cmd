@@ -22,6 +22,7 @@ curl -O https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/windows/MFScripts/
 powershell -command "Expand-Archive -Force 'PAC.zip' 'PAC'"
 cd \MFSamples\PAC
 cacls \MFSamples\PAC /e /p Everyone:f
+curl -O https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/windows/MFScripts/ALLSERVERS.xml
 mfds -g 5 \MFSamples\PAC\ALLSERVERS.xml
 
 :: CleanUp
