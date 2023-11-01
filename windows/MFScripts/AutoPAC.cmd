@@ -62,13 +62,12 @@ dbfhadmin -createdb -usedb:%USEDB% -provider:ss -type:crossregion -file:C:\MFSam
 timeout /T 5
 
 :: Redis
-SET USEREDIS=127.0.0.1
-SET /p "USEREDIS=Redis Hostname or IP Address [127.0.0.1]: "
+SET /p "USEDB=Redis Hostname or IP Address [%USEDB%]: "
 SET REDISPORT=6379
 SET /p "REDISPORT=Redis Port [6379]: "
 
 :: ESCWA - Add SOR and PAC
-curl -s -X "POST" "http://localhost:10086/server/v1/config/groups/sors" -H "accept: application/json" -H "X-Requested-With: API" -H "Content-Type: application/json" -H "Origin: http://localhost:10086" -d "{\"SorName\": \"MyPSOR\", \"SorDescription\": \"My PAC SOR\", \"SorType\": \"redis\", \"SorConnectPath\": \"%USEREDIS%:%REDISPORT%\", \"TLS\": false}"
+curl -s -X "POST" "http://localhost:10086/server/v1/config/groups/sors" -H "accept: application/json" -H "X-Requested-With: API" -H "Content-Type: application/json" -H "Origin: http://localhost:10086" -d "{\"SorName\": \"MyPSOR\", \"SorDescription\": \"My PAC SOR\", \"SorType\": \"redis\", \"SorConnectPath\": \"%USEDB%:%REDISPORT%\", \"TLS\": false}"
 
 FOR /F "tokens=* USEBACKQ" %%g IN (`curl -s -X "GET" "http://localhost:10086/server/v1/config/groups/sors" -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: http://localhost:10086" ^| jq -r .[0].Uid`) do (SET "SORUID=%%g")
 
