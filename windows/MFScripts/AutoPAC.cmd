@@ -1,9 +1,11 @@
 @ECHO OFF
 
 :: REQUIREMENTS
-:: jq - https://jqlang.github.io/jq/download/
+:: Install jq - https://jqlang.github.io/jq/download/ or choco install jq
+:: Setup SQL Server - https://unixmit.github.io/UNiXextend/docker/mssql
+:: Setup Redis - https://unixmit.github.io/UNiXextend/docker/redis
 
-:: To run this script in a Command Prompt:
+:: TO RUN THIS SCRIPT IN A COMMAND PROMPT
 :: powershell -c "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/windows/MFScripts/AutoPAC.cmd' -OutFile '%appdata%\AutoPAC.cmd'; %appdata%\AutoPAC.cmd"
 
 set OPTS=%1
