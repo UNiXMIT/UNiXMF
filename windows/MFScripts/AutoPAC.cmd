@@ -3,10 +3,12 @@
 :: REQUIREMENTS
 :: jq - https://jqlang.github.io/jq/download/
 
-IF %1==-h GOTO :USAGE
-IF %1==-H GOTO :USAGE
-IF %1==/h GOTO :USAGE
-IF %1==/H GOTO :USAGE
+set OPTS=%1
+
+IF "%OPTS%"=="-h" GOTO :USAGE
+IF "%OPTS%"=="-H" GOTO :USAGE
+IF "%OPTS%"=="/h" GOTO :USAGE
+IF "%OPTS%"=="/H" GOTO :USAGE
 
 echo Administrative permissions required. Detecting permissions...
 net session >nul 2>&1
@@ -19,11 +21,12 @@ if %errorLevel% == 0 (
 
 CALL "C:\Program Files (x86)\Micro Focus\Enterprise Developer\createenv.bat"
 
-IF %1==-r GOTO :REMOVEAUTOPAC
-IF %1==-R GOTO :REMOVEAUTOPAC
-IF %1==/r GOTO :REMOVEAUTOPAC
-IF %1==/R GOTO :REMOVEAUTOPAC
+IF "%OPTS%"=="-r" GOTO :REMOVEAUTOPAC
+IF "%OPTS%"=="-R" GOTO :REMOVEAUTOPAC
+IF "%OPTS%"=="/r" GOTO :REMOVEAUTOPAC
+IF "%OPTS%"=="/R" GOTO :REMOVEAUTOPAC
 
+:SETUPAUTOPAC
 if not exist \MFSamples md \MFSamples
 cacls \MFSamples /e /p Everyone:f
 
