@@ -81,7 +81,7 @@ curl -X "POST" "http://localhost:10086/native/v1/config/groups/pacs/%PACUID%/ins
 timeout /T 5
 
 :: Cold start regions
-casstart /rMFDBFH1 /s:c
-casstart /rMFDBFH2 /s:c
+casstart /rREGION1 /s:c
+casstart /rREGION2 /s:c
 
 :END
