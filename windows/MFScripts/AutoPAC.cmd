@@ -13,35 +13,8 @@ if %errorLevel% == 0 (
 )
 
 CALL "C:\Program Files (x86)\Micro Focus\Enterprise Developer\createenv.bat"
-:: md \tutorials
-:: cacls \tutorials /e /p Everyone:f
 if not exist \MFSamples md \MFSamples
 cacls \MFSamples /e /p Everyone:f
-
-:: Setup ACCT Demo Project and ES Region
-:: md \tutorials\ACCT
-:: cd \tutorials\ACCT
-:: cacls \tutorials\ACCT /e /p Everyone:f
-:: xcopy "C:\Users\Public\Documents\Micro Focus\Enterprise Developer\Samples\Mainframe\CICS\Classic\ACCT" \tutorials\ACCT /E /H /C /I
-:: curl -O https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/windows/MFScripts/ACCT.xml
-:: mfds -g 5 \tutorials\ACCT\ACCT.xml
-
-:: Setup JCL Demo Project and ES Region
-:: cd \MFSamples
-:: curl -O https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/windows/MFScripts/JCL.zip
-:: powershell -command "Expand-Archive -Force 'JCL.zip' 'JCL'"
-:: cd \MFSamples\JCL
-:: cacls \MFSamples\JCL /e /p Everyone:f
-:: curl -O https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/windows/MFScripts/JCL.xml
-:: mfds -g 5 \MFSamples\JCL\JCL.xml
-
-:: Setup MFBSI Demo Project and ES Region
-:: cd \MFSamples
-:: curl -O https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/windows/MFScripts/MFBSI.zip
-:: powershell -command "Expand-Archive -Force 'MFBSI.zip' 'MFBSI'"
-:: cd \MFSamples\MFBSI
-:: cacls \MFSamples\MFBSI /e /p Everyone:f
-:: mfds -g 5 \MFSamples\MFBSI\MFBSI.xml
 
 :: Setup PAC Demo Project and ES Region
 cd \MFSamples
@@ -53,8 +26,6 @@ mfds -g 5 \MFSamples\PAC\ALLSERVERS.xml
 
 :: CleanUp
 cd \MFSamples
-:: del JCL.zip
-:: del MFBSI.zip
 del PAC.zip
 
 timeout /T 5
@@ -106,6 +77,8 @@ curl -s -X "POST" "http://localhost:10086/server/v1/config/groups/pacs" -H "acce
 FOR /F "tokens=* USEBACKQ" %%g IN (`curl -s -X "GET" "http://localhost:10086/server/v1/config/groups/pacs" -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: http://localhost:10086" ^| jq -r .[0].Uid`) do (SET "PACUID=%%g")
 
 curl -X "POST" "http://localhost:10086/native/v1/config/groups/pacs/%PACUID%/install" -H "accept: application/json" -H "X-Requested-With: API" -H "Content-Type: application/json" -H "Origin: http://localhost:10086" -d "{\"Regions\": [{\"Host\": \"127.0.0.1\", \"Port\": \"86\", \"CN\": \"REGION1\"},{\"Host\": \"127.0.0.1\", \"Port\": \"86\", \"CN\": \"REGION2\"}]}"
+
+timeout /T 5
 
 :: Cold start regions
 casstart /rMFDBFH1 /s:c
