@@ -3,6 +3,11 @@
 :: REQUIREMENTS
 :: jq - https://jqlang.github.io/jq/download/
 
+IF %1==-h GOTO :USAGE
+IF %1==-H GOTO :USAGE
+IF %1==/h GOTO :USAGE
+IF %1==/H GOTO :USAGE
+
 echo Administrative permissions required. Detecting permissions...
 net session >nul 2>&1
 if %errorLevel% == 0 (
@@ -18,10 +23,6 @@ IF %1==-r GOTO :REMOVEAUTOPAC
 IF %1==-R GOTO :REMOVEAUTOPAC
 IF %1==/r GOTO :REMOVEAUTOPAC
 IF %1==/R GOTO :REMOVEAUTOPAC
-IF %1==-h GOTO :USAGE
-IF %1==-H GOTO :USAGE
-IF %1==/h GOTO :USAGE
-IF %1==/H GOTO :USAGE
 
 if not exist \MFSamples md \MFSamples
 cacls \MFSamples /e /p Everyone:f
@@ -114,11 +115,15 @@ rd \MFSamples\PAC /Q /S
 GOTO :END
 
 :USAGE
-ECHO Options:
+ECHO REQUIREMENTS:
+ECHO  Administrative permissions required
+ECHO  jq - https://jqlang.github.io/jq/download/
+ECHO.
+ECHO USAGE:
 ECHO  AutoPac                        Setup AutoPAC in ES
 ECHO  AutoPac options                Remove AutoPAC or display script usage
 ECHO.    
-ECHO Usage: 
+ECHO OPTIONS: 
 ECHO  -r              Remove AutoPAC from ES
 ECHO  -h              Usage
 GOTO :END
