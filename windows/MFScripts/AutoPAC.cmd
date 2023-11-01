@@ -3,6 +3,9 @@
 :: REQUIREMENTS
 :: jq - https://jqlang.github.io/jq/download/
 
+:: To run this script in a Command Prompt:
+:: powershell -c "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/windows/MFScripts/AutoPAC.cmd' -OutFile '%appdata%\AutoPAC.cmd'; %appdata%\AutoPAC.cmd"
+
 set OPTS=%1
 
 IF "%OPTS%"=="-h" GOTO :USAGE
