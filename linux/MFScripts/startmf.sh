@@ -41,7 +41,7 @@ start_mf()
 start_mfopen()
 {
     echo Start MFDS, ESCWA and FileShare
-    sudo tmux new -d -s mfds ". $COBDIR/bin/cobsetenv && $COBDIR/bin/mfds64 --UI-on && $COBDIR/bin/mfds --listen-all && $COBDIR/bin/mfds64"
+    sudo tmux new -d -s mfds ". $COBDIR/bin/cobsetenv && $COBDIR/bin/mfds64 --UI-on && $COBDIR/bin/mfds64 --listen-all && $COBDIR/bin/mfds64"
     sleep 1
     tmux new -d -s escwa $COBDIR/bin/escwa --BasicConfig.MfRequestedEndpoint="tcp:*:10086" --write=true
     sleep 1
