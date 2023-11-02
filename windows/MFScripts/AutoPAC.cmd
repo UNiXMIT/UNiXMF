@@ -36,11 +36,14 @@ if not exist \MFSamples md \MFSamples
 cacls \MFSamples /e /p Everyone:f
 
 :: Setup PAC Demo Project and ES Region
-cd \MFSamples
-curl -O https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/windows/MFScripts/PAC.zip
-powershell -command "Expand-Archive -Force 'PAC.zip' 'PAC'"
+if not exist \MFSamples\PAC (
+    md \MFSamples\PAC\regions\REGION1\loadlib
+    md \MFSamples\PAC\regions\REGION1\system
+    md \MFSamples\PAC\regions\REGION2\loadlib
+    md \MFSamples\PAC\regions\REGION2\system
+    cacls \MFSamples\PAC /e /p Everyone:f
+)
 cd \MFSamples\PAC
-cacls \MFSamples\PAC /e /p Everyone:f
 curl -O https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/windows/MFScripts/ALLSERVERS.xml
 mfds -g 5 \MFSamples\PAC\ALLSERVERS.xml
 
