@@ -7,7 +7,7 @@
 # Install Microsoft ODBC driver 17 and MSSQL Tools - https://bit.ly/3Qpu1bX
 # Setup SQL Server - https://unixmit.github.io/UNiXextend/docker/mssql
 # Setup Redis - https://unixmit.github.io/UNiXextend/docker/redis
-# ES Installed, environment set and ESCWA/MFDS running
+# ES Installed, environment set and ESCWA/MFDS64 running
 
 # DOWNLOAD AUTOPAC SCRIPT
 # curl -s https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/linux/MFScripts/autopac.sh
