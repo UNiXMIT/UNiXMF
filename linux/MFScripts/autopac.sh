@@ -19,7 +19,7 @@ setupAutoPAC()
     [ ! -d $SAMPLEDIR ] && mkdir $SAMPLEDIR
 
     # Setup PAC Region Directories and ES Region
-    if [[ ! -d "$SAMPLEDIR/PAC"]]; then
+    if [[ ! -d "$SAMPLEDIR/PAC" ]]; then
         mkdir -p $SAMPLEDIR/PAC/regions/REGION1/loadlib
         mkdir -p $SAMPLEDIR/PAC/regions/REGION1/system
         mkdir -p $SAMPLEDIR/PAC/regions/REGION2/loadlib
