@@ -47,10 +47,6 @@ cd \MFSamples\PAC
 curl -O https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/windows/MFScripts/ALLSERVERS.xml
 mfds -g 5 \MFSamples\PAC\ALLSERVERS.xml
 
-:: CleanUp
-cd \MFSamples
-del PAC.zip
-
 timeout /T 5
 
 :: Create Databases
