@@ -4,16 +4,18 @@
 :: Install jq - https://jqlang.github.io/jq/download/ or choco install jq
 :: Setup SQL Server - https://unixmit.github.io/UNiXextend/docker/mssql
 :: Setup Redis - https://unixmit.github.io/UNiXextend/docker/redis
+:: ES Installed, environment set and ESCWA/MFDS running
 
 :: TO RUN THIS SCRIPT IN A COMMAND PROMPT
 :: powershell -c "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/windows/MFScripts/AutoPAC.cmd' -OutFile '%appdata%\AutoPAC.cmd'; %appdata%\AutoPAC.cmd"
 
-set OPTS=%1
+SET OPTS=%1
 
 IF "%OPTS%"=="-h" GOTO :USAGE
 IF "%OPTS%"=="-H" GOTO :USAGE
 IF "%OPTS%"=="/h" GOTO :USAGE
 IF "%OPTS%"=="/H" GOTO :USAGE
+IF "%OPTS%"=="/?" GOTO :USAGE
 
 echo Administrative permissions required. Detecting permissions...
 net session >nul 2>&1
@@ -31,27 +33,29 @@ IF "%OPTS%"=="-R" GOTO :REMOVEAUTOPAC
 IF "%OPTS%"=="/r" GOTO :REMOVEAUTOPAC
 IF "%OPTS%"=="/R" GOTO :REMOVEAUTOPAC
 
-:SETUPAUTOPAC
-if not exist \MFSamples md \MFSamples
-cacls \MFSamples /e /p Everyone:f
+SET SAMPLEDIR=C:\MFSamples
 
-:: Setup PAC Demo Project and ES Region
-if not exist \MFSamples\PAC (
-    md \MFSamples\PAC\regions\REGION1\loadlib
-    md \MFSamples\PAC\regions\REGION1\system
-    md \MFSamples\PAC\regions\REGION2\loadlib
-    md \MFSamples\PAC\regions\REGION2\system
-    cacls \MFSamples\PAC /e /p Everyone:f
+:SETUPAUTOPAC
+if not exist %SAMPLEDIR% md %SAMPLEDIR%
+cacls %SAMPLEDIR% /e /p Everyone:f
+
+:: Setup PAC Region Directories and ES Region
+if not exist %SAMPLEDIR%\PAC (
+    md %SAMPLEDIR%\PAC\regions\REGION1\loadlib
+    md %SAMPLEDIR%\PAC\regions\REGION1\system
+    md %SAMPLEDIR%\PAC\regions\REGION2\loadlib
+    md %SAMPLEDIR%\PAC\regions\REGION2\system
+    cacls %SAMPLEDIR%\PAC /e /p Everyone:f
 )
-cd \MFSamples\PAC
+cd %SAMPLEDIR%\PAC
 curl -O https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/windows/MFScripts/ALLSERVERS.xml
-mfds -g 5 \MFSamples\PAC\ALLSERVERS.xml
+mfds -g 5 %SAMPLEDIR%\PAC\ALLSERVERS.xml
 
 timeout /T 5
 
 :: Create Databases
 SET USEDB=127.0.0.1
-SET /p "USEDB=Database Hostname or Ip Address [127.0.0.1]: "
+SET /p "USEDB=Database Hostname or IP Address [127.0.0.1]: "
 SET USERID=sa
 SET /p "USERID=Database User ID [sa]: "
 SET USERPASSWD=strongPassword123
@@ -59,24 +63,25 @@ SET /p "USERPASSWD=Database Password [strongPassword123]: "
 SET DRIVERNAME="{ODBC Driver 17 for SQL Server}"
 
 :: Create the MFDBFH.cfg
-IF EXIST \MFSamples\PAC\MFDBFH.cfg DEL /F \MFSamples\PAC\MFDBFH.cfg
-set MFDBFH_CONFIG=C:\MFSamples\PAC\MFDBFH.cfg
-dbfhconfig -add -file:C:\MFSamples\PAC\MFDBFH.cfg -server:MYSERVER -provider:ss -comment:"MSSQL"
-dbfhconfig -add -file:C:\MFSamples\PAC\MFDBFH.cfg -server:MYSERVER -dsn:SS.MASTER -type:database -name:master -connect:Driver=%DRIVERNAME%;Server=%USEDB%;Database=master;UID=%USERID%;PWD=%USERPASSWD%;
-dbfhconfig -add -file:C:\MFSamples\PAC\MFDBFH.cfg -server:MYSERVER -dsn:SS.VSAMDATA -type:datastore -name:VSAMDATA -connect:Driver=%DRIVERNAME%;Server=%USEDB%;Database=VSAMDATA;UID=%USERID%;PWD=%USERPASSWD%;
-dbfhconfig -add -file:C:\MFSamples\PAC\MFDBFH.cfg -server:MYSERVER -dsn:SS.MYPAC -type:region -name:MYPAC -connect:Driver=%DRIVERNAME%;Server=%USEDB%;Database=MYPAC;UID=%USERID%;PWD=%USERPASSWD%;
-dbfhconfig -add -file:C:\MFSamples\PAC\MFDBFH.cfg -server:MYSERVER -dsn:SS.CROSSREGION -type:crossRegion -connect:Driver=%DRIVERNAME%;Server=%USEDB%;Database=_$XREGN$;UID=%USERID%;PWD=%USERPASSWD%;
+SET MFDBFH_CONFIG=%MFDBFH_CONFIG%
+IF EXIST %MFDBFH_CONFIG% DEL /F %MFDBFH_CONFIG%
+set MFDBFH_CONFIG=%MFDBFH_CONFIG%
+dbfhconfig -add -file:%MFDBFH_CONFIG% -server:MYSERVER -provider:ss -comment:"MSSQL"
+dbfhconfig -add -file:%MFDBFH_CONFIG% -server:MYSERVER -dsn:SS.MASTER -type:database -name:master -connect:Driver=%DRIVERNAME%;Server=%USEDB%;Database=master;UID=%USERID%;PWD=%USERPASSWD%;
+dbfhconfig -add -file:%MFDBFH_CONFIG% -server:MYSERVER -dsn:SS.VSAMDATA -type:datastore -name:VSAMDATA -connect:Driver=%DRIVERNAME%;Server=%USEDB%;Database=VSAMDATA;UID=%USERID%;PWD=%USERPASSWD%;
+dbfhconfig -add -file:%MFDBFH_CONFIG% -server:MYSERVER -dsn:SS.MYPAC -type:region -name:MYPAC -connect:Driver=%DRIVERNAME%;Server=%USEDB%;Database=MYPAC;UID=%USERID%;PWD=%USERPASSWD%;
+dbfhconfig -add -file:%MFDBFH_CONFIG% -server:MYSERVER -dsn:SS.CROSSREGION -type:crossRegion -connect:Driver=%DRIVERNAME%;Server=%USEDB%;Database=_$XREGN$;UID=%USERID%;PWD=%USERPASSWD%;
 
 :: Create the datastore
-dbfhdeploy -configfile:C:\MFSamples\PAC\MFDBFH.cfg data create sql://MYSERVER/VSAMDATA
+dbfhdeploy -configfile:%MFDBFH_CONFIG% data create sql://MYSERVER/VSAMDATA
 
 :: Create the region database
-dbfhadmin -script -type:region -provider:ss -name:MYPAC -file:C:\MFSamples\PAC\createRegion.sql
-dbfhadmin -createdb -usedb:%USEDB% -provider:ss -type:region -name:MYPAC -file:C:\MFSamples\PAC\createRegion.sql -user:%USERID% -password:%USERPASSWD%
+dbfhadmin -script -type:region -provider:ss -name:MYPAC -file:%SAMPLEDIR%\PAC\createRegion.sql
+dbfhadmin -createdb -usedb:%USEDB% -provider:ss -type:region -name:MYPAC -file:%SAMPLEDIR%\PAC\createRegion.sql -user:%USERID% -password:%USERPASSWD%
 
 :: Create the crossregion database
-dbfhadmin -script -type:crossregion -provider:ss -file:C:\MFSamples\PAC\CreateCrossRegion.sql
-dbfhadmin -createdb -usedb:%USEDB% -provider:ss -type:crossregion -file:C:\MFSamples\PAC\CreateCrossRegion.sql -user:%USERID% -password:%USERPASSWD%
+dbfhadmin -script -type:crossregion -provider:ss -file:%SAMPLEDIR%\PAC\CreateCrossRegion.sql
+dbfhadmin -createdb -usedb:%USEDB% -provider:ss -type:crossregion -file:%SAMPLEDIR%\PAC\CreateCrossRegion.sql -user:%USERID% -password:%USERPASSWD%
 
 timeout /T 5
 
@@ -104,7 +109,8 @@ casstart /rREGION2 /s:c
 GOTO :END
 
 :REMOVEAUTOPAC
-TASKKILL -F -IM cassi.exe & TASKKILL -F -IM casmgr.exe & TASKKILL -F -IM castsc.exe & TASKKILL -F -IM cascd.exe & TASKKILL -F -IM MFCS.EXE & TASKKILL -F -IM CASTRC.EXE & TASKKILL -F -IM CASDBC.EXE & TASKKILL -F -IM CASTMC.EXE & TASKKILL -F -IM CASMQB.EXE & TASKKILL -F -IM CASPRT.EXE
+casstop /rREGION1 /f
+casstop /rREGION2 /f
 
 :: ESCWA - Remove SOR, PAC and PAC Regions
 FOR /F "tokens=* USEBACKQ" %%g IN (`curl -s -X "GET" "http://localhost:10086/server/v1/config/groups/sors" -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: http://localhost:10086" ^| jq -r .[0].Uid`) do (SET "SORUID=%%g")
@@ -120,7 +126,7 @@ curl -s -X "DELETE" "http://localhost:10086/native/v1/regions/127.0.0.1/86/REGIO
 curl -s -X "DELETE" "http://localhost:10086/native/v1/regions/127.0.0.1/86/REGION2" -H "accept: application/json" -H "X-Requested-With: API" -H "Content-Type: application/json" -H "Origin: http://localhost:10086"
 
 :: Remove files
-rd \MFSamples\PAC /Q /S
+rd %SAMPLEDIR%\PAC /Q /S
 GOTO :END
 
 :USAGE
