@@ -119,9 +119,9 @@ Options:
  -h            Usage"
 }
 
-if [[ $1 = "-r" ]]; then
+if [[ $1 = "-h" ]]; then
     usage
-elif [[ $1 = "-h" ]]; then
+elif [[ $1 = "-r" ]]; then
     removeAutoPAC
 else
     setupAutoPAC
