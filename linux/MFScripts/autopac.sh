@@ -46,7 +46,7 @@ setupAutoPAC()
     dbfhconfig -add -file:$MFDBFH_CONFIG -server:MYSERVER -dsn:SS.MASTER -type:database -name:master -connect:"Driver=$DRIVERNAME;Server=$USEDB;Database=master;UID=$USERID;PWD=$USERPASSWD;"
     dbfhconfig -add -file:$MFDBFH_CONFIG -server:MYSERVER -dsn:SS.VSAMDATA -type:datastore -name:VSAMDATA -connect:"Driver=$DRIVERNAME;Server=$USEDB;Database=VSAMDATA;UID=$USERID;PWD=$USERPASSWD;"
     dbfhconfig -add -file:$MFDBFH_CONFIG -server:MYSERVER -dsn:SS.MYPAC -type:region -name:MYPAC -connect:"Driver=$DRIVERNAME;Server=$USEDB;Database=MYPAC;UID=$USERID;PWD=$USERPASSWD;"
-    dbfhconfig -add -file:$MFDBFH_CONFIG -server:MYSERVER -dsn:SS.CROSSREGION -type:crossRegion -connect:"Driver=$DRIVERNAME;Server=$USEDB;Database=_$XREGN$;UID=$USERID;PWD=$USERPASSWD;"
+    dbfhconfig -add -file:$MFDBFH_CONFIG -server:MYSERVER -dsn:SS.CROSSREGION -type:crossRegion -connect:"Driver=$DRIVERNAME;Server=$USEDB;Database=_\$XREGN\$;UID=$USERID;PWD=$USERPASSWD;"
 
     # Create the datastore
     dbfhdeploy -configfile:$MFDBFH_CONFIG data create sql://MYSERVER/VSAMDATA
