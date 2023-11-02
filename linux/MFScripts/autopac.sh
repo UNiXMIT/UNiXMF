@@ -1,7 +1,8 @@
 #!/bin/bash
 
 # REQUIREMENTS
-# Install jq - https://jqlang.github.io/jq/download/ or choco install jq
+# Install jq - https://jqlang.github.io/jq/download/ or dnf install jq
+# Install Curl - https://github.com/curl/curl or dnf install curl
 # Setup SQL Server - https://unixmit.github.io/UNiXextend/docker/mssql
 # Setup Redis - https://unixmit.github.io/UNiXextend/docker/redis
 # ES Installed, environment set and ESCWA/MFDS running
