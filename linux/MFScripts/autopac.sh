@@ -3,12 +3,14 @@
 # REQUIREMENTS
 # Install jq - https://jqlang.github.io/jq/download/ or dnf install jq
 # Install Curl - https://github.com/curl/curl or dnf install curl
+# Install unixODBC-devel - dnf install unixODBC-devel
+# Install Microsoft ODBC driver 17 and MSSQL Tools - https://bit.ly/3Qpu1bX
 # Setup SQL Server - https://unixmit.github.io/UNiXextend/docker/mssql
 # Setup Redis - https://unixmit.github.io/UNiXextend/docker/redis
 # ES Installed, environment set and ESCWA/MFDS running
 
-# TO RUN THIS SCRIPT IN A TERMINAL
-# curl -s https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/linux/MFScripts/autopac.sh | bash
+# DOWNLOAD AUTOPAC SCRIPT
+# curl -s https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/linux/MFScripts/autopac.sh
 
 export SUPPORTDIR=/home/support/MFSupport
 export SAMPLEDIR=$SUPPORTDIR/MFSamples
@@ -32,12 +34,9 @@ setupAutoPAC()
     sleep 5
 
     # Create Databases
-    export USEDB=127.0.0.1
-    read -p "Database Hostname or IP Address [127.0.0.1]: " USEDB
-    export USERID=sa
-    read -p "Database User ID [sa]: " USERID
-    export USERPASSWD=strongPassword123
-    read -p "Database Password [strongPassword123]: " USERPASSWD
+    read -e -p "Database Hostname or IP Address [127.0.0.1]: " -i "127.0.0.1" USEDB
+    read -e -p "Database User ID [sa]: " -i "sa" USERID
+    read -e -p "Database Password [strongPassword123]: " -i "strongPassword123" USERPASSWD
     export DRIVERNAME="{ODBC Driver 17 for SQL Server}"
 
     # Create the MFDBFH.cfg
@@ -63,9 +62,9 @@ setupAutoPAC()
     sleep 5
 
     # Redis
-    read -p "Redis Hostname or IP Address [$USEDB]: " USEDB
+    read -e -p "Redis Hostname or IP Address [$USEDB]: " -i $USEDB USEDB
     export REDISPORT=6379
-    read -p "Redis Port [6379]: " REDISPORT
+    read -e -p "Redis Port [6379]: " -i 6379 REDISPORT
 
     # ESCWA - Add SOR and PAC
     curl -s -X "POST" "http://localhost:10086/server/v1/config/groups/sors" -H "accept: application/json" -H "X-Requested-With: API" -H "Content-Type: application/json" -H "Origin: http://localhost:10086" -d "{\"SorName\": \"MyPSOR\", \"SorDescription\": \"My PAC SOR\", \"SorType\": \"redis\", \"SorConnectPath\": \"$USEDB:$REDISPORT\", \"TLS\": false}"

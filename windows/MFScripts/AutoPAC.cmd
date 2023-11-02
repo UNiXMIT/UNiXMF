@@ -3,6 +3,7 @@
 :: REQUIREMENTS
 :: Install jq - https://jqlang.github.io/jq/download/ or choco install jq
 :: Install Curl - https://github.com/curl/curl or choco install curl
+:: Install Microsoft ODBC driver 17 - https://bit.ly/49gESxo
 :: Setup SQL Server - https://unixmit.github.io/UNiXextend/docker/mssql
 :: Setup Redis - https://unixmit.github.io/UNiXextend/docker/redis
 :: ES Installed, environment set and ESCWA/MFDS running
