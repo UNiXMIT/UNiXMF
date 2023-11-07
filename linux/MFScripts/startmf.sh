@@ -20,7 +20,7 @@ Usage:
 kill_mf()
 {
     echo Shutdown MFDS, started ES servers, ESCWA, FileShare and HACloud
-    sudo -E $COBDIR/bin/mfds -s 2 SYSAD SYSAD
+    sudo -E $COBDIR/bin/mfds64 -s 2 SYSAD SYSAD
     tmux kill-ses -t escwa
     tmux kill-ses -t fs
     tmux kill-ses -t mfhacloud
