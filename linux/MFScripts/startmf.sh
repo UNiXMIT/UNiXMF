@@ -19,7 +19,7 @@ Usage:
 
 kill_mf()
 {
-    echo Shutdown MFDS, started ES servers, ESCWA and FileShare
+    echo Shutdown MFDS, started ES servers, ESCWA, FileShare and HACloud
     sudo -E $COBDIR/bin/mfds -s 2 SYSAD SYSAD
     tmux kill-ses -t escwa
     tmux kill-ses -t fs
@@ -28,7 +28,7 @@ kill_mf()
 
 start_mf()
 {
-    echo Start MFDS, ESCWA and FileShare
+    echo Start MFDS, ESCWA, FileShare and HACloud
     sudo tmux new -d -s mfds ". $COBDIR/bin/cobsetenv && $COBDIR/bin/mfds64"
     sleep 1
     tmux new -d -s escwa $COBDIR/bin/escwa
@@ -43,7 +43,7 @@ start_mf()
 
 start_mfopen()
 {
-    echo Start MFDS, ESCWA and FileShare
+    echo Start MFDS, ESCWA, FileShare and HACloud
     sudo tmux new -d -s mfds ". $COBDIR/bin/cobsetenv && $COBDIR/bin/mfds64 --UI-on && $COBDIR/bin/mfds64 --listen-all && $COBDIR/bin/mfds64"
     sleep 1
     tmux new -d -s escwa $COBDIR/bin/escwa --BasicConfig.MfRequestedEndpoint="tcp:*:10086" --write=true
@@ -58,7 +58,7 @@ start_mfopen()
 
 start_mffs()
 {
-    echo Start MFDS, ESCWA and FileShare
+    echo Start MFDS, ESCWA, FileShare and HACloud
     sudo tmux new -d -s mfds ". $COBDIR/bin/cobsetenv && $COBDIR/bin/mfds64"
     sleep 1
     tmux new -d -s escwa $COBDIR/bin/escwa
