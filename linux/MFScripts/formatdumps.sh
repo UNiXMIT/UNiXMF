@@ -1,6 +1,4 @@
 #!/bin/bash
-# curl -s https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/linux/MFScripts/formatdumps.sh | bash 
-
 if [[ -f "casdumpa.rec" ]]; then
     printf "\nFormatting casdumpa...\n"
     casdup$1 -icasdumpa.rec -fcasdumpa.txt -w -d
