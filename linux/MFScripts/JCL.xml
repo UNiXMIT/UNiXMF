@@ -1,5 +1,5 @@
 
-<mfDirectoryServerRepository mfDirectoryServerVersion="1.29.16" mfRepositoryLocation="/home/products/ed90pu2" mfXMLReposVersion="2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="mfds1.29.16.xsd">
+<mfDirectoryServerRepository mfDirectoryServerVersion="1.29.16" mfRepositoryLocation="/opt/microfocus/EnterpriseDeveloper" mfXMLReposVersion="2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="mfds1.29.16.xsd">
 
   <mfServerList>
     <mfServer>
