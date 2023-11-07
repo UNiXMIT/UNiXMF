@@ -23,6 +23,7 @@ kill_mf()
     sudo -E $COBDIR/bin/mfds -s 2 SYSAD SYSAD
     tmux kill-ses -t escwa
     tmux kill-ses -t fs
+    tmux kill-ses -t mfhacloud
 }
 
 start_mf()
@@ -33,6 +34,8 @@ start_mf()
     tmux new -d -s escwa $COBDIR/bin/escwa
     sleep 1
     tmux new -d -s fs $COBDIR/bin/fs -s FSSERVER
+    sleep 1
+    tmux new -d -s mfhacloud $COBDIR/bin/startsessionserver.sh
     sleep 1
     tmux ls
     sudo tmux ls
@@ -47,6 +50,8 @@ start_mfopen()
     sleep 1
     tmux new -d -s fs $COBDIR/bin/fs -s FSSERVER
     sleep 1
+    tmux new -d -s mfhacloud $COBDIR/bin/startsessionserver.sh
+    sleep 1
     tmux ls
     sudo tmux ls
 }
@@ -59,6 +64,8 @@ start_mffs()
     tmux new -d -s escwa $COBDIR/bin/escwa
     sleep 1
     tmux new -d -s fs "export CCITCPS_FSSERVER=MFPORT:$MFOP && $COBDIR/bin/fs -s FSSERVER"
+    sleep 1
+    tmux new -d -s mfhacloud $COBDIR/bin/startsessionserver.sh
     sleep 1
     tmux ls
     sudo tmux ls
