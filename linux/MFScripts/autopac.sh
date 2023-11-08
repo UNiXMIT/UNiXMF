@@ -28,7 +28,7 @@ setupAutoPAC()
         mkdir -p $SAMPLEDIR/PAC/regions/REGION2/system
     fi
     cd $SAMPLEDIR/PAC
-    curl -O https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/linux/MFScripts/ALLSERVERS.xml
+    curl -s -O https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/linux/MFScripts/ALLSERVERS.xml
     mfds -g 5 $SAMPLEDIR/PAC/ALLSERVERS.xml
 
     sleep 5
