@@ -14,6 +14,6 @@ cd JCL
 [ ! -d "loadlib" ] && mkdir loadlib 
 [ ! -d "system" ] && mkdir system
 curl -s -O https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/linux/MFScripts/JCL.xml
-mfds -g 5 /home/$user/MFSupport/MFSamples/JCL/JCL.xml
+mfds64 -g 5 /home/$user/MFSupport/MFSamples/JCL/JCL.xml
 
 cd /home/$user/MFSupport
