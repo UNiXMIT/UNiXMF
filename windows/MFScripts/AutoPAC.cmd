@@ -50,7 +50,7 @@ if not exist %SAMPLEDIR%\PAC (
     cacls %SAMPLEDIR%\PAC /e /p Everyone:f
 )
 cd %SAMPLEDIR%\PAC
-curl -O https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/windows/MFScripts/ALLSERVERS.xml
+curl -s -O https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/windows/MFScripts/ALLSERVERS.xml
 mfds -g 5 %SAMPLEDIR%\PAC\ALLSERVERS.xml
 
 timeout /T 5
