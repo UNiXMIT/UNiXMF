@@ -1,14 +1,22 @@
+# Install ADLDS
+
+```
+powershell -command "Install-WindowsFeature -Name ADLDS"
+curl -s -o %TEMP%\adlds.txt https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/docs/ES/adlds.txt
+C:\Windows\ADAM\adaminstall.exe /answer:%TEMP%\adlds.txt
+es-ldap-setup.cmd -
+powershell -command "Set-ADAccountPassword -Server localhost -Identity 'CN=MFReader,CN=ADAM Users,CN=Micro Focus,CN=Program Data,DC=local' -NewPassword (ConvertTo-SecureString -AsPlainText 'strongPassword123' -Force) -Reset"
+```
+
 # ADLDS ESF Configuration
 
-Application Directory Partition: CN=Micro Focus,CN=Program Data,DC=local  
-LDIF Files to Import: MS-USER.LDF  
-CMD Script: es-ldap-setup.cmd - 
-
+Name: ADLDS  
 Module: mldap_esm  
 Connection Path: localhost:389  
 Authorized ID: CN=MFReader,CN=ADAM Users,CN=Micro Focus,CN=Program Data,DC=local  
+Password: strongPassword123  
 
-## Configuration Information
+### Config
 ```
 [LDAP]
 BASE=CN=Micro Focus,CN=Program Data,DC=local
