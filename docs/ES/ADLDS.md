@@ -1,7 +1,7 @@
 # Install ADLDS
 
 ```
-powershell -command "Install-WindowsFeature -Name ADLDS"
+powershell -command "Install-WindowsFeature -Name ADLDS, RSAT-ADDS"
 curl -s -o %TEMP%\adlds.txt https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/docs/ES/adlds.txt
 C:\Windows\ADAM\adaminstall.exe /answer:%TEMP%\adlds.txt
 es-ldap-setup.cmd -
@@ -16,7 +16,6 @@ Connection Path: localhost:389
 Authorized ID: CN=MFReader,CN=ADAM Users,CN=Micro Focus,CN=Program Data,DC=local  
 Password: strongPassword123  
 
-### Config
 ```
 [LDAP]
 BASE=CN=Micro Focus,CN=Program Data,DC=local
