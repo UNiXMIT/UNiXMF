@@ -6,6 +6,7 @@ curl -s -o %TEMP%\adlds.txt https://raw.githubusercontent.com/UNiXMIT/UNiXMF/mai
 C:\Windows\ADAM\adaminstall.exe /answer:%TEMP%\adlds.txt
 es-ldap-setup.cmd -
 powershell -command "Set-ADAccountPassword -Server localhost -Identity 'CN=MFReader,CN=ADAM Users,CN=Micro Focus,CN=Program Data,DC=local' -NewPassword (ConvertTo-SecureString -AsPlainText 'strongPassword123' -Force) -Reset"
+curl -X "POST" "http://localhost:10086/server/v1/config/esm" -H "accept: application/json" -H "X-Requested-With: API" -H "Content-Type: application/json" -H "Origin: http://localhost:10086" -d "{\"Name\": \"ADLDS\", \"Module\": \"mdlap_esm\", \"ConnectionPath\": \"localhost:389\", \"AuthorizedID\": \"CN=MFReader,CN=ADAM Users,CN=Micro Focus,CN=Program Data,DC=local\", \"Password\": \"strongPassword123\", \"Enabled\": true, \"CacheLimit\": 1024, \"CacheTTL\": 600, \"Config\": \"SETTING=Y\", \"Description\": \"ADLDS security manager configuration.\"}"
 ```
 
 # ADLDS ESF Configuration
