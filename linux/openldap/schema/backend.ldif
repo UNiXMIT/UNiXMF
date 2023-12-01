@@ -1,0 +1,13 @@
+dn: olcDatabase={3}mdb,cn=config
+objectClass: olcDatabaseConfig
+objectClass: olcMdbConfig
+olcDatabase: {3}mdb
+olcDbDirectory: /var/lib/ldap
+olcSuffix: dc=secldap,dc=com
+olcAccess: {0}to attrs=userPassword,shadowLastChange by dn="cn=Manager,dc=srv,dc=world" write by anonymous auth by self write by * none
+olcAccess: {1}to dn.base="" by * read
+olcAccess: {2}to * by dn="cn=Manager,dc=srv,dc=world" write by * read
+olcRootDN: cn=Manager,dc=secldap,dc=com
+olcRootPW: {SSHA}/MYmg3J7nJbzxWPle4zYWhU47WD6TB+w
+olcDbIndex: objectClass eq,pres
+olcDbIndex: ou,cn,mail,surname,givenname eq,pres,sub
