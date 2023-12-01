@@ -1,11 +1,11 @@
 #!/bin/bash
 
 function stopSlapd() {
-    sudo systemctl status slapd > /dev/null 2>&1
+    systemctl status slapd > /dev/null 2>&1
     if [ $? -eq 0 ]; then
         printf 'INFO: slapd service is running and needs to be stopped.\n'
         printf 'INFO: Stopping slapd service...\n'
-        sudo systemctl stop slapd
+        systemctl stop slapd
         if [ $? -ne 0 ]; then
             printf 'ERR_: Failed to stop slapd service.\n'
             exit 1
@@ -15,7 +15,7 @@ function stopSlapd() {
 }
 
 function startSlapd() {
-    sudo systemctl start slapd
+    systemctl start slapd
     if [ $? -ne 0 ]; then
         printf 'ERR_: Failed to start slapd service.\n'
         exit 1
@@ -25,7 +25,7 @@ function startSlapd() {
 
 function cleanSlapd() {
     printf 'INFO: Clearing previous openldap-servers/slapd install.\n'
-    sudo systemctl disable slapd
+    systemctl disable slapd
     if [ $? -ne 0 ]; then
         printf 'ERR_: Failed to disable slapd service.\n'
         exit 1
@@ -33,16 +33,16 @@ function cleanSlapd() {
     rm -rf /etc/openldap/slapd.d
     rm -f /var/lib/ldap/*
     printf 'INFO: Removing openldap-servers.\n'
-    sudo dnf -y remove openldap-servers > /dev/null 2>&1
+    dnf -y remove openldap-servers > /dev/null 2>&1
     if [ $? -ne 0 ]; then
         printf 'WARN: Failed to remove openldap-servers.\n'
     fi
     printf 'INFO: Re-installing openldap-servers.\n'
-    sudo dnf -y install openldap-servers > /dev/null 2>&1
+    dnf -y install openldap-servers > /dev/null 2>&1
 }
 
-sudo dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
-sudo dnf -y install openldap-servers openldap-clients openssl
+dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
+dnf -y install openldap-servers openldap-clients openssl
 BASEDIR=$(dirname $0)
 while true; do
     read -s -p "Password: " SLAPPASS
@@ -91,7 +91,7 @@ cp config/cn=config/cn=schema/cn={13}mfds.ldif /etc/openldap/slapd.d/cn=config/c
 chown -R ldap /etc/openldap/slapd.d
 chmod -R 700 /etc/openldap/slapd.d
 startSlapd
-sudo systemctl enable slapd
+systemctl enable slapd
 mkdir $BASEDIR/log
 rm -rf $BASEDIR/log/*
 ldapadd -v -D "cn=Manager,dc=secldap,dc=com" -w $SLAPPASS -f $BASEDIR/schema/top.ldif -H ldapi:/// > log/top.log
