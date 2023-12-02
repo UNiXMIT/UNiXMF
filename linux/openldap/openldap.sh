@@ -7,28 +7,19 @@ function stopSlapd() {
         printf 'INFO: Stopping slapd service...\n'
         systemctl stop slapd
         if [ $? -ne 0 ]; then
-            printf 'ERR_: Failed to stop slapd service.\n'
+            printf 'ERROR: Failed to stop slapd service.\n'
             exit 1
         fi
         printf 'INFO: Stopped slapd service.'
     fi
 }
 
-function startSlapd() {
-    systemctl start slapd
-    if [ $? -ne 0 ]; then
-        printf 'ERR_: Failed to start slapd service.\n'
-        exit 1
-    fi
-    printf 'INFO: Started slapd service.\n'
-}
-
 function cleanSlapd() {
     printf 'INFO: Clearing previous openldap-servers/slapd install.\n'
     systemctl disable slapd
     if [ $? -ne 0 ]; then
-        printf 'ERR_: Failed to disable slapd service.\n'
-        exit 1
+        printf 'ERROR: Failed to disable slapd service.\n'
+        exit 2
     fi
     rm -rf /etc/openldap/slapd.d
     rm -f /var/lib/ldap/*
@@ -39,6 +30,15 @@ function cleanSlapd() {
     fi
     printf 'INFO: Re-installing openldap-servers.\n'
     dnf -y install openldap-servers > /dev/null 2>&1
+}
+
+function startSlapd() {
+    systemctl start slapd
+    if [ $? -ne 0 ]; then
+        printf 'ERROR: Failed to start slapd service.\n'
+        exit 3
+    fi
+    printf 'INFO: Started slapd service.\n'
 }
 
 dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
@@ -79,9 +79,9 @@ stopSlapd
 cp /etc/openldap/schema/* $BASEDIR/schema/
 if [[ -f "$COBDIR/bin/mfds" ]]; then
     $COBDIR/bin/mfds -l "dc=secldap,dc=com" 2 $BASEDIR/schema/mfds.schema > /dev/null 2>&1
-elif [[ ! -f "schema/mfds.schema" ]]; then
+elif [[ ! -f "$BASEDIR/schema/mfds.schema" ]]; then
     printf "mfds and $BASEDIR/schema/mfds.schema not found.\n"
-    exit 1
+    exit 4
 fi
 mkdir $BASEDIR/config
 rm -rf $BASEDIR/config/*
@@ -98,9 +98,9 @@ ldapadd -v -D "cn=Manager,dc=secldap,dc=com" -w $SLAPPASS -f $BASEDIR/schema/top
 ldapadd -v -D "cn=Manager,dc=secldap,dc=com" -w $SLAPPASS -f $BASEDIR/schema/mf-containers.ldif -H ldapi:/// > log/mf-containers.log
 if [[ -f "$COBDIR/bin/mfds" ]]; then
     $COBDIR/bin/mfds -e "cn=Micro Focus,dc=secldap,dc=com" "cn=Enterprise Server Users" "cn=Enterprise Server User Groups" "cn=Enterprise Server Resources" 2 "/openldap/schema/mfds-users.ldif" > /dev/null 2>&1
-elif [[ ! -f "schema/mfds-users.ldif" ]]; then
+elif [[ ! -f "$BASEDIR/schema/mfds-users.ldif" ]]; then
     printf "mfds and $BASEDIR/schema/mfds-users.ldif not found.\n"
-    exit 1
+    exit 5
 fi
 ldapadd -v -D "cn=Manager,dc=secldap,dc=com" -w $SLAPPASS -f $BASEDIR/schema/mfds-users.ldif -H ldapi:/// -c > log/mfds-users.log
 sed 's/DC=X/CN=Micro Focus,dc=secldap,dc=com/' $COBDIR/etc/es_default_ldap_openldap.ldif > $BASEDIR/schema/es_default_ldap_openldap.ldif
