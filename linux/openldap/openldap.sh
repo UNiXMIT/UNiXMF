@@ -94,16 +94,16 @@ startSlapd
 systemctl enable slapd
 mkdir $BASEDIR/log
 rm -rf $BASEDIR/log/*
-ldapadd -v -D "cn=Manager,dc=secldap,dc=com" -w $SLAPPASS -f $BASEDIR/schema/top.ldif -H ldapi:/// > log/top.log
-ldapadd -v -D "cn=Manager,dc=secldap,dc=com" -w $SLAPPASS -f $BASEDIR/schema/mf-containers.ldif -H ldapi:/// > log/mf-containers.log
+ldapadd -v -D "cn=Manager,dc=secldap,dc=com" -w $SLAPPASS -f $BASEDIR/schema/top.ldif -H ldapi:/// > $BASEDIR/log/top.log
+ldapadd -v -D "cn=Manager,dc=secldap,dc=com" -w $SLAPPASS -f $BASEDIR/schema/mf-containers.ldif -H ldapi:/// > $BASEDIR/log/mf-containers.log
 if [[ -f "$COBDIR/bin/mfds" ]]; then
     $COBDIR/bin/mfds -e "cn=Micro Focus,dc=secldap,dc=com" "cn=Enterprise Server Users" "cn=Enterprise Server User Groups" "cn=Enterprise Server Resources" 2 "/openldap/schema/mfds-users.ldif" > /dev/null 2>&1
 elif [[ ! -f "$BASEDIR/schema/mfds-users.ldif" ]]; then
     printf "mfds and $BASEDIR/schema/mfds-users.ldif not found.\n"
     exit 5
 fi
-ldapadd -v -D "cn=Manager,dc=secldap,dc=com" -w $SLAPPASS -f $BASEDIR/schema/mfds-users.ldif -H ldapi:/// -c > log/mfds-users.log
+ldapadd -v -D "cn=Manager,dc=secldap,dc=com" -w $SLAPPASS -f $BASEDIR/schema/mfds-users.ldif -H ldapi:/// -c > $BASEDIR/log/mfds-users.log
 sed 's/DC=X/CN=Micro Focus,dc=secldap,dc=com/' $COBDIR/etc/es_default_ldap_openldap.ldif > $BASEDIR/schema/es_default_ldap_openldap.ldif
 sed -i '/,Data/d' $BASEDIR/schema/es_default_ldap_openldap.ldif
-ldapadd -v -D "cn=Manager,dc=secldap,dc=com" -w $SLAPPASS -f $BASEDIR/schema/es_default_ldap_openldap.ldif -H ldapi:/// -c > log/es_default_ldap_openldap.ldifes_default_ldap_openldap.ldif
-ldapsearch -H ldapi:/// -x -b "cn=subschema" -s base + > log/schema.log
+ldapadd -v -D "cn=Manager,dc=secldap,dc=com" -w $SLAPPASS -f $BASEDIR/schema/es_default_ldap_openldap.ldif -H ldapi:/// -c > $BASEDIR/log/es_default_ldap_openldap.ldifes_default_ldap_openldap.ldif
+ldapsearch -H ldapi:/// -x -b "cn=subschema" -s base + > $BASEDIR/log/schema.log
