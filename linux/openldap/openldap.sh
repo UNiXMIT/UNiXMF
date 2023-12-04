@@ -1,45 +1,13 @@
 #!/bin/bash
+# REQUIREMENTS
+# Run as root
+# ES Installed, environment set and ESCWA/MFDS64 running
 
-function stopSlapd() {
-    systemctl status slapd > /dev/null 2>&1
-    if [ $? -eq 0 ]; then
-        printf 'INFO: slapd service is running and needs to be stopped.\n'
-        printf 'INFO: Stopping slapd service...\n'
-        systemctl stop slapd
-        if [ $? -ne 0 ]; then
-            printf 'ERROR: Failed to stop slapd service.\n'
-            exit 1
-        fi
-        printf 'INFO: Stopped slapd service.'
-    fi
-}
+# DOWNLOAD OpenLDAP SCRIPT
+# curl -s https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/linux/openldap/openldap.sh
 
-function cleanSlapd() {
-    printf 'INFO: Clearing previous openldap-servers/slapd install.\n'
-    systemctl disable slapd
-    if [ $? -ne 0 ]; then
-        printf 'ERROR: Failed to disable slapd service.\n'
-        exit 2
-    fi
-    rm -rf /etc/openldap/slapd.d
-    rm -f /var/lib/ldap/*
-    printf 'INFO: Removing openldap-servers.\n'
-    dnf -y remove openldap-servers > /dev/null 2>&1
-    if [ $? -ne 0 ]; then
-        printf 'WARN: Failed to remove openldap-servers.\n'
-    fi
-    printf 'INFO: Re-installing openldap-servers.\n'
-    dnf -y install openldap-servers > /dev/null 2>&1
-}
-
-function startSlapd() {
-    systemctl start slapd
-    if [ $? -ne 0 ]; then
-        printf 'ERROR: Failed to start slapd service.\n'
-        exit 3
-    fi
-    printf 'INFO: Started slapd service.\n'
-}
+# DOWNLOAD + EXTRACT SCHEMAS.ZIP
+# curl -s -O https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/linux/openldap/schema.zip && unzip schema.zip
 
 dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
 dnf -y install openldap-servers openldap-clients openssl
@@ -53,12 +21,16 @@ while true; do
     printf 'WARN: Passwords do not match.\n'
 done
 # SLAPPASS=strongPassword123
-stopSlapd
-cleanSlapd
+systemctl stop slapd
+systemctl disable slapd
+rm -rf /etc/openldap/slapd.d
+rm -f /var/lib/ldap/*
+dnf -y remove openldap-servers > /dev/null 2>&1
+dnf -y install openldap-servers > /dev/null 2>&1
 sed -i '/CRC.*/d' /etc/openldap/slapd.d/cn=config/olcDatabase={0}config.ldif
 sed -i '/olcAccess:.*/c\olcAccess: {0}to * by dn.exact=gidNumber=0+uidNumber=0,cn=peercred,cn=external,cn=auth manage by * break' /etc/openldap/slapd.d/cn=config/olcDatabase={0}config.ldif
 sed -i '/ ,cn=auth.*/d' /etc/openldap/slapd.d/cn=config/olcDatabase={0}config.ldif
-startSlapd
+systemctl start slapd
 SECRET=$(slappasswd -s $SLAPPASS)
 sed -i "/olcRootPW:.*/c\olcRootPW: $SECRET" $BASEDIR/schema/chrootpwd.ldif 
 ldapadd -Y EXTERNAL -H ldapi:/// -f $BASEDIR/schema/chrootpwd.ldif > /dev/null 2>&1
@@ -75,7 +47,7 @@ ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/collective.ldif > /dev/
 ldapadd -Y EXTERNAL -H ldapi:/// -f $BASEDIR/schema/ppolicy.ldif > /dev/null 2>&1
 sed -i "/olcRootPW:.*/c\olcRootPW: $SECRET" $BASEDIR/schema/backend.ldif
 ldapadd -Y EXTERNAL -H ldapi:/// -f $BASEDIR/schema/backend.ldif > /dev/null 2>&1
-stopSlapd
+systemctl stop slapd
 cp /etc/openldap/schema/* $BASEDIR/schema/
 if [[ -f "$COBDIR/bin/mfds" ]]; then
     $COBDIR/bin/mfds -l "dc=secldap,dc=com" 2 $BASEDIR/schema/mfds.schema > /dev/null 2>&1
@@ -91,7 +63,7 @@ cp config/cn=config/cn=schema/cn={12}container.ldif /etc/openldap/slapd.d/cn=con
 cp config/cn=config/cn=schema/cn={13}mfds.ldif /etc/openldap/slapd.d/cn=config/cn=schema
 chown -R ldap /etc/openldap/slapd.d
 chmod -R 700 /etc/openldap/slapd.d
-startSlapd
+systemctl start slapd
 systemctl enable slapd
 mkdir $BASEDIR/log
 rm -rf $BASEDIR/log/*
@@ -108,3 +80,41 @@ sed 's/DC=X/CN=Micro Focus,dc=secldap,dc=com/' $COBDIR/etc/es_default_ldap_openl
 sed -i '/,Data/d' $BASEDIR/schema/es_default_ldap_openldap.ldif
 ldapadd -v -D "cn=Manager,dc=secldap,dc=com" -w $SLAPPASS -f $BASEDIR/schema/es_default_ldap_openldap.ldif -H ldapi:/// -c > $BASEDIR/log/es_default_ldap_openldap.ldifes_default_ldap_openldap.ldif
 ldapsearch -H ldapi:/// -x -b "cn=subschema" -s base + > $BASEDIR/log/schema.log
+
+curl -X 'POST' \
+  'http://awslinux:10086/server/v1/config/esm' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -H "X-Requested-With: API" \
+  -H "Origin: http://localhost:10086" \
+  -d '{
+  "Name": "OpenLDAP",
+  "Module": "mdlap_esm",
+  "ConnectionPath": "localhost:389",
+  "AuthorizedID": "cn=Manager,dc=secldap,dc=com",
+  "Password": "$(SLAPPASS)",
+  "Enabled": true,
+  "CacheLimit": 1024,
+  "CacheTTL": 600,
+  "Config": "[LDAP]\nBASE=cn=Micro Focus,dc=secldap,dc=com\nuser class=microfocus-MFDS-User\nuser container=CN=Enterprise Server Users\ngroup container=CN=Enterprise Server User Groups\nresource container=CN=Enterprise Server Resources\n\n[Operation]\nset login count=yes\nsignon attempts=3\n\n[Verify]\nMode=MF-hash\n\n[Trace]\nModify=y\nRule=y\nGroups=y\nSearch=y\nBind=n\nTrace1=verify:*:debug\nTrace2=auth:*:*:**:debug",
+  "Description": "OpenLDAP ESM"
+}'
+
+curl -X 'POST' \
+  'http://awslinux:10086/native/v1/security/127.0.0.1/86/esm' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -H "X-Requested-With: API" \
+  -H "Origin: http://localhost:10086" \
+  -d '{
+  "CN": "OpenLDAP",
+  "description": "OpenLDAP ESM",
+  "mfESMModule": "mldap_esm",
+  "mfESMConnectionPath": "localhost:389",
+  "mfESMID": "cn=Manager,dc=secldap,dc=com",
+  "mfESMPwd": "$(SLAPPASS)",
+  "mfESMStatus": "Enabled",
+  "mfESMCacheLimit": 1024,
+  "mfESMCacheTTL": 600,
+  "mfConfig": "[LDAP]\nBASE=cn=Micro Focus,dc=secldap,dc=com\nuser class=microfocus-MFDS-User\nuser container=CN=Enterprise Server Users\ngroup container=CN=Enterprise Server User Groups\nresource container=CN=Enterprise Server Resources\n\n[Operation]\nset login count=yes\nsignon attempts=3\n\n[Verify]\nMode=MF-hash\n\n[Trace]\nModify=y\nRule=y\nGroups=y\nSearch=y\nBind=n\nTrace1=verify:*:debug\nTrace2=auth:*:*:**:debug"
+}'
