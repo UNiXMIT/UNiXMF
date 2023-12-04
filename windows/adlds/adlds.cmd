@@ -1,6 +1,6 @@
 @ECHO OFF
 powershell -command "Install-WindowsFeature -Name ADLDS, RSAT-ADDS"
-curl -s -o %TEMP%\adlds.txt https://raw.githubusercontent.com/UNiXMIT/UNiXMF/windows/adlds/adlds.txt
+curl -s -o %TEMP%\adlds.txt https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/windows/adlds/adlds.txt
 C:\Windows\ADAM\adaminstall.exe /answer:%TEMP%\adlds.txt
 powershell -command "(Get-Content 'C:\Program Files (x86)\Micro Focus\Enterprise Developer\bin\es-ldap-setup.cmd') -Replace 'pause', ' ' | Set-Content 'C:\Program Files (x86)\Micro Focus\Enterprise Developer\bin\es-ldap-setup.cmd'"
 es-ldap-setup.cmd -
