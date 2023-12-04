@@ -1,4 +1,11 @@
 @ECHO OFF
+:: REQUIREMENTS
+:: Run as admin
+:: ES Installed, environment set and ESCWA/MFDS running
+
+:: DOWNLOAD ADLDS SCRIPT
+:: curl -s https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/windows/adlds/adlds.cmd
+
 powershell -command "Install-WindowsFeature -Name ADLDS, RSAT-ADDS"
 curl -s -o %TEMP%\adlds.txt https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/windows/adlds/adlds.txt
 C:\Windows\ADAM\adaminstall.exe /answer:%TEMP%\adlds.txt

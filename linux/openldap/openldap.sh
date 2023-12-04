@@ -1,7 +1,7 @@
 #!/bin/bash
 # REQUIREMENTS
 # Run as root
-# ES Installed, environment set and ESCWA/MFDS64 running
+# ES Installed, environment set and ESCWA/MFDS running
 
 # DOWNLOAD OpenLDAP SCRIPT
 # curl -s https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/linux/openldap/openldap.sh
