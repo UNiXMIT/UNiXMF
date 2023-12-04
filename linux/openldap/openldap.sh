@@ -18,7 +18,7 @@ while true; do
     read -s -p "Confirm Password: " SLAPPASS2
     printf "\n"
     [ "$SLAPPASS" = "$SLAPPASS2" ] && break
-    printf 'WARN: Passwords do not match.\n'
+    printf 'WARNING: Passwords do not match.\n'
 done
 # SLAPPASS=strongPassword123
 systemctl stop slapd
@@ -82,7 +82,7 @@ ldapadd -v -D "cn=Manager,dc=secldap,dc=com" -w $SLAPPASS -f $BASEDIR/schema/es_
 ldapsearch -H ldapi:/// -x -b "cn=subschema" -s base + > $BASEDIR/log/schema.log
 
 curl -X 'POST' \
-  'http://awslinux:10086/server/v1/config/esm' \
+  'http://localhost:10086/server/v1/config/esm' \
   -H 'accept: application/json' \
   -H 'Content-Type: application/json' \
   -H "X-Requested-With: API" \
@@ -101,7 +101,7 @@ curl -X 'POST' \
 }'
 
 curl -X 'POST' \
-  'http://awslinux:10086/native/v1/security/127.0.0.1/86/esm' \
+  'http://localhost:10086/native/v1/security/127.0.0.1/86/esm' \
   -H 'accept: application/json' \
   -H 'Content-Type: application/json' \
   -H "X-Requested-With: API" \
