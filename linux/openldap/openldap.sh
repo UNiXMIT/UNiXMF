@@ -85,6 +85,7 @@ elif [[ ! -f "$BASEDIR/schema/mfds.schema" ]]; then
 fi
 mkdir $BASEDIR/config
 rm -rf $BASEDIR/config/*
+cd $BASEDIR/schema
 slaptest -f $BASEDIR/schema/schema_convert.conf -F config
 cp config/cn=config/cn=schema/cn={12}container.ldif /etc/openldap/slapd.d/cn=config/cn=schema
 cp config/cn=config/cn=schema/cn={13}mfds.ldif /etc/openldap/slapd.d/cn=config/cn=schema
