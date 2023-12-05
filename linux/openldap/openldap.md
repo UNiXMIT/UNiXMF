@@ -1,4 +1,4 @@
-# ADLDS ESM Configuration
+# OpenLDAP ESM Configuration
 
 Name: OpenLDAP  
 Module: mldap_esm  
