@@ -1,7 +1,0 @@
-[ADAMInstall]
-InstallType=Unique
-InstanceName=ADLDS
-LocalLDAPPortToListenOn=389
-LocalSSLPortToListenOn=636
-NewApplicationPartitionToCreate="CN=Micro Focus,CN=Program Data,DC=local"
-ImportLDIFFiles="MS-User.LDF"
