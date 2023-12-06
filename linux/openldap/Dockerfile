@@ -14,7 +14,7 @@ RUN rpm -ivh https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.
     sed -i '/CRC.*/d' /etc/openldap/slapd.d/cn=config/olcDatabase={0}config.ldif; \
     sed -i '/olcAccess:.*/c\olcAccess: {0}to * by dn.exact=gidNumber=0+uidNumber=0,cn=peercred,cn=external,cn=auth manage by * break' /etc/openldap/slapd.d/cn=config/olcDatabase={0}config.ldif; \
     sed -i '/ ,cn=auth.*/d' /etc/openldap/slapd.d/cn=config/olcDatabase={0}config.ldif; \
-    /usr/sbin/slapd -u ldap -h ldap:/// ldaps:/// ldapi:///; \
+    /usr/sbin/slapd -u ldap -h "ldap:/// ldaps:/// ldapi:///"; \
     SECRET=$(slappasswd -s $SLAPPASS); \
     sed -i "/olcRootPW:.*/c\olcRootPW: $SECRET" /openldap/schema/chrootpwd.ldif; \
     ldapadd -Y EXTERNAL -H ldapi:/// -f /openldap/schema/chrootpwd.ldif > /dev/null 2>&1; \
@@ -40,7 +40,7 @@ RUN rpm -ivh https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.
     cp /openldap/config/cn=config/cn=schema/cn={13}mfds.ldif /etc/openldap/slapd.d/cn=config/cn=schema; \
     chown -R ldap /etc/openldap/slapd.d; \
     chmod -R 700 /etc/openldap/slapd.d; \
-    /usr/sbin/slapd -u ldap -h ldap:/// ldaps:/// ldapi:///; \
+    /usr/sbin/slapd -u ldap -h "ldap:/// ldaps:/// ldapi:///"; \
     systemctl enable slapd; \
     rm -rf /openldap/log/*; \
     ldapadd -v -D "cn=Manager,dc=secldap,dc=com" -w $SLAPPASS -f /openldap/schema/top.ldif -H ldapi:/// > /openldap/log/top.log; \
