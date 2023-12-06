@@ -1,52 +1,54 @@
-FROM rockylinux:9
+FROM redhat/ubi9-init:latest
 EXPOSE 389 636
-COPY containerFiles/ /openldap
 ENV SLAPPASS=strongPassword123
-RUN dnf install 'dnf-command(config-manager)' -y; \
-    dnf config-manager --set-enabled plus; \
-    dnf install openldap-servers openldap-clients python3 openssl -y; \
+RUN rpm -ivh https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm; \
+    dnf install openldap-servers openldap-clients unzip -y; \
     dnf clean all; \
-    curl -o /usr/bin/systemctl https://raw.githubusercontent.com/gdraheim/docker-systemctl-replacement/master/files/docker/systemctl3.py; \
-    chmod +x /usr/bin/systemctl; \
-    /usr/bin/systemctl start slapd; \
-    secret=$(/usr/sbin/slappasswd -s $SLAPPASS); \
-    # /usr/bin/sed -i "/olcRootPW:.*/c\olcRootPW: $secret" /openldap/chrootpwd.ldif; \
-    # /usr/bin/sed -i '/CRC.*/d' /etc/openldap/slapd.d/cn=config/olcDatabase={0}config.ldif; \
-    # /usr/bin/sed -i '/olcAccess:.*/c\olcAccess: {0}to * by dn.exact=gidNumber=0+uidNumber=0,cn=peercred,cn=external,cn=auth manage by * break' /etc/openldap/slapd.d/cn=config/olcDatabase={0}config.ldif; \
-    /usr/bin/sed -i '/ ,cn=auth.*/d' /etc/openldap/slapd.d/cn=config/olcDatabase={0}config.ldif; \
-    /usr/bin/ldapadd -Y EXTERNAL -H ldapi:/// -f /openldap/chrootpwd.ldif; \
-    /usr/bin/ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/corba.ldif; \
-    /usr/bin/ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/cosine.ldif; \
-    /usr/bin/ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/duaconf.ldif; \
-    /usr/bin/ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/dyngroup.ldif; \
-    /usr/bin/ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/inetorgperson.ldif; \
-    /usr/bin/ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/java.ldif; \
-    /usr/bin/ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/misc.ldif; \
-    /usr/bin/ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/nis.ldif; \
-    /usr/bin/ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/openldap.ldif; \
-    /usr/bin/ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/collective.ldif; \
-    # /usr/bin/ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/ppolicy.ldif; \   Removed in OpenLDAP 2.5 - https://www.openldap.org/doc/admin25/appendix-upgrading.html#ppolicy%20overlay
-    /usr/bin/sed -i "/olcRootPW:.*/c\olcRootPW: $secret" /openldap/backend.ldif; \
-    /usr/bin/ldapadd -Y EXTERNAL -H ldapi:/// -f /openldap/backend.ldif; \
-    /usr/bin/systemctl stop slapd; \
-    cp -r /etc/openldap/schema /openldap; \
-    rm -rf /openldap/schema/cn=config; \
-    cp /openldap/schema_convert.conf /openldap/schema; \
-    cp /openldap/mfds.schema /openldap/schema; \
-    cp /openldap/container.schema /openldap/schema; \
-    mkdir /openldap/config; \
-    cd /openldap/schema && /usr/sbin/slaptest -f schema_convert.conf -F /openldap/config; \
-    cp /openldap/config/cn=config/cn=schema/cn={11}container.ldif /etc/openldap/slapd.d/cn=config/cn=schema; \
-    cp /openldap/config/cn=config/cn=schema/cn={12}mfds.ldif /etc/openldap/slapd.d/cn=config/cn=schema; \
+    mkdir -m 775 /openldap; \
+    mkdir -m 775 /openldap/config; \
+    mkdir -m 775 /openldap/log; \
+    cd /openldap; \
+    curl -s -O https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/linux/openldap/schema.zip; \
+    unzip schema.zip; \
+    systemctl enable slapd; \
+    systemctl stop slapd; \
+    sed -i '/CRC.*/d' /etc/openldap/slapd.d/cn=config/olcDatabase={0}config.ldif; \
+    sed -i '/olcAccess:.*/c\olcAccess: {0}to * by dn.exact=gidNumber=0+uidNumber=0,cn=peercred,cn=external,cn=auth manage by * break' /etc/openldap/slapd.d/cn=config/olcDatabase={0}config.ldif; \
+    sed -i '/ ,cn=auth.*/d' /etc/openldap/slapd.d/cn=config/olcDatabase={0}config.ldif; \
+    systemctl start slapd; \
+    SECRET=$(slappasswd -s $SLAPPASS); \
+    sed -i "/olcRootPW:.*/c\olcRootPW: $SECRET" /openldap/schema/chrootpwd.ldif; \
+    ldapadd -Y EXTERNAL -H ldapi:/// -f /openldap/schema/chrootpwd.ldif > /dev/null 2>&1; \
+    ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/corba.ldif > /dev/null 2>&1; \
+    ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/cosine.ldif > /dev/null 2>&1; \
+    ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/duaconf.ldif > /dev/null 2>&1; \
+    ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/dyngroup.ldif > /dev/null 2>&1; \
+    ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/inetorgperson.ldif > /dev/null 2>&1; \
+    ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/java.ldif > /dev/null 2>&1; \
+    ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/misc.ldif > /dev/null 2>&1; \
+    ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/nis.ldif > /dev/null 2>&1; \
+    ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/openldap.ldif > /dev/null 2>&1; \
+    ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/collective.ldif > /dev/null 2>&1; \
+    ldapadd -Y EXTERNAL -H ldapi:/// -f /openldap/schema/ppolicy.ldif > /dev/null 2>&1; \
+    sed -i "/olcRootPW:.*/c\olcRootPW: $SECRET" /openldap/schema/backend.ldif; \
+    ldapadd -Y EXTERNAL -H ldapi:/// -f /openldap/schema/backend.ldif > /dev/null 2>&1; \
+    systemctl stop slapd; \
+    cp /etc/openldap/schema/* /openldap/schema/; \
+    rm -rf /openldap/config/*; \
+    cd /openldap/schema; \
+    slaptest -f /openldap/schema/schema_convert.conf -F /openldap/config; \
+    cp /openldap/config/cn=config/cn=schema/cn={12}container.ldif /etc/openldap/slapd.d/cn=config/cn=schema; \
+    cp /openldap/config/cn=config/cn=schema/cn={13}mfds.ldif /etc/openldap/slapd.d/cn=config/cn=schema; \
     chown -R ldap /etc/openldap/slapd.d; \
     chmod -R 700 /etc/openldap/slapd.d; \
-    /usr/bin/systemctl start slapd; \
-    /usr/bin/systemctl enable slapd; \
-    mkdir /openldap/log; \
-    /usr/bin/ldapadd -D "cn=Manager,dc=secldap,dc=com" -w $SLAPPASS -f /openldap/top.ldif -h localhost:389; \
-    /usr/bin/ldapadd -D "cn=Manager,dc=secldap,dc=com" -w $SLAPPASS -f /openldap/mf-containers.ldif -h localhost:389; \
-    /usr/bin/ldapadd -D "cn=Manager,dc=secldap,dc=com" -w $SLAPPASS -f /openldap/mfds-users.ldif -h localhost:389 -c; \
-    /usr/bin/sed 's/DC=X/CN=Micro Focus,dc=secldap,dc=com/' /openldap/es_default_ldap_openldap.ldif; \
-    /usr/bin/ldapadd -D "cn=Manager,dc=secldap,dc=com" -w $SLAPPASS -f /openldap/es_default_ldap_openldap.ldif -h localhost:389 -c; \
-    /usr/bin/ldapsearch -h localhost:389 -x -b "cn=subschema" -s base +
-ENTRYPOINT ["/usr/bin/systemctl", "start", "slapd"]
+    systemctl start slapd; \
+    systemctl enable slapd; \
+    rm -rf /openldap/log/*; \
+    ldapadd -v -D "cn=Manager,dc=secldap,dc=com" -w $SLAPPASS -f /openldap/schema/top.ldif -H ldapi:/// > /openldap/log/top.log; \
+    ldapadd -v -D "cn=Manager,dc=secldap,dc=com" -w $SLAPPASS -f /openldap/schema/mf-containers.ldif -H ldapi:/// > /openldap/log/mf-containers.log; \
+    ldapadd -v -D "cn=Manager,dc=secldap,dc=com" -w $SLAPPASS -f /openldap/schema/mfds-users.ldif -H ldapi:/// -c > /openldap/log/mfds-users.log; \
+    sed 's/DC=X/CN=Micro Focus,dc=secldap,dc=com/' {{ installPath }}/etc/es_default_ldap_openldap.ldif > /openldap/schema/es_default_ldap_openldap.ldif; \
+    sed -i '/,Data/d' /openldap/schema/es_default_ldap_openldap.ldif; \
+    ldapadd -v -D "cn=Manager,dc=secldap,dc=com" -w $SLAPPASS -f /openldap/schema/es_default_ldap_openldap.ldif -H ldapi:/// -c > /openldap/log/es_default_ldap_openldap.ldifes_default_ldap_openldap.ldif; \
+    ldapsearch -H ldapi:/// -x -b "cn=subschema" -s base + > /openldap/log/schema.log
+CMD ["/sbin/init"]

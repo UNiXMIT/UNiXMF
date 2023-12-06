@@ -1,0 +1,209 @@
+
+
+dn: cn=schemaadmin,cn=Enterprise Server Users,cn=Micro Focus,dc=secldap,dc=com
+cn: schemaadmin
+objectClass: microfocus-MFDS-User
+microfocus-MFDS-UID: 1.2.840.5043.09.002.1701891054.1
+microfocus-MFDS-User-MTO-Priority: 0
+microfocus-MFDS-User-MTO-Timeout: 0
+microfocus-MFDS-User-MTO-OperatorClass: 0
+microfocus-MFDS-User-AllowLogon: TRUE
+microfocus-MFDS-User-Pwd: MF-MD5:cB2qclCy:g+mIGNzz2dQufM9oBwjqe4==
+
+dn: cn=adddelete,cn=Enterprise Server Users,cn=Micro Focus,dc=secldap,dc=com
+cn: adddelete
+objectClass: microfocus-MFDS-User
+microfocus-MFDS-UID: 1.2.840.5043.09.002.1701891054.2
+microfocus-MFDS-User-MTO-Priority: 0
+microfocus-MFDS-User-MTO-Timeout: 0
+microfocus-MFDS-User-MTO-OperatorClass: 0
+microfocus-MFDS-User-AllowLogon: TRUE
+microfocus-MFDS-User-Pwd: MF-MD5:wmOCbqKi:8gxYQ9bH+/+xBlIsswNTVh==
+
+dn: cn=modify,cn=Enterprise Server Users,cn=Micro Focus,dc=secldap,dc=com
+cn: modify
+objectClass: microfocus-MFDS-User
+microfocus-MFDS-UID: 1.2.840.5043.09.002.1701891054.3
+microfocus-MFDS-User-MTO-Priority: 0
+microfocus-MFDS-User-MTO-Timeout: 0
+microfocus-MFDS-User-MTO-OperatorClass: 0
+microfocus-MFDS-User-AllowLogon: TRUE
+microfocus-MFDS-User-Pwd: MF-MD5:a/PA4KOa:HA/SWE+7RpG1LOrFjUBl8B==
+
+dn: cn=administrator,cn=Enterprise Server Users,cn=Micro Focus,dc=secldap,dc=com
+cn: administrator
+objectClass: microfocus-MFDS-User
+microfocus-MFDS-UID: 1.2.840.5043.09.002.1701891054.4
+microfocus-MFDS-User-MTO-Priority: 0
+microfocus-MFDS-User-MTO-Timeout: 0
+microfocus-MFDS-User-MTO-OperatorClass: 0
+microfocus-MFDS-User-AllowLogon: TRUE
+microfocus-MFDS-User-Pwd: MF-MD5:SMvAqpFw:dNTBrrSylrzCJPDUXCsR4+==
+
+dn: cn=mf_mdsa,cn=Enterprise Server Users,cn=Micro Focus,dc=secldap,dc=com
+cn: mf_mdsa
+objectClass: microfocus-MFDS-User
+microfocus-MFDS-UID: 1.2.840.5043.09.002.1701891054.5
+microfocus-MFDS-User-MTO-Priority: 0
+microfocus-MFDS-User-MTO-Timeout: 0
+microfocus-MFDS-User-MTO-OperatorClass: 0
+microfocus-MFDS-User-AllowLogon: TRUE
+microfocus-MFDS-User-Pwd: MF-MD5:2QFBEfud:ie3/GtzRYqHDKUPpUT5l0K==
+
+dn: cn=mf_dep,cn=Enterprise Server Users,cn=Micro Focus,dc=secldap,dc=com
+cn: mf_dep
+objectClass: microfocus-MFDS-User
+microfocus-MFDS-UID: 1.2.840.5043.09.002.1701891054.6
+microfocus-MFDS-User-MTO-Priority: 0
+microfocus-MFDS-User-MTO-Timeout: 0
+microfocus-MFDS-User-MTO-OperatorClass: 0
+microfocus-MFDS-User-AllowLogon: TRUE
+microfocus-MFDS-User-Pwd: MF-MD5:st7QeqRo:uosWkGquMx3+dRPqxFp7/q==
+
+dn: cn=mf_cs,cn=Enterprise Server Users,cn=Micro Focus,dc=secldap,dc=com
+cn: mf_cs
+objectClass: microfocus-MFDS-User
+microfocus-MFDS-UID: 1.2.840.5043.09.002.1701891054.7
+microfocus-MFDS-User-MTO-Priority: 0
+microfocus-MFDS-User-MTO-Timeout: 0
+microfocus-MFDS-User-MTO-OperatorClass: 0
+microfocus-MFDS-User-AllowLogon: TRUE
+microfocus-MFDS-User-Pwd: MF-MD5:G+Nut5ET:cDgmMtn29ux2NW2ZqroW2q==
+
+dn: cn=SYSAD,cn=Enterprise Server Users,cn=Micro Focus,dc=secldap,dc=com
+cn: SYSAD
+objectClass: microfocus-MFDS-User
+microfocus-MFDS-UID: 1.2.840.5043.09.002.1701891054.8
+microfocus-MFDS-User-MTO-Priority: 0
+microfocus-MFDS-User-MTO-Timeout: 0
+microfocus-MFDS-User-MTO-OperatorClass: 0
+microfocus-MFDS-User-AllowLogon: TRUE
+microfocus-MFDS-User-Pwd: MF-MD5:rTtsYmyz:ORLv+NRY9hfurtgehx7lMQ==
+
+dn: cn=\#Modify,cn=Enterprise Server User Groups,cn=Micro Focus,dc=secldap,dc=com
+cn: #Modify
+objectClass: microfocus-MFDS-Group
+microfocus-MFDS-UID: 1.2.840.5043.08.001.1701891054.140316581560322
+description: Users with write permission
+microfocus-MFDS-Group-Member: modify
+microfocus-MFDS-Group-Member: mf_mdsa
+microfocus-MFDS-Group-Member: mf_cs
+
+dn: cn=\#System,cn=Enterprise Server User Groups,cn=Micro Focus,dc=secldap,dc=com
+cn: #System
+objectClass: microfocus-MFDS-Group
+microfocus-MFDS-UID: 1.2.840.5043.08.001.1701891054.140316581560323
+description: MF system applications
+microfocus-MFDS-Group-Member: mf_mdsa
+microfocus-MFDS-Group-Member: mf_dep
+microfocus-MFDS-Group-Member: mf_cs
+
+dn: cn=\#AddDel,cn=Enterprise Server User Groups,cn=Micro Focus,dc=secldap,dc=com
+cn: #AddDel
+objectClass: microfocus-MFDS-Group
+microfocus-MFDS-UID: 1.2.840.5043.08.001.1701891054.140316581560324
+description: Add/Delete group
+microfocus-MFDS-Group-Member: adddelete
+microfocus-MFDS-Group-Member: mf_dep
+
+dn: cn=\#GAdmin,cn=Enterprise Server User Groups,cn=Micro Focus,dc=secldap,dc=com
+cn: #GAdmin
+objectClass: microfocus-MFDS-Group
+microfocus-MFDS-UID: 1.2.840.5043.08.001.1701891054.140316581560325
+description: General Administrators group
+microfocus-MFDS-Group-Member: administrator
+
+dn: cn=\#DSAdmin,cn=Enterprise Server User Groups,cn=Micro Focus,dc=secldap,dc=com
+cn: #DSAdmin
+objectClass: microfocus-MFDS-Group
+microfocus-MFDS-UID: 1.2.840.5043.08.001.1701891054.140316581560326
+description: Directory Server Administrators group
+microfocus-MFDS-Group-Member: schemaadmin
+microfocus-MFDS-Group-Member: SYSAD
+
+dn: cn=\#AllUsrs,cn=Enterprise Server User Groups,cn=Micro Focus,dc=secldap,dc=com
+cn: #AllUsrs
+objectClass: microfocus-MFDS-Group
+microfocus-MFDS-UID: 1.2.840.5043.08.001.1701891054.3539888818180063233
+description: Default group
+microfocus-MFDS-Group-Member: schemaadmin
+microfocus-MFDS-Group-Member: adddelete
+microfocus-MFDS-Group-Member: modify
+microfocus-MFDS-Group-Member: administrator
+microfocus-MFDS-Group-Member: mf_mdsa
+microfocus-MFDS-Group-Member: mf_dep
+microfocus-MFDS-Group-Member: mf_cs
+microfocus-MFDS-Group-Member: SYSAD
+
+dn: cn=Enterprise Server Administration,cn=Enterprise Server Resources,cn=Micro Focus,dc=secldap,dc=com
+cn: Enterprise Server Administration
+objectClass: container
+
+dn: cn=Servers,cn=Enterprise Server Resources,cn=Micro Focus,dc=secldap,dc=com
+cn: Servers
+objectClass: container
+
+dn: cn=Repository Access,cn=Enterprise Server Administration,cn=Enterprise Server Resources,cn=Micro Focus,dc=secldap,dc=com
+cn: Repository Access
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-UID: 1.3.6.1.4.1.5043.1.1.12.6570cc06.0x82f6e60.0xfff10c78.1
+microfocus-MFDS-Resource-Class: Enterprise Server Administration
+description: Enterprise Server Administration repository access
+microfocus-MFDS-Resource-ACE: allow:#Modify group:Read,Add,Delete
+microfocus-MFDS-Resource-ACE: allow:#AddDel group:Read,Add,Delete
+microfocus-MFDS-Resource-ACE: allow:#GAdmin group:Read,Add,Delete
+microfocus-MFDS-Resource-ACE: allow:#DSAdmin group:Read,Add,Delete
+
+dn: cn=Options,cn=Enterprise Server Administration,cn=Enterprise Server Resources,cn=Micro Focus,dc=secldap,dc=com
+cn: Options
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-UID: 1.3.6.1.4.1.5043.1.1.12.6570cc06.0x82f6e60.0xfff10c78.2
+microfocus-MFDS-Resource-Class: Enterprise Server Administration
+description: Enterprise Server Administration options
+microfocus-MFDS-Resource-ACE: allow:#GAdmin group:Update
+microfocus-MFDS-Resource-ACE: allow:#DSAdmin group:Update
+
+dn: cn=Object Permissions,cn=Enterprise Server Administration,cn=Enterprise Server Resources,cn=Micro Focus,dc=secldap,dc=com
+cn: Object Permissions
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-UID: 1.3.6.1.4.1.5043.1.1.12.6570cc06.0x82f6e60.0xfff10c78.3
+microfocus-MFDS-Resource-Class: Enterprise Server Administration
+description: Enterprise Server Administration object permissions
+microfocus-MFDS-Resource-ACE: allow:#DSAdmin group:Update
+
+dn: cn=Directory Discovery,cn=Enterprise Server Administration,cn=Enterprise Server Resources,cn=Micro Focus,dc=secldap,dc=com
+cn: Directory Discovery
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-UID: 1.3.6.1.4.1.5043.1.1.12.6570cc06.0x82f6e60.0xfff10c78.4
+microfocus-MFDS-Resource-Class: Enterprise Server Administration
+description: Enterprise Server Administration directory discovery
+microfocus-MFDS-Resource-ACE: allow:#DSAdmin group:Execute
+
+dn: cn=Execution Control,cn=Enterprise Server Administration,cn=Enterprise Server Resources,cn=Micro Focus,dc=secldap,dc=com
+cn: Execution Control
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-UID: 1.3.6.1.4.1.5043.1.1.12.6570cc06.0x82f6e60.0xfff10c78.5
+microfocus-MFDS-Resource-Class: Enterprise Server Administration
+description: Enterprise Server Administration execution control
+microfocus-MFDS-Resource-ACE: allow:#DSAdmin group:Execute
+
+dn: cn=User Administration,cn=Enterprise Server Administration,cn=Enterprise Server Resources,cn=Micro Focus,dc=secldap,dc=com
+cn: User Administration
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-UID: 1.3.6.1.4.1.5043.1.1.12.6570cc06.0x82f6e60.0xfff10c78.6
+microfocus-MFDS-Resource-Class: Enterprise Server Administration
+description: Enterprise Server Administration user administration
+microfocus-MFDS-Resource-ACE: allow:#DSAdmin group:Update,Add,Delete
+
+dn: cn=*,cn=Servers,cn=Enterprise Server Resources,cn=Micro Focus,dc=secldap,dc=com
+cn: *
+objectClass: microfocus-MFDS-Resource
+microfocus-MFDS-UID: 1.3.6.1.4.1.5043.1.1.12.6570cc06.0x82f6e60.0xfff10c78.7
+microfocus-MFDS-Resource-Class: Servers
+description: Servers resource
+microfocus-MFDS-Resource-ACE: allow:#Modify group:Execute,Read,Update
+microfocus-MFDS-Resource-ACE: allow:#System group:Execute,Read,Update,Add
+microfocus-MFDS-Resource-ACE: allow:#AddDel group:Execute,Read,Update,Add,Delete
+microfocus-MFDS-Resource-ACE: allow:#GAdmin group:Execute,Read,Update,Add,Delete
+microfocus-MFDS-Resource-ACE: allow:#DSAdmin group:Execute,Read,Update,Add,Delete
+microfocus-MFDS-Resource-ACE: allow:#AllUsrs group:Read

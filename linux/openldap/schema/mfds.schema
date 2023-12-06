@@ -1,0 +1,1390 @@
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.0.1 NAME 'microfocus-MFDS-UID'
+        DESC 'Object instance unique identifier'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.0.10 NAME 'microfocus-MFDS-LastStatusMessage'
+        DESC 'Last server status message'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.0.20 NAME 'microfocus-MFDS-CustomText'
+        DESC 'Custom configuration text data'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.0.50 NAME 'microfocus-MFDS-MajorVersion'
+        DESC 'Major version number'
+        EQUALITY integerMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.27
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.0.60 NAME 'microfocus-MFDS-MinorVersion'
+        DESC 'Minor version number'
+        EQUALITY integerMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.27
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.0.70 NAME 'microfocus-MFDS-BuildVersion'
+        DESC 'Build version number'
+        EQUALITY integerMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.27
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.0.40 NAME 'microfocus-MFDS-ParentUID'
+        DESC 'Parent UID'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.0.30 NAME 'microfocus-MFDS-InstanceState'
+        DESC 'Object instance state'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.0.100.10 NAME 'microfocus-MFDS-Endpoint-State'
+        DESC 'Endpoint state'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.0.100.20 NAME 'microfocus-MFDS-Endpoint-Requested'
+        DESC 'Requested network address'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.0.100.30 NAME 'microfocus-MFDS-Endpoint-Actual'
+        DESC 'Actual network address'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.0.200.50 NAME 'microfocus-MFDS-Endpoint-SSL-Certificate-Path'
+        DESC 'SSL Certificate location'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.0.200.60 NAME 'microfocus-MFDS-Endpoint-SSL-Keyfile-Path'
+        DESC 'SSL Keyfile location'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.0.200.80 NAME 'microfocus-MFDS-Endpoint-SSL-CARootfile'
+        DESC 'SSL Certificate Authority root file(s) location'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.0.200.90 NAME 'microfocus-MFDS-Endpoint-SSL-MaxKeyLength'
+        DESC 'SSL Maximum Key Length'
+        EQUALITY integerMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.27
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.0.200.100 NAME 'microfocus-MFDS-Endpoint-SSL-AllowNULLCipher'
+        DESC 'SSL Allow NULL Cipher'
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.7
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.0.200.110 NAME 'microfocus-MFDS-Endpoint-SSL-AllowCertCNIPMismatch'
+        DESC 'SSL Allow Cn IP mismatch'
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.7
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.0.200.120 NAME 'microfocus-MFDS-Endpoint-SSL-CheckCertRevocation'
+        DESC 'SSL Check for certificate revocation'
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.7
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.0.200.130 NAME 'microfocus-MFDS-Endpoint-SSL-CheckCertPublishersRevocation'
+        DESC 'SSL Check for certificate publishers revocation'
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.7
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.0.200.140 NAME 'microfocus-MFDS-Endpoint-SSL-Client-Option'
+        DESC 'SSL client option'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.0.200.150 NAME 'microfocus-MFDS-Endpoint-SSL-HonorServerCipherList'
+        DESC 'Honor Server Cipher List'
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.7
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.0.200.160 NAME 'microfocus-MFDS-Endpoint-SSL-TLS-Protocols'
+        DESC 'TLS Protocol Suites'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.0.200.170 NAME 'microfocus-MFDS-Endpoint-SSL-Cipher-Suites'
+        DESC 'Cipher Suites'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.0.200.180 NAME 'microfocus-MFDS-Endpoint-SSL-DH-MinimumGroupSize'
+        DESC 'DH Minimum Group Size'
+        EQUALITY integerMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.27
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.0.200.190 NAME 'microfocus-MFDS-Endpoint-SSL-ECC-Curves'
+        DESC 'ECC Curve Collection - now deprecated'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.0.200.200 NAME 'microfocus-MFDS-Endpoint-SSL-Server-CARootfile'
+        DESC 'Server Process SSL Certificate Authority root file(s) location'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.0.200.210 NAME 'microfocus-MFDS-Endpoint-SSL-Cipher-Groups'
+        DESC 'Cipher Groups'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.0.200.220 NAME 'microfocus-MFDS-Endpoint-TLS13-Cipher-Suites'
+        DESC 'TLS13 Cipher Suites'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.0.200.230 NAME 'microfocus-MFDS-Endpoint-TLS-MiddleBoxCompatibilityMode'
+        DESC 'TLS Middle Box Compatibility Mode'
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.7
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.0.300.10 NAME 'microfocus-MFDS-CacheTTL'
+        DESC 'ESM Cache TTL value'
+        EQUALITY integerMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.27
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.0.300.20 NAME 'microfocus-MFDS-CacheLimit'
+        DESC 'ESM Cache size limit'
+        EQUALITY integerMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.27
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.0.400.10 NAME 'microfocus-MFDS-Audit'
+        DESC 'ESF selective auditing attribute'
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.7
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.1000.1.10 NAME 'microfocus-MFDS-User-MTO-Priority'
+        DESC 'MTO user priority'
+        EQUALITY integerMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.27
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.1000.1.20 NAME 'microfocus-MFDS-User-MTO-Timeout'
+        DESC 'MTO user timeout'
+        EQUALITY integerMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.27
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.1000.1.30 NAME 'microfocus-MFDS-User-MTO-OperatorClass'
+        DESC 'MTO user operator class'
+        EQUALITY integerMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.27
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.1000.1.40 NAME 'microfocus-MFDS-User-AllowLogon'
+        DESC 'User allowed logon flag'
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.7
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.1000.2.10 NAME 'microfocus-MFDS-User-MTO-OperatorID'
+        DESC 'MTO user operator identifier'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.1000.2.20 NAME 'microfocus-MFDS-User-MTO-GroupPrefix'
+        DESC 'MTO user group prefix'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.1000.2.30 NAME 'microfocus-MFDS-User-Pwd'
+        DESC 'MTO user password'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.1000.2.40 NAME 'microfocus-MFDS-User-ExpirationDate'
+        DESC 'User account expiration date'
+        EQUALITY generalizedTimeMatch
+        ORDERING generalizedTimeOrderingMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.24
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.1000.2.50 NAME 'microfocus-MFDS-User-DefaultGroup'
+        DESC 'Default group'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.1000.2.60 NAME 'microfocus-MFDS-User-Pwd-MustChange'
+        DESC 'MTO user must change password flag'
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.7
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.1000.2.70 NAME 'microfocus-MFDS-User-Pwd-ExpirationDate'
+        DESC 'User password expiration date'
+        EQUALITY generalizedTimeMatch
+        ORDERING generalizedTimeOrderingMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.24
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.1000.2.80 NAME 'microfocus-MFDS-User-CreateToken'
+        DESC 'User passtoken creation option'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.1000.2.90 NAME 'microfocus-MFDS-User-UseToken'
+        DESC 'User passtoken use option'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.1000.2.100 NAME 'microfocus-MFDS-User-LastLoginTime'
+        DESC 'User last login time'
+        EQUALITY generalizedTimeMatch
+        ORDERING generalizedTimeOrderingMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.24
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.1000.2.110 NAME 'microfocus-MFDS-User-Pwd-History'
+        DESC 'User password history'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+ )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.1000.2.120 NAME 'microfocus-MFDS-User-LoginAttempts'
+        DESC 'User failed login attempts since last successful login'
+        EQUALITY integerMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.27
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.2000.2.10 NAME 'microfocus-MFDS-Group-Member'
+        DESC 'Group member item'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+ )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.3000.1.20 NAME 'microfocus-MFDS-Resource-Class'
+        DESC 'Resource class name'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.3000.2.10 NAME 'microfocus-MFDS-Resource-ACE'
+        DESC 'Resource access control entry'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+ )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.10.1.10 NAME 'microfocus-MFDS-ServerType'
+        DESC 'Server type'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.10.1.20 NAME 'microfocus-MFDS-ServerStatus'
+        DESC 'Server state'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.10.1.25 NAME 'microfocus-MFDS-ServerAutoStart'
+        DESC 'Server auto start flag'
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.7
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.10.1.30 NAME 'microfocus-MFDS-CommsProcessCount'
+        DESC 'Count of child Communications Processes'
+        EQUALITY integerMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.27
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.10.1.40 NAME 'microfocus-MFDS-ServiceCount'
+        DESC 'Count of child services'
+        EQUALITY integerMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.27
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.10.1.50 NAME 'microfocus-MFDS-HandlerCount'
+        DESC 'Count of child request handlers'
+        EQUALITY integerMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.27
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.10.1.60 NAME 'microfocus-MFDS-PackageCount'
+        DESC 'Count of child packages'
+        EQUALITY integerMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.27
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.10.1.70 NAME 'microfocus-MFDS-XRMCount'
+        DESC 'Count of child External Resource Managers'
+        EQUALITY integerMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.27
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.10.1.80 NAME 'microfocus-MFDS-JESInitiatorCount'
+        DESC 'Count of child JES initiators'
+        EQUALITY integerMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.27
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.10.1.90 NAME 'microfocus-MFDS-JESPrinterCount'
+        DESC 'Count of child JES printers'
+        EQUALITY integerMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.27
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.10.2.10 NAME 'microfocus-MTO-ShMemPages'
+        DESC 'MTO shared memory pages'
+        EQUALITY integerMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.27
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.10.2.20 NAME 'microfocus-MTO-SEPCount'
+        DESC 'MTO service execution process count'
+        EQUALITY integerMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.27
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.10.2.30 NAME 'microfocus-MTO-SysDir'
+        DESC 'Requested MTO system directory'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.10.2.31 NAME 'microfocus-MTO-DefaultSysDir'
+        DESC 'Default MTO system directory'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.10.2.40 NAME 'microfocus-MTO-ShMemCushion'
+        DESC 'MTO shared memory cushion'
+        EQUALITY integerMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.27
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.10.2.50 NAME 'microfocus-MTO-TraceTableSize'
+        DESC 'MTO trace table size'
+        EQUALITY integerMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.27
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.10.2.60 NAME 'microfocus-MTO-LocalTraceSize'
+        DESC 'MTO local trace size'
+        EQUALITY integerMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.27
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.10.2.70 NAME 'microfocus-MTO-TraceMaxSize'
+        DESC 'MTO maximum trace size'
+        EQUALITY integerMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.27
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.10.2.80 NAME 'microfocus-MTO-RequestedLicenses'
+        DESC 'MTO requested licenses'
+        EQUALITY integerMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.27
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.10.2.90 NAME 'microfocus-MTO-DumpOnAbend'
+        DESC 'MTO dump on abend'
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.7
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.10.2.100 NAME 'microfocus-MTO-ColdStartTrace'
+        DESC 'MTO cold start trace'
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.7
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.10.2.110 NAME 'microfocus-MTO-AuxiliaryTrace'
+        DESC 'MTO auxiliary trace'
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.7
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.2.120 NAME 'microfocus-MTO-ShowConsole'
+        DESC 'MTO show local console'
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.7
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.2.121 NAME 'microfocus-MTO-RemoteDebug'
+        DESC 'MTO allow remote debug'
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.7
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.2.123 NAME 'microfocus-MTO-EZASOKET'
+        DESC 'MTO EZASOKET support'
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.7
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.10.2.124 NAME 'microfocus-MTO-64Bit'
+        DESC 'ES 64-bit working mode support'
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.7
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.10.2.130 NAME 'microfocus-MTO-Enabled'
+        DESC 'MTO enabled'
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.7
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.10.2.131 NAME 'microfocus-CICS-Enabled'
+        DESC 'MTO CICS enabled'
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.7
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.10.2.140 NAME 'microfocus-JES-Enabled'
+        DESC 'MTO Job Entry Subsystem enabled'
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.7
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.10.2.150 NAME 'microfocus-ES-AutoExecuteUser'
+        DESC 'ES server automated execution control user ID'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.10.2.160 NAME 'microfocus-ES-AutoExecutePassword'
+        DESC 'ES server automated execution control user password'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.10.2.170 NAME 'microfocus-JES-Mainframe-Poll-Interval'
+        DESC 'MTO Job Entry Subsystem Mainframe Poll Interval (seconds)'
+        EQUALITY integerMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.27
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.10.2.190 NAME 'microfocus-MTO-Console-Log-Size'
+        DESC 'MTO console log size (kilobytes)'
+        EQUALITY integerMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.27
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.10.2.200 NAME 'microfocus-MTO-PurgeOldLogs'
+        DESC 'MTO Purge old logs flag'
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.7
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.10.2.210 NAME 'microfocus-MTO-PerformanceMonitoring'
+        DESC 'MTO Performance monitoring flag'
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.7
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.10.2.220 NAME 'microfocus-MTO-EventLogInformational'
+        DESC 'MTO Windows Event Log level flag'
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.7
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.10.2.230 NAME 'microfocus-MTO-EventLogWarning'
+        DESC 'MTO Windows Event Log level flag'
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.7
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.10.2.240 NAME 'microfocus-MTO-EventLogError'
+        DESC 'MTO Windows Event Log level flag'
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.7
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.10.2.250 NAME 'microfocus-MTO-EventLogSevere'
+        DESC 'MTO Windows Event Log level flag'
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.7
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.10.2.260 NAME 'microfocus-ES-PAC'
+        DESC 'Enterprise Server Performance and Availability Cluster name'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.10.2.270 NAME 'microfocus-ES-SOR'
+        DESC 'Enterprise Server Scale Out Repository definition'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.10.2.280 NAME 'microfocus-ES-ConfigManagerData'
+        DESC 'Micro Focus Configuration Manager data'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.10.3.10 NAME 'microfocus-MTO-TraceFlagsTaskControl'
+        DESC 'MTO Task Control trace'
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.7
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.10.3.20 NAME 'microfocus-MTO-TraceFlagsStorageControl'
+        DESC 'MTO Storage Control trace'
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.7
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.10.3.30 NAME 'microfocus-MTO-TraceFlagsTableManagement'
+        DESC 'MTO Table Management trace'
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.7
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.10.3.40 NAME 'microfocus-MTO-TraceFlagsApplicationContainer'
+        DESC 'MTO Application Container trace'
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.7
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.10.3.50 NAME 'microfocus-MTO-TraceFlagsRequestHandler'
+        DESC 'MTO Request handler trace'
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.7
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.10.3.60 NAME 'microfocus-MTO-TraceFlagsRMInterface'
+        DESC 'MTO RM Interface trace'
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.7
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.10.3.70 NAME 'microfocus-MTO-TraceFlagsCommunications'
+        DESC 'MTO Communications trace'
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.7
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.10.3.80 NAME 'microfocus-MTO-TraceFlagsApplication'
+        DESC 'MTO Application trace'
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.7
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.10.3.90 NAME 'microfocus-MTO-TraceFlagsExit'
+        DESC 'MTO Exit trace'
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.7
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.10.4.10 NAME 'microfocus-MTO-CICSSIT'
+        DESC 'MTO CICS SIT'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.10.4.20 NAME 'microfocus-MTO-TXTRANP'
+        DESC 'MTO CICS TXTRAN path'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.10.4.30 NAME 'microfocus-MTO-TXFILEP'
+        DESC 'MTO CICS TX file path'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.10.4.40 NAME 'microfocus-MTO-TXMAPP'
+        DESC 'MTO CICS MAP path'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.10.4.50 NAME 'microfocus-MTO-TXRDTP'
+        DESC 'MTO CICS TXRDT path'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.10.5.10 NAME 'microfocus-JES-JCLPATH'
+        DESC 'MTO JES JCL path'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.10.5.20 NAME 'microfocus-JES-MFSYSCAT'
+        DESC 'MTO JES system catalog'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.10.5.30 NAME 'microfocus-JES-JCLALLOCLOC'
+        DESC 'MTO JES JCL ALLOC location'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.10.5.40 NAME 'microfocus-JES-JCLSYSPROCLIB'
+        DESC 'MTO JES System PROCLIB'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.10.5.50 NAME 'microfocus-JES-JCLFHREDIR'
+        DESC 'MTO JES Fileshare configuration location'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.10.6.10 NAME 'microfocus-IMS-Enabled'
+        DESC 'IMS enabled'
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.7
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.10.6.20 NAME 'microfocus-IMS-Codeset-Bias'
+        DESC 'IMS MFS ASCII or EBCDIC codeset bias'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.10.6.30 NAME 'microfocus-IMS-TM-MFS-Attribute-Bias'
+        DESC 'IMS TM MFS character or binary attribute bias'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.10.6.40 NAME 'microfocus-IMS-TM-MFS-Null-Char'
+        DESC 'IMS TM MFS null character definition'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.10.6.50 NAME 'microfocus-IMS-Configuration'
+        DESC 'IMS configuration path'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.10.6.70 NAME 'microfocus-IMS-GEN'
+        DESC 'IMS GEN path'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.10.6.80 NAME 'microfocus-IMS-TM-Keypoint-Frequency'
+        DESC 'IMS TM keypoint frequency'
+        EQUALITY integerMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.27
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.10.6.90 NAME 'microfocus-IMS-TM-Trailing-Space'
+        DESC 'IMS TM trailing space flag'
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.7
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.10.6.100 NAME 'microfocus-IMS-DB-DAT'
+        DESC 'IMS DB data path'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.10.6.110 NAME 'microfocus-IMS-DB-Locked-Resource-Timeout'
+        DESC 'IMS DB locked resource timeout'
+        EQUALITY integerMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.27
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.10.6.120 NAME 'microfocus-IMS-DB-Key-Compression'
+        DESC 'IMS DB key compression flag'
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.7
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.10.6.130 NAME 'microfocus-IMS-DB-Data-Compression'
+        DESC 'IMS DB key compression flag'
+        EQUALITY integerMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.27
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.10.6.140 NAME 'microfocus-IMS-TM-MFS-Path'
+        DESC 'IMS TM MFS path'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.10.6.150 NAME 'microfocus-IMS-TM-Application-Path'
+        DESC 'IMS TM application path'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.10.6.160 NAME 'microfocus-IMS-TM-MQ-Name'
+        DESC 'IMS TM message queue name'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.10.6.170 NAME 'microfocus-IMS-TM-MQ-Maximum-Blocks'
+        DESC 'IMS TM message queue maximum blocks'
+        EQUALITY integerMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.27
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.10.6.180 NAME 'microfocus-IMS-TM-MQ-Buffer-Count'
+        DESC 'IMS TM message queue buffer count'
+        EQUALITY integerMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.27
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.10.6.190 NAME 'microfocus-IMS-TM-MQ-Cold-Start'
+        DESC 'IMS TM message queue cold start option'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.10.6.200 NAME 'microfocus-IMS-TM-MQ-Use-Default-Name'
+        DESC 'IMS TM message queue use default queue name flag'
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.7
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.10.6.210 NAME 'microfocus-IMS-TM-MQ-Transaction-Definition-File-Directory'
+        DESC 'IMS TM message queue transaction definition file directory'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.10.6.220 NAME 'microfocus-IMS-TM-MQ-Persist-Cold-Start'
+        DESC 'IMS TM message queue persist cold start option'
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.7
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.10.7.10 NAME 'microfocus-MFDS-ESF-UID-Reference'
+        DESC 'Security configuration identifier reference'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.10.7.20 NAME 'microfocus-MFDS-ESM-UID-Reference'
+        DESC 'Security Manager identifier reference'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+ )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.20.1.10 NAME 'microfocus-MFDS-PID'
+        DESC 'Communications Process actual process ID'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.20.1.20 NAME 'microfocus-MFDS-CommsProcessInstance'
+        DESC 'Communications Process instance number'
+        EQUALITY integerMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.27
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.20.1.30 NAME 'microfocus-MFDS-CommsProcessAutoStart'
+        DESC 'Communications Process autostart flag'
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.7
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.20.1.40 NAME 'microfocus-MFDS-LogPath'
+        DESC 'Communications Process log path'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.20.1.50 NAME 'microfocus-MFDS-ListenerCount'
+        DESC 'Communications Process child listener count'
+        EQUALITY integerMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.27
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.30.1.10 NAME 'microfocus-MFDS-Connector'
+        DESC 'Listener connector module'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.40.1.10 NAME 'microfocus-MFDS-HandlerPath'
+        DESC 'Handler module path'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.50.1.10 NAME 'microfocus-MFDS-IDTResident'
+        DESC 'Interface Definition Table resident'
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.7
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.50.2.10 NAME 'microfocus-MFDS-IDTPath'
+        DESC 'Interface Definition Table path'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.50.2.20 NAME 'microfocus-MFDS-PackageName'
+        DESC 'Package name'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.50.2.30 NAME 'microfocus-MFDS-PackagePath'
+        DESC 'Package path'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.60.1.10 NAME 'microfocus-MFDS-SearchOrder'
+        DESC 'Search order'
+        EQUALITY integerMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.27
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.60.1.30 NAME 'microfocus-MFDS-ListenerUID'
+        DESC 'Listener UID'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+ )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.60.1.40 NAME 'microfocus-MFDS-ServiceTransactionMode'
+        DESC 'Service Transaction Mode'
+        EQUALITY integerMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.27
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.60.1.50 NAME 'microfocus-MFDS-ServiceLoggingMode'
+        DESC 'Service Logging Mode'
+        EQUALITY integerMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.27
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.60.2.10 NAME 'microfocus-MFDS-HandlerUID'
+        DESC 'Handler UID'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.60.2.20 NAME 'microfocus-MFDS-PackageUID'
+        DESC 'Package UID'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.60.2.30 NAME 'microfocus-MFDS-ServiceClass'
+        DESC 'Service class'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.70.1.10 NAME 'microfocus-MFDS-XRM-Type'
+        DESC 'XRM Type'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.70.1.20 NAME 'microfocus-MFDS-XRM-Name'
+        DESC 'XRM Name'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.70.1.30 NAME 'microfocus-MFDS-XRM-Module'
+        DESC 'XRM Module'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.70.2.10 NAME 'microfocus-MFDS-XRM-OpenString'
+        DESC 'XRM open string'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.70.2.20 NAME 'microfocus-MFDS-XRM-CloseString'
+        DESC 'XRM close string'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.80.1.10 NAME 'microfocus-MFDS-JES-InitiatorClass'
+        DESC 'JES Initiator class'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.90.2.10 NAME 'microfocus-MFDS-JES-PrinterClass'
+        DESC 'JES Printer class'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.90.2.20 NAME 'microfocus-MFDS-JES-PrinterExitModule'
+        DESC 'JES Printer exit module'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.120.1.10 NAME 'microfocus-MFDS-IMS-MPR-TransactionClass'
+        DESC 'IMS Message Processing region transaction class'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.100.1.10 NAME 'microfocus-MFDS-ESM-Module'
+        DESC 'ESM Module'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.100.2.10 NAME 'microfocus-MFDS-ESM-ConnectionPath'
+        DESC 'ESM Connection Path'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.100.2.20 NAME 'microfocus-MFDS-ESM-ConnectionID'
+        DESC 'ESM Connection Path'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.100.2.30 NAME 'microfocus-MFDS-ESM-ConnectionPwd'
+        DESC 'ESM Connection Password'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.110.2.10 NAME 'microfocus-MFDS-ESF-VerifyAgainstAllESMs'
+        DESC 'Verify against all ESMs flag'
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.7
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.110.2.20 NAME 'microfocus-MFDS-ESF-AllowUnknownResources'
+        DESC 'Allow unknown resources flag'
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.7
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.110.2.30 NAME 'microfocus-MFDS-ESF-AllowUnknownUsers'
+        DESC 'Allow unknown users flag'
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.7
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.110.2.40 NAME 'microfocus-MFDS-ESF-CreateAuditEvents'
+        DESC 'Create audit events flag'
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.7
+        SINGLE-VALUE  )
+
+attributetype ( 1.3.6.1.4.1.5043.1.1.1.110.2.50 NAME 'microfocus-MFDS-ESF-UseAllGroups'
+        DESC 'Use all groups flag'
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.7
+        SINGLE-VALUE  )
+
+objectclass ( 1.3.6.1.4.1.5043.1.2.1.1000 NAME 'microfocus-MFDS-User'
+        DESC 'The user object class used to define entries representing Micro Focus user profiles'
+        MUST (  cn $ 
+                microfocus-MFDS-UID $ 
+                microfocus-MFDS-User-MTO-Priority $ 
+                microfocus-MFDS-User-MTO-Timeout $ 
+                microfocus-MFDS-User-MTO-OperatorClass $ 
+                microfocus-MFDS-User-AllowLogon )
+        MAY (   microfocus-MFDS-CustomText $ 
+                microfocus-MFDS-User-MTO-OperatorID $ 
+                microfocus-MFDS-User-MTO-GroupPrefix $ 
+                microfocus-MFDS-User-Pwd $ 
+                microfocus-MFDS-User-ExpirationDate $ 
+                microfocus-MFDS-User-DefaultGroup $ 
+                microfocus-MFDS-User-Pwd-MustChange $ 
+                microfocus-MFDS-User-Pwd-ExpirationDate $ 
+                microfocus-MFDS-User-CreateToken $ 
+                microfocus-MFDS-User-UseToken $ 
+                microfocus-MFDS-User-LastLoginTime $ 
+                microfocus-MFDS-User-Pwd-History $ 
+                microfocus-MFDS-User-LoginAttempts $ 
+                microfocus-MFDS-Audit $
+                displayName $
+                description )
+        )
+
+objectclass ( 1.3.6.1.4.1.5043.1.2.1.2000 NAME 'microfocus-MFDS-Group'
+        DESC 'The group object class used to define entries representing groups of items'
+        MUST (  cn $ 
+                microfocus-MFDS-UID )
+        MAY (   microfocus-MFDS-CustomText $ 
+                microfocus-MFDS-Group-Member $ 
+                microfocus-MFDS-Audit $
+                description )
+        )
+
+objectclass ( 1.3.6.1.4.1.5043.1.2.1.3000 NAME 'microfocus-MFDS-Resource'
+        DESC 'The resource object class used to define entries representing generic resources'
+        MUST (  cn $ 
+                microfocus-MFDS-UID $ 
+                microfocus-MFDS-Resource-Class )
+        MAY (   microfocus-MFDS-CustomText $ 
+                microfocus-MFDS-Resource-ACE $ 
+                microfocus-MFDS-Audit $
+                description )
+        )
+
+objectclass ( 1.3.6.1.4.1.5043.1.2.1.10 NAME 'microfocus-MFDS-Server'
+        DESC 'The server object class used to define entries representing Micro Focus server instances'
+        MUST (  cn $ 
+                microfocus-MFDS-UID $ 
+                microfocus-MFDS-LastStatusMessage $ 
+                microfocus-MFDS-ServerType $ 
+                microfocus-MFDS-ServerStatus $ 
+                microfocus-MFDS-ServerAutoStart $ 
+                microfocus-MFDS-CommsProcessCount $ 
+                microfocus-MFDS-ServiceCount $ 
+                microfocus-MFDS-HandlerCount $ 
+                microfocus-MFDS-PackageCount $ 
+                microfocus-MFDS-XRMCount $ 
+                microfocus-MFDS-JESInitiatorCount $ 
+                microfocus-MFDS-JESPrinterCount )
+        MAY (   microfocus-MFDS-CustomText $ 
+                microfocus-MTO-ShMemPages $ 
+                microfocus-MTO-SEPCount $ 
+                microfocus-MTO-SysDir $ 
+                microfocus-MTO-DefaultSysDir $ 
+                microfocus-MTO-ShMemCushion $ 
+                microfocus-MTO-TraceTableSize $ 
+                microfocus-MTO-LocalTraceSize $ 
+                microfocus-MTO-TraceMaxSize $ 
+                microfocus-MTO-RequestedLicenses $ 
+                microfocus-MTO-DumpOnAbend $ 
+                microfocus-MTO-ColdStartTrace $ 
+                microfocus-MTO-AuxiliaryTrace $ 
+                microfocus-MTO-ShowConsole $ 
+                microfocus-MTO-RemoteDebug $ 
+                microfocus-MTO-EZASOKET $ 
+                microfocus-MTO-64Bit $ 
+                microfocus-MTO-Enabled $ 
+                microfocus-CICS-Enabled $ 
+                microfocus-JES-Enabled $ 
+                microfocus-ES-AutoExecuteUser $ 
+                microfocus-ES-AutoExecutePassword $ 
+                microfocus-JES-Mainframe-Poll-Interval $ 
+                microfocus-MTO-Console-Log-Size $ 
+                microfocus-MTO-PurgeOldLogs $ 
+                microfocus-MTO-PerformanceMonitoring $ 
+                microfocus-MTO-EventLogInformational $ 
+                microfocus-MTO-EventLogWarning $ 
+                microfocus-MTO-EventLogError $ 
+                microfocus-MTO-EventLogSevere $ 
+                microfocus-ES-PAC $ 
+                microfocus-ES-SOR $ 
+                microfocus-ES-ConfigManagerData $ 
+                microfocus-MTO-TraceFlagsTaskControl $ 
+                microfocus-MTO-TraceFlagsStorageControl $ 
+                microfocus-MTO-TraceFlagsTableManagement $ 
+                microfocus-MTO-TraceFlagsApplicationContainer $ 
+                microfocus-MTO-TraceFlagsRequestHandler $ 
+                microfocus-MTO-TraceFlagsRMInterface $ 
+                microfocus-MTO-TraceFlagsCommunications $ 
+                microfocus-MTO-TraceFlagsApplication $ 
+                microfocus-MTO-TraceFlagsExit $ 
+                microfocus-MTO-CICSSIT $ 
+                microfocus-MTO-TXTRANP $ 
+                microfocus-MTO-TXFILEP $ 
+                microfocus-MTO-TXMAPP $ 
+                microfocus-MTO-TXRDTP $ 
+                microfocus-JES-JCLPATH $ 
+                microfocus-JES-MFSYSCAT $ 
+                microfocus-JES-JCLALLOCLOC $ 
+                microfocus-JES-JCLSYSPROCLIB $ 
+                microfocus-JES-JCLFHREDIR $ 
+                microfocus-IMS-Enabled $ 
+                microfocus-IMS-Codeset-Bias $ 
+                microfocus-IMS-TM-MFS-Attribute-Bias $ 
+                microfocus-IMS-TM-MFS-Null-Char $ 
+                microfocus-IMS-Configuration $ 
+                microfocus-IMS-GEN $ 
+                microfocus-IMS-TM-Keypoint-Frequency $ 
+                microfocus-IMS-TM-Trailing-Space $ 
+                microfocus-IMS-DB-DAT $ 
+                microfocus-IMS-DB-Locked-Resource-Timeout $ 
+                microfocus-IMS-DB-Key-Compression $ 
+                microfocus-IMS-DB-Data-Compression $ 
+                microfocus-IMS-TM-MFS-Path $ 
+                microfocus-IMS-TM-Application-Path $ 
+                microfocus-IMS-TM-MQ-Name $ 
+                microfocus-IMS-TM-MQ-Maximum-Blocks $ 
+                microfocus-IMS-TM-MQ-Buffer-Count $ 
+                microfocus-IMS-TM-MQ-Cold-Start $ 
+                microfocus-IMS-TM-MQ-Use-Default-Name $ 
+                microfocus-IMS-TM-MQ-Transaction-Definition-File-Directory $ 
+                microfocus-IMS-TM-MQ-Persist-Cold-Start $ 
+                microfocus-MFDS-ESF-UID-Reference $ 
+                microfocus-MFDS-ESM-UID-Reference $
+                description )
+        )
+
+objectclass ( 1.3.6.1.4.1.5043.1.2.1.20 NAME 'microfocus-MFDS-CommsProcess'
+        DESC 'The object class used to define entries representing Micro Focus communications process instances'
+        MUST (  cn $ 
+                microfocus-MFDS-UID $ 
+                microfocus-MFDS-LastStatusMessage $ 
+                microfocus-MFDS-CustomText $ 
+                microfocus-MFDS-ParentUID $ 
+                microfocus-MFDS-MajorVersion $ 
+                microfocus-MFDS-MinorVersion $ 
+                microfocus-MFDS-BuildVersion $ 
+                microfocus-MFDS-PID $ 
+                microfocus-MFDS-CommsProcessInstance $ 
+                microfocus-MFDS-CommsProcessAutoStart $ 
+                microfocus-MFDS-LogPath $ 
+                microfocus-MFDS-ListenerCount $ 
+                microfocus-MFDS-Endpoint-State $ 
+                microfocus-MFDS-Endpoint-Requested $ 
+                microfocus-MFDS-Endpoint-Actual )
+        MAY (   microfocus-MFDS-Endpoint-SSL-Certificate-Path $ 
+                microfocus-MFDS-Endpoint-SSL-Keyfile-Path $ 
+                microfocus-MFDS-Endpoint-SSL-CARootfile $ 
+                microfocus-MFDS-Endpoint-SSL-MaxKeyLength $ 
+                microfocus-MFDS-Endpoint-SSL-AllowNULLCipher $ 
+                microfocus-MFDS-Endpoint-SSL-AllowCertCNIPMismatch $ 
+                microfocus-MFDS-Endpoint-SSL-CheckCertRevocation $ 
+                microfocus-MFDS-Endpoint-SSL-CheckCertPublishersRevocation $ 
+                microfocus-MFDS-Endpoint-SSL-Client-Option $ 
+                microfocus-MFDS-Endpoint-SSL-HonorServerCipherList $ 
+                microfocus-MFDS-Endpoint-SSL-TLS-Protocols $ 
+                microfocus-MFDS-Endpoint-SSL-Cipher-Suites $ 
+                microfocus-MFDS-Endpoint-SSL-DH-MinimumGroupSize $ 
+                microfocus-MFDS-Endpoint-SSL-ECC-Curves $ 
+                microfocus-MFDS-Endpoint-SSL-Server-CARootfile $ 
+                microfocus-MFDS-Endpoint-SSL-Cipher-Groups $ 
+                microfocus-MFDS-Endpoint-TLS13-Cipher-Suites $ 
+                microfocus-MFDS-Endpoint-TLS-MiddleBoxCompatibilityMode $
+                description )
+        )
+
+objectclass ( 1.3.6.1.4.1.5043.1.2.1.30 NAME 'microfocus-MFDS-Listener'
+        DESC 'The object class used to define entries representing Micro Focus Enterprise Server listener instances'
+        MUST (  cn $ 
+                microfocus-MFDS-UID $ 
+                microfocus-MFDS-LastStatusMessage $ 
+                microfocus-MFDS-ParentUID $ 
+                microfocus-MFDS-Endpoint-State $ 
+                microfocus-MFDS-Endpoint-Requested $ 
+                microfocus-MFDS-Endpoint-Actual $ 
+                microfocus-MFDS-Connector )
+        MAY (   microfocus-MFDS-CustomText $ 
+                microfocus-MFDS-Endpoint-SSL-Certificate-Path $ 
+                microfocus-MFDS-Endpoint-SSL-Keyfile-Path $ 
+                microfocus-MFDS-Endpoint-SSL-CARootfile $ 
+                microfocus-MFDS-Endpoint-SSL-MaxKeyLength $ 
+                microfocus-MFDS-Endpoint-SSL-AllowNULLCipher $ 
+                microfocus-MFDS-Endpoint-SSL-AllowCertCNIPMismatch $ 
+                microfocus-MFDS-Endpoint-SSL-CheckCertRevocation $ 
+                microfocus-MFDS-Endpoint-SSL-CheckCertPublishersRevocation $ 
+                microfocus-MFDS-Endpoint-SSL-Client-Option $ 
+                microfocus-MFDS-Endpoint-SSL-HonorServerCipherList $ 
+                microfocus-MFDS-Endpoint-SSL-TLS-Protocols $ 
+                microfocus-MFDS-Endpoint-SSL-Cipher-Suites $ 
+                microfocus-MFDS-Endpoint-SSL-DH-MinimumGroupSize $ 
+                microfocus-MFDS-Endpoint-SSL-ECC-Curves $ 
+                microfocus-MFDS-Endpoint-SSL-Server-CARootfile $ 
+                microfocus-MFDS-Endpoint-SSL-Cipher-Groups $ 
+                microfocus-MFDS-Endpoint-TLS13-Cipher-Suites $ 
+                microfocus-MFDS-Endpoint-TLS-MiddleBoxCompatibilityMode $
+                description )
+        )
+
+objectclass ( 1.3.6.1.4.1.5043.1.2.1.40 NAME 'microfocus-MFDS-Handler'
+        DESC 'The object class used to define entries representing Micro Focus Enterprise Server handler instances'
+        MUST (  cn $ 
+                microfocus-MFDS-UID $ 
+                microfocus-MFDS-ParentUID $ 
+                microfocus-MFDS-InstanceState $ 
+                microfocus-MFDS-HandlerPath )
+        MAY (   microfocus-MFDS-CustomText $
+                description )
+        )
+
+objectclass ( 1.3.6.1.4.1.5043.1.2.1.50 NAME 'microfocus-MFDS-Package'
+        DESC 'The object class used to define entries representing Micro Focus Enterprise Server package instances'
+        MUST (  cn $ 
+                microfocus-MFDS-UID $ 
+                microfocus-MFDS-ParentUID $ 
+                microfocus-MFDS-InstanceState )
+        MAY (   microfocus-MFDS-CustomText $ 
+                microfocus-MFDS-IDTPath $ 
+                microfocus-MFDS-PackageName $ 
+                microfocus-MFDS-PackagePath $ 
+                microfocus-MFDS-IDTResident $
+                description )
+        )
+
+objectclass ( 1.3.6.1.4.1.5043.1.2.1.60 NAME 'microfocus-MFDS-Service'
+        DESC 'The object class used to define entries representing Micro Focus Enterprise Server service instances'
+        MUST (  cn $ 
+                microfocus-MFDS-UID $ 
+                microfocus-MFDS-ParentUID $ 
+                microfocus-MFDS-InstanceState $ 
+                microfocus-MFDS-SearchOrder $ 
+                microfocus-MFDS-ListenerUID $ 
+                microfocus-MFDS-ServiceTransactionMode $ 
+                microfocus-MFDS-ServiceLoggingMode )
+        MAY (   microfocus-MFDS-CustomText $ 
+                microfocus-MFDS-HandlerUID $ 
+                microfocus-MFDS-PackageUID $ 
+                microfocus-MFDS-ServiceClass $
+                description )
+        )
+
+objectclass ( 1.3.6.1.4.1.5043.1.2.1.70 NAME 'microfocus-MFDS-MTO-XRM'
+        DESC 'The object class used to define entries representing Micro Focus Enterprise Server External Resource Manager instances'
+        MUST (  cn $ 
+                microfocus-MFDS-UID $ 
+                microfocus-MFDS-ParentUID $ 
+                microfocus-MFDS-InstanceState $ 
+                microfocus-MFDS-XRM-Type $ 
+                microfocus-MFDS-XRM-Name $ 
+                microfocus-MFDS-XRM-Module )
+        MAY (   microfocus-MFDS-XRM-OpenString $ 
+                microfocus-MFDS-XRM-CloseString $
+                description )
+        )
+
+objectclass ( 1.3.6.1.4.1.5043.1.2.1.80 NAME 'microfocus-MFDS-JES-Initiator'
+        DESC 'The object class used to define entries representing Micro Focus Enterprise Server Job Entry Subsystem initiator instances'
+        MUST (  cn $ 
+                microfocus-MFDS-UID $ 
+                microfocus-MFDS-ParentUID $ 
+                microfocus-MFDS-JES-InitiatorClass )
+        )
+
+objectclass ( 1.3.6.1.4.1.5043.1.2.1.90 NAME 'microfocus-MFDS-JES-Printer'
+        DESC 'The object class used to define entries representing Micro Focus Enterprise Server Job Entry Subsystem printer instances'
+        MUST (  cn $ 
+                microfocus-MFDS-UID $ 
+                microfocus-MFDS-ParentUID $ 
+                microfocus-MFDS-InstanceState )
+        MAY (   microfocus-MFDS-JES-PrinterClass $ 
+                microfocus-MFDS-JES-PrinterExitModule $
+                description )
+        )
+
+objectclass ( 1.3.6.1.4.1.5043.1.2.1.120 NAME 'microfocus-MFDS-IMS-MPR'
+        DESC 'The object class used to define entries representing Micro Focus Enterprise Server Information Management System Message Processing Region instances'
+        MUST (  cn $ 
+                microfocus-MFDS-UID $ 
+                microfocus-MFDS-ParentUID $ 
+                microfocus-MFDS-IMS-MPR-TransactionClass )
+        )
+
+objectclass ( 1.3.6.1.4.1.5043.1.2.1.100 NAME 'microfocus-MFDS-ESM'
+        DESC 'The configuration object class used to define entries representing Micro Focus Enterprise Server External Security Manager configuration settings'
+        MUST (  cn $ 
+                microfocus-MFDS-UID $ 
+                microfocus-MFDS-InstanceState $ 
+                microfocus-MFDS-ESM-Module )
+        MAY (   microfocus-MFDS-LastStatusMessage $ 
+                microfocus-MFDS-CustomText $ 
+                microfocus-MFDS-CacheTTL $ 
+                microfocus-MFDS-CacheLimit $ 
+                microfocus-MFDS-ESM-ConnectionPath $ 
+                microfocus-MFDS-ESM-ConnectionID $ 
+                microfocus-MFDS-ESM-ConnectionPwd $
+                description )
+        )
+
+objectclass ( 1.3.6.1.4.1.5043.1.2.1.110 NAME 'microfocus-MFDS-ESF'
+        DESC 'The configuration object class used to define entries representing Micro Focus Enterprise Server Security Manager configuration settings'
+        MUST (  cn $ 
+                microfocus-MFDS-UID )
+        MAY (   microfocus-MFDS-CacheTTL $ 
+                microfocus-MFDS-CacheLimit $ 
+                microfocus-MFDS-ESF-VerifyAgainstAllESMs $ 
+                microfocus-MFDS-ESF-AllowUnknownResources $ 
+                microfocus-MFDS-ESF-AllowUnknownUsers $ 
+                microfocus-MFDS-ESF-CreateAuditEvents $ 
+                microfocus-MFDS-ESF-UseAllGroups $
+                description )
+        )
