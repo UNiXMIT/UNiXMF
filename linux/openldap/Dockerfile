@@ -10,12 +10,11 @@ RUN rpm -ivh https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.
     cd /openldap; \
     curl -s -O https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/linux/openldap/schema.zip; \
     unzip schema.zip; \
-    systemctl enable slapd; \
-    systemctl stop slapd; \
+    pkill slapd; \
     sed -i '/CRC.*/d' /etc/openldap/slapd.d/cn=config/olcDatabase={0}config.ldif; \
     sed -i '/olcAccess:.*/c\olcAccess: {0}to * by dn.exact=gidNumber=0+uidNumber=0,cn=peercred,cn=external,cn=auth manage by * break' /etc/openldap/slapd.d/cn=config/olcDatabase={0}config.ldif; \
     sed -i '/ ,cn=auth.*/d' /etc/openldap/slapd.d/cn=config/olcDatabase={0}config.ldif; \
-    systemctl start slapd; \
+    /usr/sbin/slapd -u ldap -h ldap:/// ldaps:/// ldapi:///; \
     SECRET=$(slappasswd -s $SLAPPASS); \
     sed -i "/olcRootPW:.*/c\olcRootPW: $SECRET" /openldap/schema/chrootpwd.ldif; \
     ldapadd -Y EXTERNAL -H ldapi:/// -f /openldap/schema/chrootpwd.ldif > /dev/null 2>&1; \
@@ -32,7 +31,7 @@ RUN rpm -ivh https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.
     ldapadd -Y EXTERNAL -H ldapi:/// -f /openldap/schema/ppolicy.ldif > /dev/null 2>&1; \
     sed -i "/olcRootPW:.*/c\olcRootPW: $SECRET" /openldap/schema/backend.ldif; \
     ldapadd -Y EXTERNAL -H ldapi:/// -f /openldap/schema/backend.ldif > /dev/null 2>&1; \
-    systemctl stop slapd; \
+    pkill slapd; \
     cp /etc/openldap/schema/* /openldap/schema/; \
     rm -rf /openldap/config/*; \
     cd /openldap/schema; \
@@ -41,7 +40,8 @@ RUN rpm -ivh https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.
     cp /openldap/config/cn=config/cn=schema/cn={13}mfds.ldif /etc/openldap/slapd.d/cn=config/cn=schema; \
     chown -R ldap /etc/openldap/slapd.d; \
     chmod -R 700 /etc/openldap/slapd.d; \
-    systemctl start slapd; \
+    /usr/sbin/slapd -u ldap -h ldap:/// ldaps:/// ldapi:///; \
+    systemctl enable slapd; \
     rm -rf /openldap/log/*; \
     ldapadd -v -D "cn=Manager,dc=secldap,dc=com" -w $SLAPPASS -f /openldap/schema/top.ldif -H ldapi:/// > /openldap/log/top.log; \
     ldapadd -v -D "cn=Manager,dc=secldap,dc=com" -w $SLAPPASS -f /openldap/schema/mf-containers.ldif -H ldapi:/// > /openldap/log/mf-containers.log; \
