@@ -42,7 +42,6 @@ RUN rpm -ivh https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.
     chown -R ldap /etc/openldap/slapd.d; \
     chmod -R 700 /etc/openldap/slapd.d; \
     systemctl start slapd; \
-    systemctl enable slapd; \
     rm -rf /openldap/log/*; \
     ldapadd -v -D "cn=Manager,dc=secldap,dc=com" -w $SLAPPASS -f /openldap/schema/top.ldif -H ldapi:/// > /openldap/log/top.log; \
     ldapadd -v -D "cn=Manager,dc=secldap,dc=com" -w $SLAPPASS -f /openldap/schema/mf-containers.ldif -H ldapi:/// > /openldap/log/mf-containers.log; \
