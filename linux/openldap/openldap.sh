@@ -76,9 +76,9 @@ elif [[ ! -f "$BASEDIR/schema/mfds-users.ldif" ]]; then
     exit 5
 fi
 ldapadd -v -D "cn=Manager,dc=secldap,dc=com" -w $SLAPPASS -f $BASEDIR/schema/mfds-users.ldif -H ldapi:/// -c > $BASEDIR/log/mfds-users.log
-sed 's/DC=X/CN=Micro Focus,dc=secldap,dc=com/' $COBDIR/etc/es_default_ldap_openldap.ldif > $BASEDIR/schema/es_default_ldap_openldap.ldif
+sed 's/DC=X/CN=Micro Focus,dc=secldap,dc=com/' $COBDIR/etc/es_default_ldap_openldap.ldf > $BASEDIR/schema/es_default_ldap_openldap.ldif
 sed -i '/,Data/d' $BASEDIR/schema/es_default_ldap_openldap.ldif
-ldapadd -v -D "cn=Manager,dc=secldap,dc=com" -w $SLAPPASS -f $BASEDIR/schema/es_default_ldap_openldap.ldif -H ldapi:/// -c > $BASEDIR/log/es_default_ldap_openldap.ldifes_default_ldap_openldap.ldif
+ldapadd -v -D "cn=Manager,dc=secldap,dc=com" -w $SLAPPASS -f $BASEDIR/schema/es_default_ldap_openldap.ldif -H ldapi:/// -c > $BASEDIR/log/es_default_ldap_openldap.log
 ldapsearch -H ldapi:/// -x -b "cn=subschema" -s base + > $BASEDIR/log/schema.log
 
 curl -X 'POST' \
