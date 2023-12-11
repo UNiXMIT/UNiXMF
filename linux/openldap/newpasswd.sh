@@ -6,4 +6,3 @@ if [[ -n "${SLAPPWD}" ]]; then
     /usr/sbin/slapd -u ldap -h "ldap:/// ldaps:/// ldapi:///"
     ldapmodify -H ldapi:// -Y EXTERNAL -f /openldap/schema/newpasswd.ldif
 fi
-/sbin/init
