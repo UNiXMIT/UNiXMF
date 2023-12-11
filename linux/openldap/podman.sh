@@ -3,6 +3,7 @@
 containerName=openldap
 containerRepo=mf/openldap
 runOptions=(
+-e SLAPPWD=strongPassword123
 --restart always
 -p 1389:389
 )

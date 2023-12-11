@@ -1,0 +1,5 @@
+dn: olcDatabase={3}mdb,cn=config
+#olcRootDN: cn=Manager,dc=secldap,dc=com
+changetype: modify
+replace: olcRootPW
+olcRootPW: {SSHA}Va2wEy+bd62uQTHlNPUwOSluI+zQQY7h

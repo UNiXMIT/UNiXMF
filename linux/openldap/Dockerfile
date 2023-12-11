@@ -1,7 +1,8 @@
 FROM redhat/ubi9-init:latest
 EXPOSE 389 636
 ENV SLAPPASS=strongPassword123
-RUN rpm -ivh https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm; \
+RUN echo '[[ -n "${SLAPPWD}" ]] && SECRET=$(slappasswd -s ${SLAPPWD}) && pkill slapd && sed -i "/olcRootPW:.*/c\olcRootPW: $SECRET" /openldap/schema/newpasswd.ldif && /usr/sbin/slapd -u ldap -h "ldap:/// ldaps:/// ldapi:///" && ldapmodify -H ldapi:// -Y EXTERNAL -f /openldap/schema/newpasswd.ldif' >> /etc/rc.d
+    rpm -ivh https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm; \
     dnf install openldap-servers openldap-clients unzip -y; \
     dnf clean all; \
     mkdir -m 775 /openldap; \
