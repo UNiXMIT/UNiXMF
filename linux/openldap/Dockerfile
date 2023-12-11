@@ -1,8 +1,7 @@
 FROM redhat/ubi9-init:latest
 EXPOSE 389 636
 ENV SLAPPASS=strongPassword123
-RUN echo '[[ -n "${SLAPPWD}" ]] && SECRET=$(slappasswd -s ${SLAPPWD}) && pkill slapd && sed -i "/olcRootPW:.*/c\olcRootPW: $SECRET" /openldap/schema/newpasswd.ldif && /usr/sbin/slapd -u ldap -h "ldap:/// ldaps:/// ldapi:///" && ldapmodify -H ldapi:// -Y EXTERNAL -f /openldap/schema/newpasswd.ldif' >> /etc/rc.d
-    rpm -ivh https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm; \
+RUN rpm -ivh https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm; \
     dnf install openldap-servers openldap-clients unzip -y; \
     dnf clean all; \
     mkdir -m 775 /openldap; \
@@ -48,5 +47,7 @@ RUN echo '[[ -n "${SLAPPWD}" ]] && SECRET=$(slappasswd -s ${SLAPPWD}) && pkill s
     ldapadd -v -D "cn=Manager,dc=secldap,dc=com" -w $SLAPPASS -f /openldap/schema/mf-containers.ldif -H ldapi:/// > /openldap/log/mf-containers.log; \
     ldapadd -v -D "cn=Manager,dc=secldap,dc=com" -w $SLAPPASS -f /openldap/schema/mfds-users.ldif -H ldapi:/// -c > /openldap/log/mfds-users.log; \
     ldapadd -v -D "cn=Manager,dc=secldap,dc=com" -w $SLAPPASS -f /openldap/schema/es_default_ldap_openldap.ldif -H ldapi:/// -c > /openldap/log/es_default_ldap_openldap.ldif; \
-    ldapsearch -H ldapi:/// -x -b "cn=subschema" -s base + > /openldap/log/schema.log
-CMD ["/sbin/init"]
+    ldapsearch -H ldapi:/// -x -b "cn=subschema" -s base + > /openldap/log/schema.log; \
+    curl -s -o /openldap/entrypoint.sh https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/linux/openldap/entrypoint.sh; \
+    chmod +x /openldap/entrypoint.sh
+ENTRYPOINT ["/openldap/entrypoint.sh"]

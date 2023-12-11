@@ -30,7 +30,7 @@ removeContainer() {
 
 buildContainer() {
     printf "Building Container...\n\n"
-    sudo ${containerRuntime} build --tag ${containerRepo} -f Dockerfile
+    sudo ${containerRuntime} build --no-cache --tag ${containerRepo} -f Dockerfile
 }
 
 startContainer() {
