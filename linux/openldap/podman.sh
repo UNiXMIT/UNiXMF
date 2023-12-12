@@ -6,6 +6,11 @@ runOptions=(
 -e SLAPPWD=strongPassword123
 --restart always
 -p 1389:389
+--health-interval=30s 
+--health-timeout=3s 
+--health-start-period=30s 
+--health-retries=3
+--health-cmd 'systemctl is-active --quiet slapd || exit 1'
 )
 
 checkContainerRuntime() {

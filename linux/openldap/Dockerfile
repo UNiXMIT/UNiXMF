@@ -50,6 +50,4 @@ RUN rpm -ivh https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.
     ldapsearch -H ldapi:/// -x -b "cn=subschema" -s base + > /openldap/log/schema.log; \
     curl -s -o /openldap/newpasswd.sh https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/linux/openldap/newpasswd.sh; \
     chmod +x /openldap/newpasswd.sh
-HEALTHCHECK --interval=30s --timeout=3s --start-period=30s --retries=3 \
-    CMD systemctl is-active --quiet slapd || exit 1
 CMD ["/sbin/init"]
