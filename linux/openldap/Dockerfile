@@ -48,6 +48,8 @@ RUN rpm -ivh https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.
     ldapadd -v -D "cn=Manager,dc=secldap,dc=com" -w $SLAPPASS -f /openldap/schema/mfds-users.ldif -H ldapi:/// -c > /openldap/log/mfds-users.log; \
     ldapadd -v -D "cn=Manager,dc=secldap,dc=com" -w $SLAPPASS -f /openldap/schema/es_default_ldap_openldap.ldif -H ldapi:/// -c > /openldap/log/es_default_ldap_openldap.ldif; \
     ldapsearch -H ldapi:/// -x -b "cn=subschema" -s base + > /openldap/log/schema.log; \
-    curl -s -o /openldap/entrypoint.sh https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/linux/openldap/newpasswd.sh; \
+    curl -s -o /openldap/newpasswd.sh https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/linux/openldap/newpasswd.sh; \
     chmod +x /openldap/newpasswd.sh
+HEALTHCHECK --interval=30s --timeout=3s --start-period=30s --retries=3 \
+    CMD systemctl is-active --quiet slapd || exit 1
 CMD ["/sbin/init"]
