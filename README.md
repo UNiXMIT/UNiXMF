@@ -16,8 +16,6 @@
 - [Documentation](#documentation)
     - [Official](#official)
     - [Wiki](#wiki)
-- [KB Articles](#kb-articles)
-- [Docker](#docker)
 
 ## Documentation
 ### Official
@@ -33,18 +31,3 @@
 - [Native Or Managed Code](docs/vs/NativeOrManaged.md)
 - [SafeNet License Information](docs/cestracing.md)
 - [Import/Export Project from Eclipse](docs/eclipse/importexport.md)
-
-## Docker
-- [SQL Server](https://unixmit.github.io/UNiXextend/docker/mssql.md)
-- [Oracle](https://unixmit.github.io/UNiXextend/docker/oracle.md)
-- [PostgreSQL](https://unixmit.github.io/UNiXextend/docker/postgres.md)
-- [Informix](https://unixmit.github.io/UNiXextend/docker/informix.md)
-- [DB2](https://unixmit.github.io/UNiXextend/docker/db2.md)
-- [MySQL](https://unixmit.github.io/UNiXextend/docker/mysql.md)
-- [Sybase](https://unixmit.github.io/UNiXextend/docker/sybase.md)
-- [IBM MQ](https://unixmit.github.io/UNiXextend/docker/mq.md)
-- [Redis](https://unixmit.github.io/UNiXextend/docker/redis.md)
-- [APLS](https://unixmit.github.io/UNiXextend/docker/apls.md)
-- [NODE](https://unixmit.github.io/UNiXextend/docker/node.md)
-- [Squid](https://unixmit.github.io/UNiXextend/docker/squid.md)
-- [OpenLDAP](https://unixmit.github.io/UNiXextend/docker/openldap.md)
