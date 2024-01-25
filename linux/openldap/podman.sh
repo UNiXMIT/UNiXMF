@@ -35,7 +35,9 @@ removeContainer() {
 
 buildContainer() {
     printf "Building Container...\n\n"
+    curl -o $SCRIPT_DIR/Dockerfile https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/linux/openldap/Dockerfile
     sudo ${containerRuntime} build --no-cache --tag ${containerRepo} -f Dockerfile
+    rm Dockerfile
 }
 
 startContainer() {
@@ -43,6 +45,7 @@ startContainer() {
     sudo ${containerRuntime} run -d --name ${containerName} "${runOptions[@]}" ${containerRepo} 
 }
 
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 checkContainerRuntime
 removeContainer
 buildContainer
