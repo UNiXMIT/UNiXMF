@@ -5,8 +5,8 @@
 # Install Curl - https://github.com/curl/curl or dnf install curl
 # Install unixODBC-devel - dnf install unixODBC-devel
 # Install Microsoft ODBC driver 17 and MSSQL Tools - https://bit.ly/3Qpu1bX
-# Setup SQL Server - https://unixmit.github.io/UNiXextend/docker/mssql
-# Setup Redis - https://unixmit.github.io/UNiXextend/docker/redis
+# Setup SQL Server - https://unixmit.github.io/UNiXPod/mssql
+# Setup Redis - https://unixmit.github.io/UNiXPod/redis
 # ES Installed, environment set and ESCWA/MFDS64 running
 
 # DOWNLOAD AUTOPAC SCRIPT
