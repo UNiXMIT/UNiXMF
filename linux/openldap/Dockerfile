@@ -1,4 +1,4 @@
-FROM redhat/ubi9-init:latest
+FROM docker.io/redhat/ubi9-init:latest
 EXPOSE 389 636
 ENV SLAPPASS=strongPassword123
 RUN rpm -ivh https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm; \
