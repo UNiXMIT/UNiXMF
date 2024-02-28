@@ -1,6 +1,9 @@
 # TITLE
 ## Environment
-
+Enterprise Developer  
+Visual COBOL  
+Windows  
+Linux/UNIX
 
 ## Situation
 
