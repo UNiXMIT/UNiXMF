@@ -6,7 +6,7 @@
 # Install unixODBC-devel - dnf install unixODBC-devel
 # Install Microsoft ODBC driver 17 and MSSQL Tools - https://bit.ly/3Qpu1bX
 # Setup SQL Server - https://unixmit.github.io/UNiXPod/mssql
-# Setup Redis - https://unixmit.github.io/UNiXPod/redis
+# Setup Remote Redis - https://unixmit.github.io/UNiXPod/redis (optional)
 # ES Installed, environment set and ESCWA/MFDS64 running
 
 # DOWNLOAD AUTOPAC SCRIPT
@@ -62,9 +62,24 @@ setupAutoPAC()
     sleep 5
 
     # Redis
-    read -e -p "Redis Hostname or IP Address [$USEDB]: " -i $USEDB USEDB
     export REDISPORT=6379
-    read -e -p "Redis Port [6379]: " -i 6379 REDISPORT
+    while true; do
+        read -e -p "Use local Redis (y/n): " -i "y" REDIS
+        case "$REDIS" in
+            y|Y)
+                tmux new -d -s redis $COBDIR/bin/redis-server
+                break
+                ;;
+            n|N)
+                read -e -p "Redis Hostname or IP Address [$USEDB]: " -i $USEDB USEDB
+                read -e -p "Redis Port [6379]: " -i 6379 REDISPORT
+                break
+                ;;
+            *)
+                echo "Invalid input. Please enter y or n."
+                ;;
+        esac
+    done
 
     # ESCWA - Add SOR and PAC
     curl -s -X "POST" "http://localhost:10086/server/v1/config/groups/sors" -H "accept: application/json" -H "X-Requested-With: API" -H "Content-Type: application/json" -H "Origin: http://localhost:10086" -d "{\"SorName\": \"MyPSOR\", \"SorDescription\": \"My PAC SOR\", \"SorType\": \"redis\", \"SorConnectPath\": \"$USEDB:$REDISPORT\", \"TLS\": false}"
@@ -88,6 +103,9 @@ removeAutoPAC()
 {
     casstop /rREGION1 /f
     casstop /rREGION2 /f
+
+    # Redis
+    tmux kill-ses -t redis
 
     # ESCWA - Remove SOR, PAC and PAC Regions
     export SORUID=$(curl -s -X "GET" "http://localhost:10086/server/v1/config/groups/sors" -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: http://localhost:10086" | jq -r .[0].Uid)
@@ -124,5 +142,9 @@ if [[ $1 = "-h" ]]; then
 elif [[ $1 = "-r" ]]; then
     removeAutoPAC
 else
+    if [[ -z "${COBDIR}" ]]; then
+        echo "Error: COBDIR environment variable is not set!"
+        exit 1
+    fi
     setupAutoPAC
 fi

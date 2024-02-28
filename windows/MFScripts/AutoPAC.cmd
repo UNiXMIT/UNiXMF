@@ -2,10 +2,10 @@
 
 :: REQUIREMENTS
 :: Install jq - https://jqlang.github.io/jq/download/ or choco install jq
-:: Install Curl - https://github.com/curl/curl or choco install curl
+:: Install curl - https://github.com/curl/curl or choco install curl
 :: Install Microsoft ODBC driver 17 - https://bit.ly/49gESxo
 :: Setup SQL Server - https://unixmit.github.io/UNiXPod/mssql
-:: Setup Redis - https://unixmit.github.io/UNiXPod/redis
+:: Setup Remote Redis - https://unixmit.github.io/UNiXPod/redis (optional)
 :: ES Installed, environment set and ESCWA/MFDS running
 
 :: TO RUN THIS SCRIPT IN A COMMAND PROMPT
@@ -28,7 +28,12 @@ if %errorLevel% == 0 (
     GOTO :END
 )
 
-CALL "C:\Program Files (x86)\Micro Focus\Enterprise Developer\createenv.bat"
+IF "%COBDIR%"=="" (
+    ECHO Error: COBDIR environment variable is not set!
+    GOTO :END
+) ELSE (
+    SET "COBDIR=%COBDIR:;=%"
+)
 
 IF "%OPTS%"=="-r" GOTO :REMOVEAUTOPAC
 IF "%OPTS%"=="-R" GOTO :REMOVEAUTOPAC
@@ -65,9 +70,8 @@ SET /p "USERPASSWD=Database Password [strongPassword123]: "
 SET DRIVERNAME="{ODBC Driver 17 for SQL Server}"
 
 :: Create the MFDBFH.cfg
-SET MFDBFH_CONFIG=%MFDBFH_CONFIG%
+SET MFDBFH_CONFIG=%SAMPLEDIR%\PAC\MFDBFH.cfg
 IF EXIST %MFDBFH_CONFIG% DEL /F %MFDBFH_CONFIG%
-set MFDBFH_CONFIG=%MFDBFH_CONFIG%
 dbfhconfig -add -file:%MFDBFH_CONFIG% -server:MYSERVER -provider:ss -comment:"MSSQL"
 dbfhconfig -add -file:%MFDBFH_CONFIG% -server:MYSERVER -dsn:SS.MASTER -type:database -name:master -connect:Driver=%DRIVERNAME%;Server=%USEDB%;Database=master;UID=%USERID%;PWD=%USERPASSWD%;
 dbfhconfig -add -file:%MFDBFH_CONFIG% -server:MYSERVER -dsn:SS.VSAMDATA -type:datastore -name:VSAMDATA -connect:Driver=%DRIVERNAME%;Server=%USEDB%;Database=VSAMDATA;UID=%USERID%;PWD=%USERPASSWD%;
@@ -88,9 +92,23 @@ dbfhadmin -createdb -usedb:%USEDB% -provider:ss -type:crossregion -file:%SAMPLED
 timeout /T 5
 
 :: Redis
-SET /p "USEDB=Redis Hostname or IP Address [%USEDB%]: "
+:REDIS
 SET REDISPORT=6379
-SET /p "REDISPORT=Redis Port [6379]: "
+SET /p "REDIS=Use local Redis (y/n) [y]: " || REDIS=y
+IF "%REDIS%" EQUALS "y" OR "%REDIS%" EQUALS "Y" (
+    SET USEDB=127.0.0.1
+    SET /p "USEDB=Redis Hostname or IP Address [%USEDB%]: "
+    SET /p "REDISPORT=Redis Port [6379]: "
+    GOTO :exitREDIS
+) ELSE IF "%REDIS%" EQUALS "n" OR "%REDIS%" EQUALS "N" (
+    SET /p "USEDB=Redis Hostname or IP Address [%USEDB%]: "
+    SET /p "REDISPORT=Redis Port [6379]: "
+) ELSE (
+    echo Invalid input. Please enter y or n.
+)
+GOTO :REDIS
+
+:exitREDIS
 
 :: ESCWA - Add SOR and PAC
 curl -s -X "POST" "http://localhost:10086/server/v1/config/groups/sors" -H "accept: application/json" -H "X-Requested-With: API" -H "Content-Type: application/json" -H "Origin: http://localhost:10086" -d "{\"SorName\": \"MyPSOR\", \"SorDescription\": \"My PAC SOR\", \"SorType\": \"redis\", \"SorConnectPath\": \"%USEDB%:%REDISPORT%\", \"TLS\": false}"
@@ -135,6 +153,7 @@ GOTO :END
 ECHO REQUIREMENTS:
 ECHO  Administrative permissions required
 ECHO  jq - https://jqlang.github.io/jq/download/
+ECHO  curl - https://github.com/curl/curl
 ECHO.
 ECHO USAGE:
 ECHO  AutoPac                        Setup AutoPAC in ES
