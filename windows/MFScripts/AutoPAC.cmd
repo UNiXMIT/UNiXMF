@@ -5,7 +5,7 @@
 :: Install curl - https://github.com/curl/curl or choco install curl
 :: Install Microsoft ODBC driver 17 - https://bit.ly/49gESxo
 :: Setup SQL Server - https://unixmit.github.io/UNiXPod/mssql
-:: Setup Remote Redis - https://unixmit.github.io/UNiXPod/redis (optional)
+:: Setup Redis - https://unixmit.github.io/UNiXPod/redis
 :: ES Installed, environment set and ESCWA/MFDS running
 
 :: TO RUN THIS SCRIPT IN A COMMAND PROMPT

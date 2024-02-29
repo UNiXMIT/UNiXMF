@@ -2,11 +2,11 @@
 
 # REQUIREMENTS
 # Install jq - https://jqlang.github.io/jq/download/ or dnf install jq
-# Install Curl - https://github.com/curl/curl or dnf install curl
+# Install curl - https://github.com/curl/curl or dnf install curl
 # Install unixODBC-devel - dnf install unixODBC-devel
 # Install Microsoft ODBC driver 17 and MSSQL Tools - https://bit.ly/3Qpu1bX
 # Setup SQL Server - https://unixmit.github.io/UNiXPod/mssql
-# Setup Remote Redis - https://unixmit.github.io/UNiXPod/redis (optional)
+# Setup Redis - https://unixmit.github.io/UNiXPod/redis (optional)
 # ES Installed, environment set and ESCWA/MFDS64 running
 
 # DOWNLOAD AUTOPAC SCRIPT
@@ -62,11 +62,12 @@ setupAutoPAC()
     sleep 5
 
     # Redis
-    export REDISPORT=6379
     while true; do
         read -e -p "Use local Redis (y/n): " -i "y" REDIS
         case "$REDIS" in
             y|Y)
+                export USEDB=127.0.0.1
+                export REDISPORT=6379
                 tmux new -d -s redis $COBDIR/bin/redis-server
                 break
                 ;;
