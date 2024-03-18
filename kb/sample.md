@@ -3,7 +3,7 @@
 Enterprise Developer  
 Visual COBOL  
 Windows  
-Linux/UNIX
+Linux/UNIX  
 
 ## Situation
 
@@ -13,7 +13,7 @@ Linux/UNIX
 
 ## Additional Information
 More information can be found in the documentation:   
-ACUCOBOL-GT Version x.y.z Documentation Set > ACUCOBOL-GT Reference Manual    
+Welcome > Product Overview  
 
-The AcuCOBOL Documentation and Resources are available here:  
-https://www.microfocus.com/en-us/support/ACUCOBOL-GT%20(Extend)  
+The Enterprise Developer Documentation and Resources are available here:  
+https://www.microfocus.com/en-us/support/Micro%20Focus%20Enterprise%20Developer  
