@@ -10,7 +10,7 @@ Additionally, upon restarting MFDS, the open string of an XAR is altered to matc
 
 ## Resolution
 This can be caused by duplicating regions in an incorrect way, causing a XAR in multiple regions to have the same UID.  
-To resolve this issue, delete the affected XAR from each region and then re-add it, to ensure that every XAR obtains a unique UID.  
+To resolve this issue, delete the affected XAR from each region and then re-add it, to ensure that every XAR obtains a unique ID.  
 
 ## Additional Information
 More information about duplicating a region correctly can be found in the documentation:   
