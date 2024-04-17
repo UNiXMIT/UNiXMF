@@ -2,6 +2,7 @@
 ## [Enterprise Developer for Visual Studio Documentation](https://www.microfocus.com/documentation/enterprise-developer/ed-latest/ED-VS2022/index.html)
 
 - [Enterprise Developer for Eclipse Documentation](https://www.microfocus.com/documentation/enterprise-developer/ed-latest/ED-Eclipse/index.html)
+- [Enterprise Developer for Eclipse (UNIX) Documentation](https://www.microfocus.com/documentation/enterprise-developer/ed-latest/ED-EclipseUNIX/index.html)
 - [Enterprise Server for Windows Documentation](https://www.microfocus.com/documentation/enterprise-developer/ed-latest/ES-WIN/index.html)
 - [Enterprise Server for UNIX Documentation](https://www.microfocus.com/documentation/enterprise-developer/ed-latest/ES-UNIX/index.html)
 - [Visual Cobol for Visual Studio Documentation](https://www.microfocus.com/documentation/visual-cobol/vc-latest/VS2022/index.html)
