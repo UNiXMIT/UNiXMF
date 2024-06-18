@@ -1,4 +1,4 @@
-# Patch Update install fails read registry keys so it cannot detect the base installation
+# Patch Update install fails to read registry keys so it cannot detect the base installation
 ## Environment
 Enterprise Developer  
 Visual COBOL  
