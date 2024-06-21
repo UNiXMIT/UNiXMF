@@ -1,22 +1,8 @@
 # ES TLS Setup
-### TLS Certificate/Key
-Include the machine name as a Subject Alternative Name (SAN).  
+### TLS Certificate/Key 
 For example:  
 ```
-minica --domains '*.eu-west-2.compute.amazonaws.com,mfsupport'
-```
-#### Change Machine Name
-Windows:  
-```
-wmic computersystem where name="%computername%" call rename name="mfsupport"
-echo 127.0.0.1  mfsupport >> %WINDIR%\System32\drivers\etc\hosts
-shutdown /r
-```
-Linux:  
-```
-sudo hostnamectl set-hostname mfsupport
-sudo echo "127.0.0.1   mfsupport" >> /etc/hosts
-sudor reboot
+minica --domains '*.eu-west-2.compute.amazonaws.com'
 ```
 
 ### Environment Variables
