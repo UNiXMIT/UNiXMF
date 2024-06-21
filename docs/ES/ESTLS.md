@@ -3,19 +3,19 @@
 Include the machine name as a Subject Alternative Name (SAN).  
 For example:  
 ```
-minica --domains '*.eu-west-2.compute.amazonaws.com,support'
+minica --domains '*.eu-west-2.compute.amazonaws.com,mfsupport'
 ```
 #### Change Machine Name
 Windows:  
 ```
-wmic computersystem where name="%computername%" call rename name="support"
-echo 127.0.0.1  support >> %WINDIR%\System32\drivers\etc\hosts
+wmic computersystem where name="%computername%" call rename name="mfsupport"
+echo 127.0.0.1  mfsupport >> %WINDIR%\System32\drivers\etc\hosts
 shutdown /r
 ```
 Linux:  
 ```
-sudo hostnamectl set-hostname support
-sudo echo "127.0.0.1   support" >> /etc/hosts
+sudo hostnamectl set-hostname mfsupport
+sudo echo "127.0.0.1   mfsupport" >> /etc/hosts
 sudor reboot
 ```
 
@@ -24,6 +24,7 @@ sudor reboot
 MF_ROOT_CERT=RootCA.pem  
 MFDS_DNS_RESOLVE=Y  
 ```
+Restart ESCWA and MFDS.  
 
 ### cci.ini
 [cci.ini Documentation](https://www.microfocus.com/documentation/enterprise-developer/ed-latest/ED-VS2022/BKCCCCIINI.html)
