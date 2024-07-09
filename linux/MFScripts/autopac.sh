@@ -7,7 +7,7 @@
     # Install Microsoft ODBC driver 17 and MSSQL Tools - https://bit.ly/3Qpu1bX
     # Setup Postgres ODBC driver and Client Tools - postgresql-client and odbc-postgresql
     # Install Oracle Instant Client and set Oracle environment variables - https://bit.ly/3LcTnrd
-    # Install DB2 Client and catalog remote database
+    # Install DB2 Client - https://www.ibm.com/support/pages/download-initial-version-115-clients-and-drivers
 # Setup Redis - https://unixmit.github.io/UNiXPod/redis
 # ES Installed, environment set and ESCWA/MFDS64 running
 
@@ -128,13 +128,14 @@ DBDetails() {
 setupMSSQL() {
     export DRIVERNAME="{ODBC Driver 17 for SQL Server}"
     export MFPROVIDER=SS
+    export connString="Driver=$DRIVERNAME;Server=$USEDB,$DBPORT;Database=master;UID=$USERID;PWD=$USERPASSWD;"
 
     # Create the MFDBFH.cfg
     dbfhconfig -add -file:$MFDBFH_CONFIG -server:MYSERVER -provider:$MFPROVIDER -comment:"MSSQL"
-    dbfhconfig -add -file:$MFDBFH_CONFIG -server:MYSERVER -dsn:$MFPROVIDER.MASTER -type:database -name:master -connect:"Driver=$DRIVERNAME;Server=$USEDB,$DBPORT;Database=master;UID=$USERID;PWD=$USERPASSWD;"
-    dbfhconfig -add -file:$MFDBFH_CONFIG -server:MYSERVER -dsn:$MFPROVIDER.VSAMDATA -type:datastore -name:VSAMDATA -connect:"Driver=$DRIVERNAME;Server=$USEDB,$DBPORT;Database=VSAMDATA;UID=$USERID;PWD=$USERPASSWD;"
-    dbfhconfig -add -file:$MFDBFH_CONFIG -server:MYSERVER -dsn:$MFPROVIDER.MYSERVER -type:region -name:MYSERVER -connect:"Driver=$DRIVERNAME;Server=$USEDB,$DBPORT;Database=MYSERVER;UID=$USERID;PWD=$USERPASSWD;"
-    dbfhconfig -add -file:$MFDBFH_CONFIG -server:MYSERVER -dsn:$MFPROVIDER.CROSSREGION -type:crossRegion -connect:"Driver=$DRIVERNAME;Server=$USEDB,$DBPORT;Database=_\$XREGN\$;UID=$USERID;PWD=$USERPASSWD;"
+    dbfhconfig -add -file:$MFDBFH_CONFIG -server:MYSERVER -dsn:$MFPROVIDER.MASTER -type:database -name:master -connect:"$connString"
+    dbfhconfig -add -file:$MFDBFH_CONFIG -server:MYSERVER -dsn:$MFPROVIDER.VSAMDATA -type:datastore -name:VSAMDATA -connect:"$connString"
+    dbfhconfig -add -file:$MFDBFH_CONFIG -server:MYSERVER -dsn:$MFPROVIDER.MYSERVER -type:region -name:MYSERVER -connect:"$connString"
+    dbfhconfig -add -file:$MFDBFH_CONFIG -server:MYSERVER -dsn:$MFPROVIDER.CROSSREGION -type:crossRegion -connect:"$connString"
 
     # Create the datastore
     dbfhdeploy -configfile:$MFDBFH_CONFIG data create sql://MYSERVER/VSAMDATA
@@ -155,13 +156,14 @@ setupPG() {
     export PGPORT=$DBPORT
     export PGUSER=$USERID
     export PGPASSWORD=$USERPASSWD
+    export connString="Driver=$DRIVERNAME;Server=$USEDB;Port=$DBPORT;Database=postgres;UID=$USERID;PWD=$USERPASSWD;"
 
     # Create the MFDBFH.cfg
     dbfhconfig -add -file:$MFDBFH_CONFIG -server:MYSERVER -provider:$MFPROVIDER -comment:"PostgreSQL"
-    dbfhconfig -add -file:$MFDBFH_CONFIG -server:MYSERVER -dsn:$MFPROVIDER.POSTGRES -type:database -name:postgres -connect:"Driver=$DRIVERNAME;Server=$USEDB;Port=$DBPORT;Database=postgres;UID=$USERID;PWD=$USERPASSWD;"
-    dbfhconfig -add -file:$MFDBFH_CONFIG -server:MYSERVER -dsn:$MFPROVIDER.VSAMDATA -type:datastore -name:VSAMDATA -connect:"Driver=$DRIVERNAME;Server=$USEDB;Port=$DBPORT;Database=VSAMDATA;UID=$USERID;PWD=$USERPASSWD;"
-    dbfhconfig -add -file:$MFDBFH_CONFIG -server:MYSERVER -dsn:$MFPROVIDER.MYSERVER -type:region -name:MYSERVER -connect:"Driver=$DRIVERNAME;Server=$USEDB;Port=$DBPORT;Database=MYSERVER;UID=$USERID;PWD=$USERPASSWD;"
-    dbfhconfig -add -file:$MFDBFH_CONFIG -server:MYSERVER -dsn:$MFPROVIDER.CROSSREGION -type:crossRegion -connect:"Driver=$DRIVERNAME;Server=$USEDB;Port=$DBPORT;Database=\$XREGN\$;UID=$USERID;PWD=$USERPASSWD;"
+    dbfhconfig -add -file:$MFDBFH_CONFIG -server:MYSERVER -dsn:$MFPROVIDER.POSTGRES -type:database -name:postgres -connect:"$connString"
+    dbfhconfig -add -file:$MFDBFH_CONFIG -server:MYSERVER -dsn:$MFPROVIDER.VSAMDATA -type:datastore -name:VSAMDATA -connect:"$connString"
+    dbfhconfig -add -file:$MFDBFH_CONFIG -server:MYSERVER -dsn:$MFPROVIDER.MYSERVER -type:region -name:MYSERVER -connect:"$connString"
+    dbfhconfig -add -file:$MFDBFH_CONFIG -server:MYSERVER -dsn:$MFPROVIDER.CROSSREGION -type:crossRegion -connect:"$connString"
 
     # Create the datastore
     dbfhdeploy -configfile:$MFDBFH_CONFIG data create sql://MYSERVER/VSAMDATA
@@ -201,14 +203,18 @@ setupORA() {
 
 setupDB2() {
     export DRIVERNAME="{IBM DB2 ODBC DRIVER}"
-    read -e -p "DB2 Instance [db2inst1]: " -i "db2inst1" DB2INST
+    read -e -p "DB2 Instance Name [db2inst1]: " -i "db2inst1" DB2INST
     export MFPROVIDER=DB2
+    export connString="Driver=$DRIVERNAME;Server=$USEDB;Port=$DBPORT;Database=$DB2INST;uid=$USERID;pwd=$USERPASSWD"
+    db2 catalog tcpip node db2 remote $USEDB server $DBPORT
+    db2 catalog database $DB2INST at node db2
+    db2 terminate
 
     # Create the MFDBFH.cfg
     dbfhconfig -add -file:$MFDBFH_CONFIG -server:MYSERVER -provider:$MFPROVIDER -comment:"DB2"
-    dbfhconfig -add -file:$MFDBFH_CONFIG -server:MYSERVER -dsn:$MFPROVIDER.VSAMDATA -type:datastore -name:VSAMDATA -connect:"Driver=$DRIVERNAME;Server=$USEDB;Port=$DBPORT;Database=$DB2INST;uid=$USERID;pwd=$USERPASSWD" -db:support
-    dbfhconfig -add -file:$MFDBFH_CONFIG -server:MYSERVER -dsn:$MFPROVIDER.MYSERVER -type:region -name:MYSERVER -connect:"Driver=$DRIVERNAME;Server=$USEDB;Port=$DBPORT;Database=$DB2INST;uid=$USERID;pwd=$USERPASSWD" -db:support
-    dbfhconfig -add -file:$MFDBFH_CONFIG -server:MYSERVER -dsn:$MFPROVIDER.CROSSREGION -type:crossRegion -connect:"Driver=$DRIVERNAME;Server=$USEDB;Port=$DBPORT;Database=$DB2INST;uid=$USERID;pwd=$USERPASSWD" -db:support
+    dbfhconfig -add -file:$MFDBFH_CONFIG -server:MYSERVER -dsn:$MFPROVIDER.VSAMDATA -type:datastore -name:VSAMDATA -connect:"$connString" -db:support
+    dbfhconfig -add -file:$MFDBFH_CONFIG -server:MYSERVER -dsn:$MFPROVIDER.MYSERVER -type:region -name:MYSERVER -connect:"$connString" -db:support
+    dbfhconfig -add -file:$MFDBFH_CONFIG -server:MYSERVER -dsn:$MFPROVIDER.CROSSREGION -type:crossRegion -connect:"$connString" -db:support
 
     # Create the datastore
     # dbfhdeploy -configfile:$MFDBFH_CONFIG data create sql://MYSERVER/VSAMDATA
