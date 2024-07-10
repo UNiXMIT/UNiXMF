@@ -37,6 +37,8 @@ setupAutoPAC() {
     cd $SAMPLEDIR/PAC
     curl -s -O https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/linux/MFScripts/ALLSERVERS.xml
     mfds -g 5 $SAMPLEDIR/PAC/ALLSERVERS.xml
+    export MFDBFH_CONFIG=$SAMPLEDIR/PAC/MFDBFH.cfg
+    [[ -f $MFDBFH_CONFIG ]] && rm -rf $MFDBFH_CONFIG
 
     sleep 5
 
@@ -48,8 +50,6 @@ setupAutoPAC() {
     printf "4) DB2\n"
     while true; do
         read -p "Database Choice: " choice
-        export MFDBFH_CONFIG=$SAMPLEDIR/PAC/MFDBFH.cfg
-        [[ -f $MFDBFH_CONFIG ]] && rm -rf $MFDBFH_CONFIG
         case $choice in
             1)
                 export DBPORT=1433
@@ -87,9 +87,9 @@ setupAutoPAC() {
     sleep 5
 
     # ESCWA - Add SOR and PAC
-    curl -s -X "POST" "http://localhost:10086/server/v1/config/groups/sors" -H "accept: application/json" -H "X-Requested-With: API" -H "Content-Type: application/json" -H "Origin: http://localhost:10086" -d "{\"SorName\": \"MyPSOR\", \"SorDescription\": \"My PAC SOR\", \"SorType\": \"redis\", \"SorConnectPath\": \"$USEDB:$REDISPORT\", \"TLS\": false}"
+    curl -s -X "POST" "http://localhost:10086/server/v1/config/groups/sors" -H "accept: application/json" -H "X-Requested-With: API" -H "Content-Type: application/json" -H "Origin: http://localhost:10086" -d "{\"SorName\": \"MYPSOR\", \"SorDescription\": \"My PAC SOR\", \"SorType\": \"redis\", \"SorConnectPath\": \"$USEDB:$REDISPORT\", \"TLS\": false}"
     export SORUID=$(curl -s -X "GET" "http://localhost:10086/server/v1/config/groups/sors" -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: http://localhost:10086" | jq -r .[0].Uid)
-    curl -s -X "POST" "http://localhost:10086/server/v1/config/groups/pacs" -H "accept: application/json" -H "X-Requested-With: API" -H "Content-Type: application/json" -H "Origin: http://localhost:10086" -d "{\"PacName\": \"MYSERVER\", \"PacDescription\": \"My PAC\", \"PacResourceSorUid\": \"$SORUID\"}"
+    curl -s -X "POST" "http://localhost:10086/server/v1/config/groups/pacs" -H "accept: application/json" -H "X-Requested-With: API" -H "Content-Type: application/json" -H "Origin: http://localhost:10086" -d "{\"PacName\": \"MYPAC\", \"PacDescription\": \"My PAC\", \"PacResourceSorUid\": \"$SORUID\"}"
     export PACUID=$(curl -s -X "GET" "http://localhost:10086/server/v1/config/groups/pacs" -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: http://localhost:10086" | jq -r .[0].Uid)
     curl -X "POST" "http://localhost:10086/native/v1/config/groups/pacs/$PACUID/install" -H "accept: application/json" -H "X-Requested-With: API" -H "Content-Type: application/json" -H "Origin: http://localhost:10086" -d "{\"Regions\": [{\"Host\": \"127.0.0.1\", \"Port\": \"86\", \"CN\": \"REGION1\"},{\"Host\": \"127.0.0.1\", \"Port\": \"86\", \"CN\": \"REGION2\"}]}"
 
@@ -132,16 +132,16 @@ setupMSSQL() {
 
     # Create the MFDBFH.cfg
     dbfhconfig -add -file:$MFDBFH_CONFIG -server:MYSERVER -provider:$MFPROVIDER -comment:"MSSQL"
-    dbfhconfig -add -file:$MFDBFH_CONFIG -server:MYSERVER -dsn:$MFPROVIDER.MASTER -type:database -name:master -connect:"$connString"
-    dbfhconfig -add -file:$MFDBFH_CONFIG -server:MYSERVER -dsn:$MFPROVIDER.VSAMDATA -type:datastore -name:VSAMDATA -connect:"$connString"
-    dbfhconfig -add -file:$MFDBFH_CONFIG -server:MYSERVER -dsn:$MFPROVIDER.MYSERVER -type:region -name:MYSERVER -connect:"$connString"
-    dbfhconfig -add -file:$MFDBFH_CONFIG -server:MYSERVER -dsn:$MFPROVIDER.CROSSREGION -type:crossRegion -connect:"$connString"
+    dbfhconfig -add -file:$MFDBFH_CONFIG -server:MYSERVER -dsn:$MFPROVIDER.MASTER -type:database -name:master -connect:"Driver=$DRIVERNAME;Server=$USEDB;Database=master;UID=$USERID;PWD=$USERPASSWD;"
+    dbfhconfig -add -file:$MFDBFH_CONFIG -server:MYSERVER -dsn:$MFPROVIDER.VSAMDATA -type:datastore -name:VSAMDATA -connect:"Driver=$DRIVERNAME;Server=$USEDB;Database=VSAMDATA;UID=$USERID;PWD=$USERPASSWD;"
+    dbfhconfig -add -file:$MFDBFH_CONFIG -server:MYSERVER -dsn:$MFPROVIDER.MYPAC -type:region -name:MYPAC -connect:"Driver=$DRIVERNAME;Server=$USEDB;Database=MYPAC;UID=$USERID;PWD=$USERPASSWD;"
+    dbfhconfig -add -file:$MFDBFH_CONFIG -server:MYSERVER -dsn:$MFPROVIDER.CROSSREGION -type:crossRegion -connect:"Driver=$DRIVERNAME;Server=$USEDB;Database=_\$XREGN\$;UID=$USERID;PWD=$USERPASSWD;"
 
     # Create the datastore
     dbfhdeploy -configfile:$MFDBFH_CONFIG data create sql://MYSERVER/VSAMDATA
 
     # Create the region database
-    dbfhadmin -script -type:region -provider:$MFPROVIDER -name:MYSERVER -file:$SAMPLEDIR/PAC/createRegion.sql
+    dbfhadmin -script -type:region -provider:$MFPROVIDER -name:MYPAC -file:$SAMPLEDIR/PAC/createRegion.sql
     dbfhadmin -createdb -usedb:$USEDB -provider:$MFPROVIDER -type:region -file:$SAMPLEDIR/PAC/createRegion.sql -user:$USERID -password:$USERPASSWD
 
     # Create the crossregion database
@@ -156,14 +156,13 @@ setupPG() {
     export PGPORT=$DBPORT
     export PGUSER=$USERID
     export PGPASSWORD=$USERPASSWD
-    export connString="Driver=$DRIVERNAME;Server=$USEDB;Port=$DBPORT;Database=postgres;UID=$USERID;PWD=$USERPASSWD;"
 
     # Create the MFDBFH.cfg
     dbfhconfig -add -file:$MFDBFH_CONFIG -server:MYSERVER -provider:$MFPROVIDER -comment:"PostgreSQL"
-    dbfhconfig -add -file:$MFDBFH_CONFIG -server:MYSERVER -dsn:$MFPROVIDER.POSTGRES -type:database -name:postgres -connect:"$connString"
-    dbfhconfig -add -file:$MFDBFH_CONFIG -server:MYSERVER -dsn:$MFPROVIDER.VSAMDATA -type:datastore -name:VSAMDATA -connect:"$connString"
-    dbfhconfig -add -file:$MFDBFH_CONFIG -server:MYSERVER -dsn:$MFPROVIDER.MYSERVER -type:region -name:MYSERVER -connect:"$connString"
-    dbfhconfig -add -file:$MFDBFH_CONFIG -server:MYSERVER -dsn:$MFPROVIDER.CROSSREGION -type:crossRegion -connect:"$connString"
+    dbfhconfig -add -file:$MFDBFH_CONFIG -server:MYSERVER -dsn:$MFPROVIDER.POSTGRES -type:database -name:postgres -connect:"Driver=$DRIVERNAME;Server=$USEDB;Port=$DBPORT;Database=postgres;UID=$USERID;PWD=$USERPASSWD;"
+    dbfhconfig -add -file:$MFDBFH_CONFIG -server:MYSERVER -dsn:$MFPROVIDER.VSAMDATA -type:datastore -name:VSAMDATA -connect:"Driver=$DRIVERNAME;Server=$USEDB;Port=$DBPORT;Database=VSAMDATA;UID=$USERID;PWD=$USERPASSWD;"
+    dbfhconfig -add -file:$MFDBFH_CONFIG -server:MYSERVER -dsn:$MFPROVIDER.MYSERVER -type:region -name:MYSERVER -connect:"Driver=$DRIVERNAME;Server=$USEDB;Port=$DBPORT;Database=MYSERVER;UID=$USERID;PWD=$USERPASSWD;"
+    dbfhconfig -add -file:$MFDBFH_CONFIG -server:MYSERVER -dsn:$MFPROVIDER.CROSSREGION -type:crossRegion -connect:"Driver=$DRIVERNAME;Server=$USEDB;Port=$DBPORT;Database=\$XREGN\$;UID=$USERID;PWD=$USERPASSWD;"
 
     # Create the datastore
     dbfhdeploy -configfile:$MFDBFH_CONFIG data create sql://MYSERVER/VSAMDATA
