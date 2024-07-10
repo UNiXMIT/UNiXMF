@@ -161,14 +161,14 @@ setupPG() {
     dbfhconfig -add -file:$MFDBFH_CONFIG -server:MYSERVER -provider:$MFPROVIDER -comment:"PostgreSQL"
     dbfhconfig -add -file:$MFDBFH_CONFIG -server:MYSERVER -dsn:$MFPROVIDER.POSTGRES -type:database -name:postgres -connect:"Driver=$DRIVERNAME;Server=$USEDB;Port=$DBPORT;Database=postgres;UID=$USERID;PWD=$USERPASSWD;"
     dbfhconfig -add -file:$MFDBFH_CONFIG -server:MYSERVER -dsn:$MFPROVIDER.VSAMDATA -type:datastore -name:VSAMDATA -connect:"Driver=$DRIVERNAME;Server=$USEDB;Port=$DBPORT;Database=VSAMDATA;UID=$USERID;PWD=$USERPASSWD;"
-    dbfhconfig -add -file:$MFDBFH_CONFIG -server:MYSERVER -dsn:$MFPROVIDER.MYSERVER -type:region -name:MYSERVER -connect:"Driver=$DRIVERNAME;Server=$USEDB;Port=$DBPORT;Database=MYSERVER;UID=$USERID;PWD=$USERPASSWD;"
+    dbfhconfig -add -file:$MFDBFH_CONFIG -server:MYSERVER -dsn:$MFPROVIDER.MYPAC -type:region -name:MYPAC -connect:"Driver=$DRIVERNAME;Server=$USEDB;Port=$DBPORT;Database=MYPAC;UID=$USERID;PWD=$USERPASSWD;"
     dbfhconfig -add -file:$MFDBFH_CONFIG -server:MYSERVER -dsn:$MFPROVIDER.CROSSREGION -type:crossRegion -connect:"Driver=$DRIVERNAME;Server=$USEDB;Port=$DBPORT;Database=\$XREGN\$;UID=$USERID;PWD=$USERPASSWD;"
 
     # Create the datastore
     dbfhdeploy -configfile:$MFDBFH_CONFIG data create sql://MYSERVER/VSAMDATA
 
     # Create the region database
-    dbfhadmin -script -type:region -provider:$MFPROVIDER -name:MYSERVER -file:$SAMPLEDIR/PAC/createRegion.sql
+    dbfhadmin -script -type:region -provider:$MFPROVIDER -name:MYPAC -file:$SAMPLEDIR/PAC/createRegion.sql
     dbfhadmin -createdb -provider:$MFPROVIDER -type:region -file:$SAMPLEDIR/PAC/createRegion.sql -user:$USERID -password:$USERPASSWD
 
     # Create the crossregion database
@@ -185,14 +185,14 @@ setupORA() {
     # Create the MFDBFH.cfg
     dbfhconfig -add -file:$MFDBFH_CONFIG -server:MYSERVER -provider:$MFPROVIDER -comment:"Oracle"
     dbfhconfig -add -file:$MFDBFH_CONFIG -server:MYSERVER -dsn:$MFPROVIDER.VSAMDATA -type:datastore -name:VSAMDATA -user:$USERID -password:$USERPASSWD -db:oracle
-    dbfhconfig -add -file:$MFDBFH_CONFIG -server:MYSERVER -dsn:$MFPROVIDER.MYSERVER -type:region -name:MYSERVER -user:$USERID -password:$USERPASSWD -db:oracle
+    dbfhconfig -add -file:$MFDBFH_CONFIG -server:MYSERVER -dsn:$MFPROVIDER.MYPAC -type:region -name:MYPAC -user:$USERID -password:$USERPASSWD -db:oracle
     dbfhconfig -add -file:$MFDBFH_CONFIG -server:MYSERVER -dsn:$MFPROVIDER.CROSSREGION -type:crossRegion -user:$USERID -password:$USERPASSWD -db:oracle
 
     # Create the datastore
     dbfhdeploy -configfile:$MFDBFH_CONFIG data create sql://MYSERVER/VSAMDATA
 
     # Create the region database
-    dbfhadmin -script -type:region -provider:$MFPROVIDER -name:MYSERVER -file:$SAMPLEDIR/PAC/createRegion.sql
+    dbfhadmin -script -type:region -provider:$MFPROVIDER -name:MYPAC -file:$SAMPLEDIR/PAC/createRegion.sql
     dbfhadmin -createdb -provider:$MFPROVIDER -type:region -file:$SAMPLEDIR/PAC/createRegion.sql -user:$USERID -password:$USERPASSWD -existdb:oracle
 
     # Create the crossregion database
@@ -212,7 +212,7 @@ setupDB2() {
     # Create the MFDBFH.cfg
     dbfhconfig -add -file:$MFDBFH_CONFIG -server:MYSERVER -provider:$MFPROVIDER -comment:"DB2"
     dbfhconfig -add -file:$MFDBFH_CONFIG -server:MYSERVER -dsn:$MFPROVIDER.VSAMDATA -type:datastore -name:VSAMDATA -connect:"$connString" -db:support
-    dbfhconfig -add -file:$MFDBFH_CONFIG -server:MYSERVER -dsn:$MFPROVIDER.MYSERVER -type:region -name:MYSERVER -connect:"$connString" -db:support
+    dbfhconfig -add -file:$MFDBFH_CONFIG -server:MYSERVER -dsn:$MFPROVIDER.MYPAC -type:region -name:MYPAC -connect:"$connString" -db:support
     dbfhconfig -add -file:$MFDBFH_CONFIG -server:MYSERVER -dsn:$MFPROVIDER.CROSSREGION -type:crossRegion -connect:"$connString" -db:support
 
     # Create the datastore
@@ -224,7 +224,7 @@ setupDB2() {
     db2 -svtf $SAMPLEDIR/PAC/VSAMDATA.sql
 
     # Create the region database
-    dbfhadmin -script -type:region -provider:$MFPROVIDER -name:MYSERVER -file:$SAMPLEDIR/PAC/createRegion.sql -existdb:$DB2INST
+    dbfhadmin -script -type:region -provider:$MFPROVIDER -name:MYPAC -file:$SAMPLEDIR/PAC/createRegion.sql -existdb:$DB2INST
     # dbfhadmin -createdb -provider:$MFPROVIDER -type:region -file:$SAMPLEDIR/PAC/createRegion.sql
     # WORKAROUND
     sed -i "/CONNECT TO/c\CONNECT TO $DB2INST USER $USERID USING $USERPASSWD;" $SAMPLEDIR/PAC/createRegion.sql

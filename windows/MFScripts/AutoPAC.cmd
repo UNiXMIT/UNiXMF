@@ -71,9 +71,9 @@ timeout /T 5
 :DBCHOICE
 ECHO Which database?
 ECHO 1) SQL Server
-@REM ECHO 2) PostgreSQL
-@REM ECHO 3) Oracle
-@REM ECHO 4) DB2
+:: ECHO 2) PostgreSQL
+:: ECHO 3) Oracle
+:: ECHO 4) DB2
 
 set /p choice="Database Choice: "
 IF "%choice%"=="1" SET "DBPORT=1433"
@@ -121,7 +121,30 @@ dbfhadmin -createdb -usedb:%USEDB% -provider:%MFPROVIDER% -type:crossregion -fil
 GOTO :REDIS
 
 :setupPG
+SET DRIVERNAME="{PostgreSQL ANSI}"
+SET MFPROVIDER=PG
+SET PGHOST=%USEDB%
+SET PGPORT=%DBPORT%
+SET PGUSER=%USERID%
+SET PGPASSWORD=%USERPASSWD%
 
+:: Create the MFDBFH.cfg
+dbfhconfig -add -file:%MFDBFH_CONFIG% -server:MYSERVER -provider:%MFPROVIDER% -comment:"PostgreSQL"
+dbfhconfig -add -file:%MFDBFH_CONFIG% -server:MYSERVER -dsn:%MFPROVIDER%.POSTGRES -type:database -name:postgres -connect:""Driver=%DRIVERNAME%;Server=%USEDB%;Port=%DBPORT%;Database=postgres;UID=%USERID%;PWD=%USERPASSWD%;""
+dbfhconfig -add -file:%MFDBFH_CONFIG% -server:MYSERVER -dsn:%MFPROVIDER%.VSAMDATA -type:datastore -name:VSAMDATA -connect:""Driver=%DRIVERNAME%;Server=%USEDB%,%DBPORT%;Database=VSAMDATA;UID=%USERID%;PWD=%USERPASSWD%;""
+dbfhconfig -add -file:%MFDBFH_CONFIG% -server:MYSERVER -dsn:%MFPROVIDER%.MYPAC -type:region -name:MYPAC -connect:""Driver=%DRIVERNAME%;Server=%USEDB%,%DBPORT%;Database=MYPAC;UID=%USERID%;PWD=%USERPASSWD%;""
+dbfhconfig -add -file:%MFDBFH_CONFIG% -server:MYSERVER -dsn:%MFPROVIDER%.CROSSREGION -type:crossRegion -connect:""Driver=%DRIVERNAME%;Server=%USEDB%,%DBPORT%;Database=$XREGN$;UID=%USERID%;PWD=%USERPASSWD%;""
+
+:: Create the datastore
+dbfhdeploy -configfile:%MFDBFH_CONFIG% data create sql://MYSERVER/VSAMDATA
+
+:: Create the region database
+dbfhadmin -script -type:region -provider:%MFPROVIDER% -name:MYPAC -file:%SAMPLEDIR%\PAC\createRegion.sql
+dbfhadmin -createdb -provider:%MFPROVIDER% -type:region -file:%SAMPLEDIR%\PAC\createRegion.sql -user:%USERID% -password:%USERPASSWD%
+
+:: Create the crossregion database
+dbfhadmin -script -type:crossregion -provider:%MFPROVIDER% -file:%SAMPLEDIR%\PAC\CreateCrossRegion.sql
+dbfhadmin -createdb -provider:%MFPROVIDER% -type:crossregion -file:%SAMPLEDIR%\PAC\CreateCrossRegion.sql -user:%USERID% -password:%USERPASSWD%
 
 GOTO :REDIS
 
