@@ -46,7 +46,7 @@ IF "%COBDIR%"=="" (
 :ESCHOICE
 SET ESUSER=SYSAD
 SET ESPASS=SYSAD
-SET /p ESSEC="Enterprise Server Security Enabled [Y/N]?"
+SET /p ESSEC="Enterprise Server Security Enabled [Y/N]?: "
 IF "%ESSEC%"=="Y" (
     SET /p "ESUSER=Enterprise Server User [%ESUSER%]: "
     SET /p "ESPASS=Enterprise Server Password [%ESPASS%]: "
@@ -62,7 +62,7 @@ IF "%ESSEC%"=="n" GOTO :CONTINUE1
 GOTO :ESCHOICE
 
 :ESCWACOOKIE
-curl -s -X POST -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: http://localhost:10086" -H "Content-Type: application/json" -c "cookieFile.txt" -d "{\"mfUser\": \"%ESUSER%\",\"mfPassword\": \"%ESPASS%\"}" http://localhost:10086/logon
+curl -s -X POST -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: http://localhost:10086" -H "Content-Type: application/json" -c "C:\Users\Public\Documents\cookieFile.txt" -d "{\"mfUser\": \"%ESUSER%\",\"mfPassword\": \"%ESPASS%\"}" http://localhost:10086/logon
 
 :CONTINUE1
 IF "%OPTS%"=="-r" GOTO :REMOVEAUTOPAC
@@ -82,8 +82,7 @@ MD %SAMPLEDIR%\PAC\regions\REGION1\system
 MD %SAMPLEDIR%\PAC\regions\REGION2\loadlib
 MD %SAMPLEDIR%\PAC\regions\REGION2\system
 CACLS %SAMPLEDIR%\PAC /e /p Everyone:f
-CD %SAMPLEDIR%\PAC
-curl -s -O https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/windows/MFScripts/ALLSERVERS.xml
+curl -s -o %SAMPLEDIR%\PAC\ALLSERVERS.xml https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/windows/MFScripts/ALLSERVERS.xml
 mfds -g 5 %SAMPLEDIR%\PAC\ALLSERVERS.xml D %ESUSER% %ESPASS%
 SET MFDBFH_CONFIG=%SAMPLEDIR%\PAC\MFDBFH.cfg
 IF EXIST %MFDBFH_CONFIG% DEL /F %MFDBFH_CONFIG%
@@ -187,15 +186,15 @@ SET /p "USEDB=Redis Hostname or IP Address [%USEDB%]: "
 SET /p "REDISPORT=Redis Port [6379]: "
 
 :ESCWA
-curl -s -X "POST" "http://localhost:10086/server/v1/config/groups/sors" -H "accept: application/json" -H "X-Requested-With: API" -H "Content-Type: application/json" -H "Origin: http://localhost:10086" -b "cookieFile.txt" -d "{\"SorName\": \"MYPSOR\", \"SorDescription\": \"My PAC SOR\", \"SorType\": \"redis\", \"SorConnectPath\": \"%USEDB%:%REDISPORT%\", \"TLS\": false}"
+curl -s -X "POST" "http://localhost:10086/server/v1/config/groups/sors" -H "accept: application/json" -H "X-Requested-With: API" -H "Content-Type: application/json" -H "Origin: http://localhost:10086" -b "C:\Users\Public\Documents\cookieFile.txt" -d "{\"SorName\": \"MYPSOR\", \"SorDescription\": \"My PAC SOR\", \"SorType\": \"redis\", \"SorConnectPath\": \"%USEDB%:%REDISPORT%\", \"TLS\": false}"
 
-FOR /F "tokens=* USEBACKQ" %%g IN (`curl -s -X "GET" "http://localhost:10086/server/v1/config/groups/sors" -b "cookieFile.txt" -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: http://localhost:10086" ^| jq -r .[0].Uid`) do (SET "SORUID=%%g")
+FOR /F "tokens=* USEBACKQ" %%g IN (`curl -s -X "GET" "http://localhost:10086/server/v1/config/groups/sors" -b "C:\Users\Public\Documents\cookieFile.txt" -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: http://localhost:10086" ^| jq -r .[0].Uid`) do (SET "SORUID=%%g")
 
-curl -s -X "POST" "http://localhost:10086/server/v1/config/groups/pacs" -H "accept: application/json" -H "X-Requested-With: API" -H "Content-Type: application/json" -H "Origin: http://localhost:10086" -b "cookieFile.txt" -d "{\"PacName\": \"MYPAC\", \"PacDescription\": \"My PAC\", \"PacResourceSorUid\": \"%SORUID%\"}"
+curl -s -X "POST" "http://localhost:10086/server/v1/config/groups/pacs" -H "accept: application/json" -H "X-Requested-With: API" -H "Content-Type: application/json" -H "Origin: http://localhost:10086" -b "C:\Users\Public\Documents\cookieFile.txt" -d "{\"PacName\": \"MYPAC\", \"PacDescription\": \"My PAC\", \"PacResourceSorUid\": \"%SORUID%\"}"
 
-FOR /F "tokens=* USEBACKQ" %%g IN (`curl -s -X "GET" "http://localhost:10086/server/v1/config/groups/pacs" -b "cookieFile.txt" -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: http://localhost:10086" ^| jq -r .[0].Uid`) do (SET "PACUID=%%g")
+FOR /F "tokens=* USEBACKQ" %%g IN (`curl -s -X "GET" "http://localhost:10086/server/v1/config/groups/pacs" -b "C:\Users\Public\Documents\cookieFile.txt" -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: http://localhost:10086" ^| jq -r .[0].Uid`) do (SET "PACUID=%%g")
 
-curl -X "POST" "http://localhost:10086/native/v1/config/groups/pacs/%PACUID%/install" -H "accept: application/json" -H "X-Requested-With: API" -H "Content-Type: application/json" -H "Origin: http://localhost:10086" -b "cookieFile.txt" -d "{\"Regions\": [{\"Host\": \"127.0.0.1\", \"Port\": \"86\", \"CN\": \"REGION1\"},{\"Host\": \"127.0.0.1\", \"Port\": \"86\", \"CN\": \"REGION2\"}]}"
+curl -s -X "POST" "http://localhost:10086/native/v1/config/groups/pacs/%PACUID%/install" -H "accept: application/json" -H "X-Requested-With: API" -H "Content-Type: application/json" -H "Origin: http://localhost:10086" -b "C:\Users\Public\Documents\cookieFile.txt" -d "{\"Regions\": [{\"Host\": \"127.0.0.1\", \"Port\": \"86\", \"CN\": \"REGION1\"},{\"Host\": \"127.0.0.1\", \"Port\": \"86\", \"CN\": \"REGION2\"}]}"
 
 timeout /T 5
 
@@ -210,17 +209,17 @@ casstop /rREGION1 /f /u%ESUSER% /p%ESPASS%
 casstop /rREGION2 /f /u%ESUSER% /p%ESPASS%
 
 :: ESCWA - Remove SOR, PAC and PAC Regions
-FOR /F "tokens=* USEBACKQ" %%g IN (`curl -s -X "GET" "http://localhost:10086/server/v1/config/groups/sors" -b "cookieFile.txt" -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: http://localhost:10086" ^| jq -r .[0].Uid`) do (SET "SORUID=%%g")
+FOR /F "tokens=* USEBACKQ" %%g IN (`curl -s -X "GET" "http://localhost:10086/server/v1/config/groups/sors" -b "C:\Users\Public\Documents\cookieFile.txt" -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: http://localhost:10086" ^| jq -r .[0].Uid`) do (SET "SORUID=%%g")
 
-curl -s -X "DELETE" "http://localhost:10086/server/v1/config/groups/sors/%SORUID%" -b "cookieFile.txt" -H "accept: application/json" -H "X-Requested-With: API" -H "Content-Type: application/json" -H "Origin: http://localhost:10086"
+curl -s -X "DELETE" "http://localhost:10086/server/v1/config/groups/sors/%SORUID%" -b "C:\Users\Public\Documents\cookieFile.txt" -H "accept: application/json" -H "X-Requested-With: API" -H "Content-Type: application/json" -H "Origin: http://localhost:10086"
 
-FOR /F "tokens=* USEBACKQ" %%g IN (`curl -s -X "GET" "http://localhost:10086/server/v1/config/groups/pacs" -b "cookieFile.txt" -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: http://localhost:10086" ^| jq -r .[0].Uid`) do (SET "PACUID=%%g")
+FOR /F "tokens=* USEBACKQ" %%g IN (`curl -s -X "GET" "http://localhost:10086/server/v1/config/groups/pacs" -b "C:\Users\Public\Documents\cookieFile.txt" -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: http://localhost:10086" ^| jq -r .[0].Uid`) do (SET "PACUID=%%g")
 
-curl -s -X "DELETE" "http://localhost:10086/server/v1/config/groups/pacs/%PACUID%" -b "cookieFile.txt" -H "accept: application/json" -H "X-Requested-With: API" -H "Content-Type: application/json" -H "Origin: http://localhost:10086"
+curl -s -X "DELETE" "http://localhost:10086/server/v1/config/groups/pacs/%PACUID%" -b "C:\Users\Public\Documents\cookieFile.txt" -H "accept: application/json" -H "X-Requested-With: API" -H "Content-Type: application/json" -H "Origin: http://localhost:10086"
 
-curl -s -X "DELETE" "http://localhost:10086/native/v1/regions/127.0.0.1/86/REGION1" -b "cookieFile.txt" -H "accept: application/json" -H "X-Requested-With: API" -H "Content-Type: application/json" -H "Origin: http://localhost:10086"
+curl -s -X "DELETE" "http://localhost:10086/native/v1/regions/127.0.0.1/86/REGION1" -b "C:\Users\Public\Documents\cookieFile.txt" -H "accept: application/json" -H "X-Requested-With: API" -H "Content-Type: application/json" -H "Origin: http://localhost:10086"
 
-curl -s -X "DELETE" "http://localhost:10086/native/v1/regions/127.0.0.1/86/REGION2" -b "cookieFile.txt" -H "accept: application/json" -H "X-Requested-With: API" -H "Content-Type: application/json" -H "Origin: http://localhost:10086"
+curl -s -X "DELETE" "http://localhost:10086/native/v1/regions/127.0.0.1/86/REGION2" -b "C:\Users\Public\Documents\cookieFile.txt" -H "accept: application/json" -H "X-Requested-With: API" -H "Content-Type: application/json" -H "Origin: http://localhost:10086"
 
 :: Remove files
 rd %SAMPLEDIR%\PAC /Q /S

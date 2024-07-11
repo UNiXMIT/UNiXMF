@@ -92,7 +92,7 @@ setupAutoPAC() {
     export SORUID=$(curl -s -X "GET" "http://localhost:10086/server/v1/config/groups/sors" -b "cookieFile.txt" -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: http://localhost:10086" | jq -r .[0].Uid)
     curl -s -X "POST" "http://localhost:10086/server/v1/config/groups/pacs" -b "cookieFile.txt" -H "accept: application/json" -H "X-Requested-With: API" -H "Content-Type: application/json" -H "Origin: http://localhost:10086" -d "{\"PacName\": \"MYPAC\", \"PacDescription\": \"My PAC\", \"PacResourceSorUid\": \"$SORUID\"}"
     export PACUID=$(curl -s -X "GET" "http://localhost:10086/server/v1/config/groups/pacs" -b "cookieFile.txt" -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: http://localhost:10086" | jq -r .[0].Uid)
-    curl -X "POST" "http://localhost:10086/native/v1/config/groups/pacs/$PACUID/install" -b "cookieFile.txt" -H "accept: application/json" -H "X-Requested-With: API" -H "Content-Type: application/json" -H "Origin: http://localhost:10086" -d "{\"Regions\": [{\"Host\": \"127.0.0.1\", \"Port\": \"86\", \"CN\": \"REGION1\"},{\"Host\": \"127.0.0.1\", \"Port\": \"86\", \"CN\": \"REGION2\"}]}"
+    curl -s -X "POST" "http://localhost:10086/native/v1/config/groups/pacs/$PACUID/install" -b "cookieFile.txt" -H "accept: application/json" -H "X-Requested-With: API" -H "Content-Type: application/json" -H "Origin: http://localhost:10086" -d "{\"Regions\": [{\"Host\": \"127.0.0.1\", \"Port\": \"86\", \"CN\": \"REGION1\"},{\"Host\": \"127.0.0.1\", \"Port\": \"86\", \"CN\": \"REGION2\"}]}"
 
     sleep 5
 
