@@ -170,13 +170,69 @@ dbfhadmin -createdb -provider:%MFPROVIDER% -type:crossregion -file:%SAMPLEDIR%\P
 GOTO :REDIS
 
 :setupORA
+SET MFPROVIDER=ORA
+SET ORASID=XEPDB1
+SET /p "ORASID=SID/Service Name [XEPDB1]: "
+ECHO oracle=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=%USEDB%)(PORT=%DBPORT%))(CONNECT_DATA=(SERVICE_NAME=%ORASID%))) > %SAMPLEDIR%\tnsnames.ora
+SET TNS_ADMIN=%SAMPLEDIR%
 
+:: Create the MFDBFH.cfg
+dbfhconfig -add -file:%MFDBFH_CONFIG% -server:MYSERVER -provider:%MFPROVIDER% -comment:"Oracle"
+dbfhconfig -add -file:%MFDBFH_CONFIG% -server:MYSERVER -dsn:%MFPROVIDER%.VSAMDATA -type:datastore -name:VSAMDATA -user:%USERID% -password:%USERPASSWD% -db:oracle
+dbfhconfig -add -file:%MFDBFH_CONFIG% -server:MYSERVER -dsn:%MFPROVIDER%.MYPAC -type:region -name:MYPAC -user:%USERID% -password:%USERPASSWD% -db:oracle
+dbfhconfig -add -file:%MFDBFH_CONFIG% -server:MYSERVER -dsn:%MFPROVIDER%.CROSSREGION -type:crossRegion -user:%USERID% -password:%USERPASSWD% -db:oracle
+
+:: Create the datastore
+dbfhdeploy -configfile:%MFDBFH_CONFIG% data create sql://MYSERVER/VSAMDATA
+
+: Create the region database
+dbfhadmin -script -type:region -provider:%MFPROVIDER% -name:MYPAC -file:%SAMPLEDIR%\PAC\createRegion.sql
+dbfhadmin -createdb -provider:%MFPROVIDER% -type:region -file:%SAMPLEDIR%\PAC\createRegion.sql -user:%USERID% -password:%USERPASSWD% -existdb:oracle
+
+: Create the crossregion database
+dbfhadmin -script -type:crossregion -provider:%MFPROVIDER% -file:%SAMPLEDIR%\PAC\CreateCrossRegion.sql
+dbfhadmin -createdb -provider:%MFPROVIDER% -type:crossregion -file:%SAMPLEDIR%\PAC\CreateCrossRegion.sql -user:%USERID% -password:%USERPASSWD% -existdb:oracle
 
 GOTO :REDIS
 
 :setupDB2
 db2cmd -i -w db2clpsetcp
+SET DRIVERNAME="{IBM DB2 ODBC DRIVER}"
+SET DB2INST=db2inst1
+SET /p "DB2INST=DB2 Instance Name [db2inst1]: "
+SET MFPROVIDER=DB2
+SET connString="Driver=%DRIVERNAME%;Server=%USEDB%;Port=%DBPORT%;Database=%DB2INST%;uid=%USERID%;pwd=%USERPASSWD%"
+db2 catalog tcpip node db2 remote %USEDB% server %DBPORT%
+db2 catalog database %DB2INST% at node db2
+db2 terminate
 
+:: Create the MFDBFH.cfg
+dbfhconfig -add -file:%MFDBFH_CONFIG% -server:MYSERVER -provider:%MFPROVIDER% -comment:"DB2"
+dbfhconfig -add -file:%MFDBFH_CONFIG% -server:MYSERVER -dsn:%MFPROVIDER%.VSAMDATA -type:datastore -name:VSAMDATA -connect:"%connString%" -db:%DB2INST%
+dbfhconfig -add -file:%MFDBFH_CONFIG% -server:MYSERVER -dsn:%MFPROVIDER%.MYPAC -type:region -name:MYPAC -connect:"%connString%" -db:%DB2INST%
+dbfhconfig -add -file:%MFDBFH_CONFIG% -server:MYSERVER -dsn:%MFPROVIDER%.CROSSREGION -type:crossRegion -connect:"%connString%" -db:%DB2INST%
+
+:: Create the datastore
+:: dbfhdeploy -configfile:%MFDBFH_CONFIG% data create sql://MYSERVER/VSAMDATA
+dbfhadmin -script -type:datastore -provider:%MFPROVIDER% -name:VSAMDATA -file:%SAMPLEDIR%\PAC\VSAMDATA.sql -existdb:%DB2INST%
+:: dbfhadmin -createdb -provider:%MFPROVIDER% -type:region -file:%SAMPLEDIR%\PAC\VSAMDATA.sql
+:: WORKAROUND
+powershell -Command "(Get-Content '%SAMPLEDIR%\PAC\VSAMDATA.sql') -replace 'CONNECT TO.*', 'CONNECT TO %DB2INST% USER %USERID% USING %USERPASSWD%;' | Set-Content '%SAMPLEDIR%\PAC\VSAMDATA.sql'"
+db2 -svtf %SAMPLEDIR%\PAC\VSAMDATA.sql
+
+:: Create the region database
+dbfhadmin -script -type:region -provider:%MFPROVIDER% -name:MYPAC -file:%SAMPLEDIR%\PAC\createRegion.sql -existdb:%DB2INST%
+:: dbfhadmin -createdb -provider:%MFPROVIDER% -type:region -file:%SAMPLEDIR%\PAC\createRegion.sql
+:: WORKAROUND
+powershell -Command "(Get-Content '%SAMPLEDIR%\PAC\createRegion.sql') -replace 'CONNECT TO.*', 'CONNECT TO %DB2INST% USER %USERID% USING %USERPASSWD%;' | Set-Content '%SAMPLEDIR%\PAC\createRegion.sql'"
+db2 -svtf %SAMPLEDIR%\PAC\createRegion.sql
+
+:: Create the crossregion database
+dbfhadmin -script -type:crossregion -provider:%MFPROVIDER% -file:%SAMPLEDIR%\PAC\CreateCrossRegion.sql -existdb:%DB2INST%
+:: dbfhadmin -createdb -provider:%MFPROVIDER% -type:crossregion -file:%SAMPLEDIR%\PAC\CreateCrossRegion.sql
+:: WORKAROUND
+powershell -Command "(Get-Content '%SAMPLEDIR%\PAC\CreateCrossRegion.sql') -replace 'CONNECT TO.*', 'CONNECT TO %DB2INST% USER %USERID% USING %USERPASSWD%;' | Set-Content '%SAMPLEDIR%\PAC\CreateCrossRegion.sql'"
+db2 -svtf %SAMPLEDIR%\PAC\CreateCrossRegion.sql
 
 GOTO :REDIS
 

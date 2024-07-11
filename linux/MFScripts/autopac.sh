@@ -212,9 +212,9 @@ setupDB2() {
 
     # Create the MFDBFH.cfg
     dbfhconfig -add -file:$MFDBFH_CONFIG -server:MYSERVER -provider:$MFPROVIDER -comment:"DB2"
-    dbfhconfig -add -file:$MFDBFH_CONFIG -server:MYSERVER -dsn:$MFPROVIDER.VSAMDATA -type:datastore -name:VSAMDATA -connect:"$connString" -db:support
-    dbfhconfig -add -file:$MFDBFH_CONFIG -server:MYSERVER -dsn:$MFPROVIDER.MYPAC -type:region -name:MYPAC -connect:"$connString" -db:support
-    dbfhconfig -add -file:$MFDBFH_CONFIG -server:MYSERVER -dsn:$MFPROVIDER.CROSSREGION -type:crossRegion -connect:"$connString" -db:support
+    dbfhconfig -add -file:$MFDBFH_CONFIG -server:MYSERVER -dsn:$MFPROVIDER.VSAMDATA -type:datastore -name:VSAMDATA -connect:"$connString" -db:$DB2INST
+    dbfhconfig -add -file:$MFDBFH_CONFIG -server:MYSERVER -dsn:$MFPROVIDER.MYPAC -type:region -name:MYPAC -connect:"$connString" -db:$DB2INST
+    dbfhconfig -add -file:$MFDBFH_CONFIG -server:MYSERVER -dsn:$MFPROVIDER.CROSSREGION -type:crossRegion -connect:"$connString" -db:$DB2INST
 
     # Create the datastore
     # dbfhdeploy -configfile:$MFDBFH_CONFIG data create sql://MYSERVER/VSAMDATA
