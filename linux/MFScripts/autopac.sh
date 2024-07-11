@@ -36,7 +36,8 @@ setupAutoPAC() {
     fi
     cd $SAMPLEDIR/PAC
     curl -s -O https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/linux/MFScripts/ALLSERVERS.xml
-    mfds -g 5 $SAMPLEDIR/PAC/ALLSERVERS.xml
+    ESSec
+    mfds -g 5 $SAMPLEDIR/PAC/ALLSERVERS.xml D $ESUSER $ESPASS
     export MFDBFH_CONFIG=$SAMPLEDIR/PAC/MFDBFH.cfg
     [[ -f $MFDBFH_CONFIG ]] && rm -rf $MFDBFH_CONFIG
 
@@ -87,31 +88,31 @@ setupAutoPAC() {
     sleep 5
 
     # ESCWA - Add SOR and PAC
-    curl -s -X "POST" "http://localhost:10086/server/v1/config/groups/sors" -H "accept: application/json" -H "X-Requested-With: API" -H "Content-Type: application/json" -H "Origin: http://localhost:10086" -d "{\"SorName\": \"MYPSOR\", \"SorDescription\": \"My PAC SOR\", \"SorType\": \"redis\", \"SorConnectPath\": \"$USEDB:$REDISPORT\", \"TLS\": false}"
-    export SORUID=$(curl -s -X "GET" "http://localhost:10086/server/v1/config/groups/sors" -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: http://localhost:10086" | jq -r .[0].Uid)
-    curl -s -X "POST" "http://localhost:10086/server/v1/config/groups/pacs" -H "accept: application/json" -H "X-Requested-With: API" -H "Content-Type: application/json" -H "Origin: http://localhost:10086" -d "{\"PacName\": \"MYPAC\", \"PacDescription\": \"My PAC\", \"PacResourceSorUid\": \"$SORUID\"}"
-    export PACUID=$(curl -s -X "GET" "http://localhost:10086/server/v1/config/groups/pacs" -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: http://localhost:10086" | jq -r .[0].Uid)
-    curl -X "POST" "http://localhost:10086/native/v1/config/groups/pacs/$PACUID/install" -H "accept: application/json" -H "X-Requested-With: API" -H "Content-Type: application/json" -H "Origin: http://localhost:10086" -d "{\"Regions\": [{\"Host\": \"127.0.0.1\", \"Port\": \"86\", \"CN\": \"REGION1\"},{\"Host\": \"127.0.0.1\", \"Port\": \"86\", \"CN\": \"REGION2\"}]}"
+    curl -s -X "POST" "http://localhost:10086/server/v1/config/groups/sors" -b "cookieFile.txt" -H "accept: application/json" -H "X-Requested-With: API" -H "Content-Type: application/json" -H "Origin: http://localhost:10086" -d "{\"SorName\": \"MYPSOR\", \"SorDescription\": \"My PAC SOR\", \"SorType\": \"redis\", \"SorConnectPath\": \"$USEDB:$REDISPORT\", \"TLS\": false}"
+    export SORUID=$(curl -s -X "GET" "http://localhost:10086/server/v1/config/groups/sors" -b "cookieFile.txt" -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: http://localhost:10086" | jq -r .[0].Uid)
+    curl -s -X "POST" "http://localhost:10086/server/v1/config/groups/pacs" -b "cookieFile.txt" -H "accept: application/json" -H "X-Requested-With: API" -H "Content-Type: application/json" -H "Origin: http://localhost:10086" -d "{\"PacName\": \"MYPAC\", \"PacDescription\": \"My PAC\", \"PacResourceSorUid\": \"$SORUID\"}"
+    export PACUID=$(curl -s -X "GET" "http://localhost:10086/server/v1/config/groups/pacs" -b "cookieFile.txt" -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: http://localhost:10086" | jq -r .[0].Uid)
+    curl -X "POST" "http://localhost:10086/native/v1/config/groups/pacs/$PACUID/install" -b "cookieFile.txt" -H "accept: application/json" -H "X-Requested-With: API" -H "Content-Type: application/json" -H "Origin: http://localhost:10086" -d "{\"Regions\": [{\"Host\": \"127.0.0.1\", \"Port\": \"86\", \"CN\": \"REGION1\"},{\"Host\": \"127.0.0.1\", \"Port\": \"86\", \"CN\": \"REGION2\"}]}"
 
     sleep 5
 
     # Start regions
-    casstart /rREGION1 /s:c
+    casstart /rREGION1 /s:c /u$ESUSER /p$ESPASS
     sleep 5
-    casstart /rREGION2 /s:w
+    casstart /rREGION2 /s:w /u$ESUSER /p$ESPASS
 }
 
 removeAutoPAC() {
-    casstop /rREGION1 /f
-    casstop /rREGION2 /f
+    casstop /rREGION1 /f /u$ESUSER /p$ESPASS
+    casstop /rREGION2 /f /u$ESUSER /p$ESPASS
 
     # ESCWA - Remove SOR, PAC and PAC Regions
-    export SORUID=$(curl -s -X "GET" "http://localhost:10086/server/v1/config/groups/sors" -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: http://localhost:10086" | jq -r .[0].Uid)
-    curl -s -X "DELETE" "http://localhost:10086/server/v1/config/groups/sors/$SORUID" -H "accept: application/json" -H "X-Requested-With: API" -H "Content-Type: application/json" -H "Origin: http://localhost:10086"
-    export PACUID=$(curl -s -X "GET" "http://localhost:10086/server/v1/config/groups/pacs" -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: http://localhost:10086" | jq -r .[0].Uid)
-    curl -s -X "DELETE" "http://localhost:10086/server/v1/config/groups/pacs/$PACUID" -H "accept: application/json" -H "X-Requested-With: API" -H "Content-Type: application/json" -H "Origin: http://localhost:10086"
-    curl -s -X "DELETE" "http://localhost:10086/native/v1/regions/127.0.0.1/86/REGION1" -H "accept: application/json" -H "X-Requested-With: API" -H "Content-Type: application/json" -H "Origin: http://localhost:10086"
-    curl -s -X "DELETE" "http://localhost:10086/native/v1/regions/127.0.0.1/86/REGION2" -H "accept: application/json" -H "X-Requested-With: API" -H "Content-Type: application/json" -H "Origin: http://localhost:10086"
+    export SORUID=$(curl -s -X "GET" "http://localhost:10086/server/v1/config/groups/sors" -b "cookieFile.txt" -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: http://localhost:10086" | jq -r .[0].Uid)
+    curl -s -X "DELETE" "http://localhost:10086/server/v1/config/groups/sors/$SORUID" -b "cookieFile.txt" -H "accept: application/json" -H "X-Requested-With: API" -H "Content-Type: application/json" -H "Origin: http://localhost:10086"
+    export PACUID=$(curl -s -X "GET" "http://localhost:10086/server/v1/config/groups/pacs" -b "cookieFile.txt" -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: http://localhost:10086" | jq -r .[0].Uid)
+    curl -s -X "DELETE" "http://localhost:10086/server/v1/config/groups/pacs/$PACUID" -b "cookieFile.txt" -H "accept: application/json" -H "X-Requested-With: API" -H "Content-Type: application/json" -H "Origin: http://localhost:10086"
+    curl -s -X "DELETE" "http://localhost:10086/native/v1/regions/127.0.0.1/86/REGION1" -b "cookieFile.txt" -H "accept: application/json" -H "X-Requested-With: API" -H "Content-Type: application/json" -H "Origin: http://localhost:10086"
+    curl -s -X "DELETE" "http://localhost:10086/native/v1/regions/127.0.0.1/86/REGION2" -b "cookieFile.txt" -H "accept: application/json" -H "X-Requested-With: API" -H "Content-Type: application/json" -H "Origin: http://localhost:10086"
 
     rm -rf $SAMPLEDIR/PAC
     rm -rf /var/mfcobol/es/REGION1
@@ -244,6 +245,29 @@ setupRedis() {
     read -e -p "Redis Port [6379]: " -i 6379 REDISPORT
 }
 
+ESSec() {
+    while true; do
+        read -p "Enterprise Server Security Enabled [Y/N]?: " yn
+        case $yn in
+            [Yy]*) 
+                    read -e -p "Enterprise Server User [SYSAD]: " -i "SYSAD" ESUSER
+                    read -e -p "Enterprise Server Password [SYSAD]: " -i "SYSAD" ESPASS
+                    ESCWACookie
+                    break
+                    ;;  
+            [Nn]*) 
+                    export ESUSER=SYSAD
+                    export ESPASS=SYSAD
+                    break
+                    ;;
+        esac
+    done
+}
+
+ESCWACookie() {
+    curl -s -X POST -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: http://localhost:10086" -H "Content-Type: application/json" -c "cookieFile.txt" -d '{"mfUser": "'"${ESUSER}"'","mfPassword": "'"${ESPASS}"'"}' http://localhost:10086/logon
+}
+
 usage() {
   echo "
 Usage:  
@@ -258,6 +282,7 @@ Options:
 if [[ $1 = "-h" ]]; then
     usage
 elif [[ $1 = "-r" ]]; then
+    ESSec
     removeAutoPAC
 else
     if [[ -z "${COBDIR}" ]]; then
