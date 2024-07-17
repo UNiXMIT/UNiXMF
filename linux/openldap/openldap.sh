@@ -9,6 +9,23 @@
 # DOWNLOAD + EXTRACT SCHEMAS.ZIP
 # curl -s -O https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/linux/openldap/schema.zip && unzip schema.zip
 
+while true; do
+    read -p "Enterprise Server Security Enabled [Y/N]?: " yn
+    case $yn in
+        [Yy]*) 
+                read -e -p "Enterprise Server User [SYSAD]: " -i "SYSAD" ESUSER
+                read -e -p "Enterprise Server Password [SYSAD]: " -i "SYSAD" ESPASS
+                ESCWACookie
+                break
+                ;;  
+        [Nn]*) 
+                export ESUSER=SYSAD
+                export ESPASS=SYSAD
+                break
+                ;;
+    esac
+done
+
 dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
 dnf -y install openldap-servers openldap-clients openssl
 BASEDIR=$(dirname $0)
@@ -87,6 +104,7 @@ curl -X 'POST' \
   -H 'Content-Type: application/json' \
   -H "X-Requested-With: API" \
   -H "Origin: http://localhost:10086" \
+  -b "cookieFile.txt" \
   -d '{
   "Name": "OpenLDAP",
   "Module": "mdlap_esm",
@@ -106,6 +124,7 @@ curl -X 'POST' \
   -H 'Content-Type: application/json' \
   -H "X-Requested-With: API" \
   -H "Origin: http://localhost:10086" \
+  -b "cookieFile.txt" \
   -d '{
   "CN": "OpenLDAP",
   "description": "OpenLDAP ESM",
@@ -118,3 +137,7 @@ curl -X 'POST' \
   "mfESMCacheTTL": 600,
   "mfConfig": "[LDAP]\nBASE=cn=Micro Focus,dc=secldap,dc=com\nuser class=microfocus-MFDS-User\nuser container=CN=Enterprise Server Users\ngroup container=CN=Enterprise Server User Groups\nresource container=CN=Enterprise Server Resources\n\n[Operation]\nset login count=yes\nsignon attempts=3\n\n[Verify]\nMode=MF-hash\n\n[Trace]\nModify=y\nRule=y\nGroups=y\nSearch=y\nBind=n\nTrace1=verify:*:debug\nTrace2=auth:*:*:**:debug"
 }'
+
+ESCWACookie() {
+    curl -s -X POST -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: http://localhost:10086" -H "Content-Type: application/json" -c "cookieFile.txt" -d '{"mfUser": "'"${ESUSER}"'","mfPassword": "'"${ESPASS}"'"}' http://localhost:10086/logon
+}
