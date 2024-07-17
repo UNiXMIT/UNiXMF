@@ -93,8 +93,8 @@ timeout /T 5
 ECHO Which database?
 ECHO 1) SQL Server
 ECHO 2) PostgreSQL
-:: ECHO 3) Oracle
-:: ECHO 4) DB2
+ECHO 3) Oracle
+ECHO 4) DB2
 
 set /p choice="Database Choice: "
 IF "%choice%"=="1" SET "DBPORT=1433"
@@ -196,14 +196,14 @@ dbfhadmin -createdb -provider:%MFPROVIDER% -type:crossregion -file:%SAMPLEDIR%\P
 GOTO :REDIS
 
 :setupDB2
-db2cmd -i -w db2clpsetcp
+CALL DB2SETCP.BAT
 SET DRIVERNAME="{IBM DB2 ODBC DRIVER}"
 SET DB2INST=db2inst1
 SET /p "DB2INST=DB2 Instance Name [db2inst1]: "
 SET MFPROVIDER=DB2
 SET connString="Driver=%DRIVERNAME%;Server=%USEDB%;Port=%DBPORT%;Database=%DB2INST%;uid=%USERID%;pwd=%USERPASSWD%"
-db2 catalog tcpip node db2 remote %USEDB% server %DBPORT%
-db2 catalog database %DB2INST% at node db2
+db2 catalog tcpip node mfdb2 remote %USEDB% server %DBPORT%
+db2 catalog database %DB2INST% at node mfdb2
 db2 terminate
 
 :: Create the MFDBFH.cfg

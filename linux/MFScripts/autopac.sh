@@ -206,8 +206,8 @@ setupDB2() {
     read -e -p "DB2 Instance Name [db2inst1]: " -i "db2inst1" DB2INST
     export MFPROVIDER=DB2
     export connString="Driver=$DRIVERNAME;Server=$USEDB;Port=$DBPORT;Database=$DB2INST;uid=$USERID;pwd=$USERPASSWD"
-    db2 catalog tcpip node db2 remote $USEDB server $DBPORT
-    db2 catalog database $DB2INST at node db2
+    db2 catalog tcpip node mfdb2 remote $USEDB server $DBPORT
+    db2 catalog database $DB2INST at node mfdb2
     db2 terminate
 
     # Create the MFDBFH.cfg
