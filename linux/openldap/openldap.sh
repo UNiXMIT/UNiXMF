@@ -107,7 +107,7 @@ curl -X 'POST' \
   -b "cookieFile.txt" \
   -d '{
   "Name": "OpenLDAP",
-  "Module": "mdlap_esm",
+  "Module": "mldap_esm",
   "ConnectionPath": "localhost:389",
   "AuthorizedID": "cn=Manager,dc=secldap,dc=com",
   "Password": "$(SLAPPASS)",
