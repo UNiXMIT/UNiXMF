@@ -50,4 +50,4 @@ RUN rpm -ivh https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.
     ldapsearch -H ldapi:/// -x -b "cn=subschema" -s base + > /openldap/log/schema.log; \
     curl -s -o /openldap/newpasswd.sh https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/linux/openldap/newpasswd.sh; \
     chmod +x /openldap/newpasswd.sh
-CMD ["/sbin/init"]
+CMD ["/openldap/newpasswd.sh ; /sbin/init"]
