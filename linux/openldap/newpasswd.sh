@@ -1,4 +1,7 @@
 #!bin/bash
+if [[ -n "$1" ]]; then
+    SLAPPWD="$1"
+fi
 if [[ -n "${SLAPPWD}" ]]; then
     SECRET=$(slappasswd -s ${SLAPPWD})
     pkill slapd
