@@ -10,7 +10,7 @@
       <mfServerStatus>Stopped</mfServerStatus>
       <mfServerType>MFES</mfServerType>
       <cn>CICS</cn>
-      <description/>
+      <description>Template region for CICS applications</description>
       <mfESEnableStartScript>Disabled</mfESEnableStartScript>
       <mfESEnableStopScript>Disabled</mfESEnableStopScript>
       <mfESEnableNotRespondingScript>Disabled</mfESEnableNotRespondingScript>
