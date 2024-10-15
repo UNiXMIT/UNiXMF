@@ -4,6 +4,8 @@
 
 ![1](images/osLangGer.png)
 
-- **MF_INSTALL_DE_LANG_PACK YES** is set as an environment variable for the system (not for the user!).  
+- **MF_INSTALL_DE_LANG_PACK YES** is set as an environment variable for the system (not for the user!) with value Yes (the case of the value does not matter).   
 
 ![2](images/envGer.png)
+
+To enable German in Eclipse, either the display language of the system should be set to German or Eclipse should be started with '-nl de' command line argument (or added in eclipse.ini).  
