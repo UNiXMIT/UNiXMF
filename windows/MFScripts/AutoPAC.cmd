@@ -47,12 +47,7 @@ IF "%COBDIR%"=="" (
 SET ESUSER=SYSAD
 SET ESPASS=SYSAD
 SET /p ESSEC="Enterprise Server Security Enabled [Y/N]?: "
-IF "%ESSEC%"=="Y" (
-    SET /p "ESUSER=Enterprise Server User [%ESUSER%]: "
-    SET /p "ESPASS=Enterprise Server Password [%ESPASS%]: "
-    GOTO :ESCWACOOKIE
-)
-IF "%ESSEC%"=="y" (
+IF /I "%ESSEC%"=="Y" (
     SET /p "ESUSER=Enterprise Server User [%ESUSER%]: "
     SET /p "ESPASS=Enterprise Server Password [%ESPASS%]: "
     GOTO :ESCWACOOKIE
