@@ -17,7 +17,7 @@ The behaviour of ED/ES mimics the behaviour on the mainframe. The behaviour on t
 > 
 > https://www.ibm.com/docs/en/cics-ts/5.2?topic=translation-translating-national-characters-uppercase  
 
-Unless one of the suggested methods (the XZCIN exit or a new TCT) or something else to handle the conversion is being used, this is expected behaviour.  
+This behaviour is expected unless one of the suggested methods (the XZCIN exit or a new TCT) or an alternative conversion solution is used.    
 
 There is also an environment variable that changes the behaviour and causes national characters to be translated to uppercase.  
 
