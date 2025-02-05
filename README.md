@@ -19,6 +19,7 @@
 
 ## Documentation
 ### Official
+- [MFESDIAGS Enterprise Server Diagnostic Collection Script](https://portal.microfocus.com/s/article/KM000026522)
 - [Syntax Checking Error Messages - COBCH](https://docs.rocketsoftware.com/bundle/enterprisedeveloper_dg2_100_html/page/HRERRHSERR01.html)
 - [Code Generation Error Messages - COBOP](https://docs.rocketsoftware.com/bundle/enterprisedeveloper_dg2_100_html/page/HRERRHGERR02.html)
 - [Run-time System Error Messages - COBRT](https://docs.rocketsoftware.com/bundle/enterprisedeveloper_dg2_100_html/page/HRERRHRERR01.html)
