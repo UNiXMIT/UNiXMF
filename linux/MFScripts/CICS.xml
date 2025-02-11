@@ -79,12 +79,16 @@ MFROOT=/home/support/MFSupport/MFSamples/CICS</mfCustomConfiguration>
           <mfServerMTOConfiguration>
             <mfCASCICSSIT>DEMOSIT</mfCASCICSSIT>
             <mfCASTXTRANP>$MFROOT/loadlib</mfCASTXTRANP>
-            <mfCASTXFILEP>$MFROOT/data</mfCASTXFILEP>
+            <mfCASTXFILEP>$MFROOT/dataset</mfCASTXFILEP>
             <mfCASTXMAPP>$MFROOT/loadlib</mfCASTXMAPP>
             <mfCASTXRDTP>$MFROOT/system</mfCASTXRDTP>
           </mfServerMTOConfiguration>
           <mfServerBatchConfiguration>
             <mfCASJCLMainframePollInterval>0</mfCASJCLMainframePollInterval>
+            <mfCASJCLPATH>$MFROOT/loadlib</mfCASJCLPATH>
+            <mfCASMFSYSCAT>$MFROOT/catalog/catalog.dat</mfCASMFSYSCAT>
+            <mfCASJCLALLOCLOC>$MFROOT/dataset</mfCASJCLALLOCLOC>
+            <mfCASJCLSYSPROCLIB>SYS1.PROCLIB</mfCASJCLSYSPROCLIB>
           </mfServerBatchConfiguration>
           <mfServerIMSConfiguration>
             <mfCASIMSCodesetBias>A</mfCASIMSCodesetBias>
@@ -378,7 +382,17 @@ listener=Web Services and J2EE
       </mfServiceList>
       <mfPackageList/>
       <mfXRMList/>
-      <mfJESInitiatorList/>
+      <mfJESInitiatorList>
+        <mfJESInitiator>
+          <objectclass>mfJESInitiator</objectclass>
+          <mfStructVersion>1</mfStructVersion>
+          <mfUID>1.3.6.1.4.1.5043.1.21.12.6543a92b.4896.140312286593039</mfUID>
+          <mfServerUID>1.3.6.1.4.1.5043.1.21.1.6543a92b.4896.2</mfServerUID>
+          <cn>INITALL</cn>
+          <mfJESInitiatorClass>ABCDEFGHIJKLMNOPQRSTUVWXYZ01234567</mfJESInitiatorClass>
+          <description> </description>
+        </mfJESInitiator>
+      </mfJESInitiatorList>
       <mfJESPrinterList/>
       <mfIMSMPRList/>
       <mfMQListenerList/>
