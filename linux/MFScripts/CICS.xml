@@ -60,7 +60,7 @@ MFROOT=/home/support/MFSupport/MFSamples/CICS</mfCustomConfiguration>
             <mfCASEventLogSevere>0</mfCASEventLogSevere>
             <mfCASMTOEnabled>1</mfCASMTOEnabled>
             <mfCASCICSPersonality>1</mfCASCICSPersonality>
-            <mfCASBatchEnabled>0</mfCASBatchEnabled>
+            <mfCASBatchEnabled>1</mfCASBatchEnabled>
             <mfCASIMSEnabled>0</mfCASIMSEnabled>
             <mfCASPLIEnabled>0</mfCASPLIEnabled>
             <mfMQLEnabled>0</mfMQLEnabled>
