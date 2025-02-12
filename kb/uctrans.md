@@ -1,11 +1,11 @@
-# UCTRANS option doesn't convert lowercase national characters to upper case
+# UCTRAN option doesn't convert lowercase national characters to upper case
 ## Environment
 Enterprise Developer / Enterprise Server  
 Windows  
 Linux/UNIX  
 
 ## Situation
-In the PCT CICS resource for any TX, the option 'Translate to Upper Case' (UCTRANS) is enabled. It's expected that everything typed in via the keyboard, will be translated to uppercase. It works, but not for national characters i.e. áéíóúñ.  
+In the PCT CICS resource for any TX, the option 'Translate to Upper Case' (UCTRAN) is enabled. It's expected that everything typed in via the keyboard, will be translated to uppercase. It works, but not for national characters i.e. áéíóúñ.  
 
 ## Resolution
 The behaviour of ED/ES mimics the behaviour on the mainframe. The behaviour on the mainframe is described in the IBM documentation: 
