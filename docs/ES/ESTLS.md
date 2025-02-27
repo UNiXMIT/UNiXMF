@@ -39,6 +39,10 @@ keyfile=""
 certificate=""
 keyfile=""
 
+[Web/SSL/passphrases]
+certificate=""
+keyfile=""
+
 [TN3270/SSL/passphrases]
 certificate=""
 keyfile=""
