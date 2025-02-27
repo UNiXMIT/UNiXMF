@@ -35,7 +35,7 @@ LINUX: $COBDIR/etc
 certificate=""
 keyfile=""
 
-[Web Services and j2EE/SSL/passphrases]
+[Web Services and J2EE/SSL/passphrases]
 certificate=""
 keyfile=""
 
