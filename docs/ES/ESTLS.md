@@ -12,20 +12,6 @@ MFDS_DNS_RESOLVE=Y
 ```
 Restart ESCWA and MFDS.  
 
-### cci.ini
-[cci.ini Documentation](https://www.microfocus.com/documentation/enterprise-developer/ed-latest/ED-VS2022/BKCCCCIINI.html)
-```
-[ccitrace-base]
-
-[ccitcp-base]
-ssl_display_cipher=yes
-ssl_display_cert=yes
-ssl_display_cert_fail_report=yes
-ssl_display_cert_connection_details=yes
-ssl_display_options_on=yes
-ssl_display_destination=/tmp/ssltrc.txt
-```
-
 ### mf-server.dat
 #### Location
 Windows: %COBDIR%\bin  
