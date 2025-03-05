@@ -23,6 +23,3 @@
 - [Installing Visual COBOL in an Offline Environment](https://docs.rocketsoftware.com/bundle/enterprisedeveloper_dg2_100_html/page/GUID-F27673CD-0800-4A75-9074-D832CA3E1FA3.html)
 - [Run-time System Files to Ship](https://docs.rocketsoftware.com/bundle/enterprisedeveloper_dg2_100_html/page/HHSHCHSHPF06.html)
 - [Microsoft Package Dependencies](https://docs.rocketsoftware.com/bundle/enterprisedeveloper_dg2_100_html/page/GUID-1273653F-B4C2-4086-8F59-516EB260C4F4.html)
-
-
-https://docs.rocketsoftware.com/bundle?labelkey=prod_acucobol_gt&name_filter.value=Release+Notes

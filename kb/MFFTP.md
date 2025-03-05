@@ -8,11 +8,11 @@ Data corruption occurs when using MFFTP to GET a line sequential '.txt' file, th
 
 For example, it should look like this when catalogued:  
 
-![1](images/mffts1.png)
+![1](images/mfftp1.png)
 
 But instead, it looks like this:  
 
-![2](images/mffts2.png)
+![2](images/mfftp2.png)
 
 ## Resolution
 Set the following MFFTP control variables either in the '//ENVVAR   DD *' section, within Enterprise Server Administration or in a dataset called FTP.DATA  
