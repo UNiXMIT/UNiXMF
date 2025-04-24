@@ -15,7 +15,7 @@
         RETCODE (EXCI-EXEC-RETURN-CODE)
     END-EXEC
     ```
-    [Documentation](https://www.microfocus.com/documentation/enterprise-developer/ed-latest/ED-VS2022/HCOMCMVIEWS003.html)  
+    [Documentation](https://docs.rocketsoftware.com/bundle/enterprisedeveloper_dg2_100_html/page/HCOMCMVIEWS003.html)  
 
 3. Compile the calling program using the following compiler directive.  
     ```

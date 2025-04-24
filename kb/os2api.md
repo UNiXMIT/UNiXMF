@@ -13,4 +13,4 @@ Additionally, if setting CALL-CONVENTION 2 (Bit 1), "Parameters removed from sta
 An RTS 114 could also occur with other CALL-CONVENTION combinations.  
 
 ## Additional Information
-More information can be found in the documentation - https://www.microfocus.com/documentation/enterprise-developer/ed-latest/ED-VS2022/HHMXCHMIXL19.html  
+More information can be found in the documentation - https://docs.rocketsoftware.com/bundle/enterprisedeveloper_dg2_100_html/page/HHMXCHMIXL19.html  
