@@ -1,6 +1,8 @@
 @ECHO OFF
 SETLOCAL ENABLEDELAYEDEXPANSION
 
+:: Workaround for defect VCVS-1121
+
 SET "VSWHERE=%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe"
 
 IF NOT EXIST "%VSWHERE%" (
