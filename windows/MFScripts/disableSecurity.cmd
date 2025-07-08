@@ -5,10 +5,10 @@ SETLOCAL ENABLEDELAYEDEXPANSION
 :: Install jq - https://jqlang.github.io/jq/download/ or choco install jq
 :: Install yq - choco install yq
 
-SET "BASE=C:\ProgramData\Micro Focus\Enterprise Developer"
+SET "ESBASE=C:\ProgramData\Micro Focus\Enterprise Developer"
 
 sc stop escwa > NUL 2>&1
-CD %BASE%\ESCWA
+CD %ESBASE%\ESCWA
 FOR /L %%I IN (0,1,20) DO (
     SC QUERY "escwa" | FIND "STOPPED" > NUL 2>&1
     IF !ERRORLEVEL! EQU 0 (
@@ -25,7 +25,7 @@ move /y "commonwebadmin.json.tmp" "commonwebadmin.json" > NUL 2>&1
 sc start escwa > NUL 2>&1
 
 sc stop mf_CCITCP2 > NUL 2>&1
-CD %BASE%
+CD %ESBASE%
 FOR /L %%I IN (0,1,20) DO (
     SC QUERY "mf_CCITCP2" | FIND "STOPPED" > NUL 2>&1
     IF !ERRORLEVEL! EQU 0 (
@@ -39,7 +39,7 @@ GOTO :END
 copy /y "mfdsacfg.xml" "mfdsacfg.xml.BACKUP" > NUL 2>&1
 yq "(.mfDirectoryServerConfiguration.use_default_ES_security, .mfDirectoryServerConfiguration.security_options) |= (select(. == \"1\") | \"0\")" "mfdsacfg.xml" > "mfdsacfg.xml.tmp"
 move /y "mfdsacfg.xml.tmp" "mfdsacfg.xml" > NUL 2>&1
-move /y "%BASE%\MFDS\des_esm.dat" "%BASE%\MFDS\des_esm.dat.BACKUP" > NUL 2>&1
+move /y "%ESBASE%\MFDS\des_esm.dat" "%ESBASE%\MFDS\des_esm.dat.BACKUP" > NUL 2>&1
 sc start mf_ccitcp2 > NUL 2>&1
 
 :END

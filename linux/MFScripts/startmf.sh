@@ -19,7 +19,7 @@ Usage:
 
 kill_mf()
 {
-    echo Shutdown MFDS, started ES servers, ESCWA, FileShare and HACloud
+    echo Shutdown MFDS, ES servers, ESCWA, FileShare and HACloud
     tmux -L es send-keys -t mfds C-c
     tmux -L es kill-ses -t mfds
     tmux -L es kill-ses -t escwa
