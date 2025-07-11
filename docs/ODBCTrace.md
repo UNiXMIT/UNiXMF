@@ -3,7 +3,7 @@
 1. Close the ODBC application / service that is to be traced.
 2. Launch the ODBC Data Source Administrator Tool.
 3. Select the tab 'Tracing'.
-4. If needed, change the path and name of the log file e.g. c:\sql.log
+4. If needed, change the path and name of the log file e.g. C:\temp\sql.log
 5. Enable the checkbox 'Machine-Wide tracing for all user identities'.
 6. Click the button 'Start Tracing' (if prompted for it, confirm to enable machine-wide ODBC tracing for all user identities).
 7. Click the button 'OK'.
