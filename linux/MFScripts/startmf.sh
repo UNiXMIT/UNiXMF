@@ -48,7 +48,7 @@ start_mfopen()
     tmux -L es new -d -s mfds "sudo -E env PATH=$PATH su"
     tmux -L es send-keys -t mfds ". cobsetenv && mfds64 --UI-on && mfds64 --listen-all && mfds64" ENTER
     sleep 1
-    tmux -L es new -d -s escwa escwa --BasicConfig.MfRequestedEndpoint="tcp:*:10086" --write=true
+    tmux -L es new -d -s escwa escwa --BasicConfig.MfRequestedEndpoint="tcp:*:10086" --BasicConfig.InsecureAutoSignOn=true --write=true
     sleep 1
     tmux -L es new -d -s fs fs -s FSSERVER
     sleep 1
