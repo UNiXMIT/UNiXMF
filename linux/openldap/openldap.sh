@@ -27,7 +27,7 @@ while true; do
 done
 
 dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
-dnf -y install openldap-servers openldap-clients openssl
+dnf -y install openldap openldap-servers openldap-clients openssl
 BASEDIR=$(dirname $0)
 while true; do
     read -s -p "Password: " SLAPPASS

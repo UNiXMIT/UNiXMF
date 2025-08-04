@@ -2,7 +2,7 @@ FROM docker.io/redhat/ubi9-init:latest
 EXPOSE 389 636
 ENV SLAPPASS=strongPassword123
 RUN rpm -ivh https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm; \
-    dnf install openldap openldap-clients unzip -y; \
+    dnf install openldap openldap-servers openldap-clients openssl unzip -y; \
     dnf clean all; \
     mkdir -m 775 /openldap; \
     mkdir -m 775 /openldap/config; \
