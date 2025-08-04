@@ -1,9 +1,9 @@
 #!bin/bash
 if [[ -n "$1" ]]; then
-    SLAPPWD="$1"
+    SLAPPASS="$1"
 fi
-if [[ -n "${SLAPPWD}" ]]; then
-    SECRET=$(slappasswd -s ${SLAPPWD})
+if [[ -n "${SLAPPASS}" ]]; then
+    SECRET=$(slappasswd -s ${SLAPPASS})
     pkill slapd
     sed -i "/olcRootPW:.*/c\olcRootPW: $SECRET" /openldap/schema/newpasswd.ldif
     /usr/sbin/slapd -u ldap -h "ldap:/// ldaps:/// ldapi:///"
