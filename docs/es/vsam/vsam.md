@@ -1,4 +1,4 @@
-# ADLDS ESM Configuration
+# VASM ESM Configuration
 
 Name: VSAM  
 Module: vsam_esm   
