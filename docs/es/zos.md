@@ -118,7 +118,6 @@ Generate a PL/I BMS mapset:
            DISPLAY 'HELLO PRINTING WORLD' UPON SYSLST.
            DISPLAY 'HELLO CONSOLE WORLD' UPON CONSOLE.
            STOP RUN.
-
 ```
 
 ### z/OS ISPF System Commands
