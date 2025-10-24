@@ -150,7 +150,7 @@ region=AJCL
               <mfServerUID>1.3.6.1.4.1.5043.1.21.6.615ac6ae.2820.3</mfServerUID>
               <cn>Web Services and J2EE</cn>
               <mfListenerStatus>Stopped</mfListenerStatus>
-              <mfRequestedEndpoint>tcp:*:*</mfRequestedEndpoint>
+              <mfRequestedEndpoint>tcp:*:55552</mfRequestedEndpoint>
               <mfActualEndpoint>tcp:,MFNODE:10.0.2.15,MFPORT:61837</mfActualEndpoint>
               <mfConnector>mfcs-mp::mfcs-mp</mfConnector>
               <mfError>OK</mfError>
