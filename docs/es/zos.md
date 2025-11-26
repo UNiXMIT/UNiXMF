@@ -4,23 +4,24 @@
 JCL, SRCE and CPYLIB:
 ```
 Space Units - CYLINDER  
-Primary Quantity - 3  
-Secondary Quantity - 3  
-Directory Blocks - 75  
+Primary Quantity - 4  
+Secondary Quantity - 8  
+Directory Blocks - 72  
 Record Format - FB  
 Record Length - 80
+Block Size - 3120
 Data Set Name Type - Library  
 ```
 
 LOADLIB:
 ```
 Space Units - CYLINDER  
-Primary Quantity - 3  
-Secondary Quantity - 3  
-Directory Blocks - 75  
+Primary Quantity - 4  
+Secondary Quantity - 8  
+Directory Blocks - 72  
 Record Format - U  
-Record Length - 32760
-Block Size - 32760
+Record Length - 80
+Block Size - 3120
 Data Set Name Type - Library  
 ```
 

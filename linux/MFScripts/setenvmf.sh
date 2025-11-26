@@ -14,7 +14,7 @@ set_mf()
 
     # Display a list of all MF installations.
     echo
-    PS3="Which version of MFCOBOL? "
+    PS3="Enter the NUMBER of the MFCOBOL installation to use: "
     select MF in "${array[@]}"
     do export MFCOBOL=$(echo $MF_OPT/$MF | sed -e "s/\/*$//"); break;  done
 
