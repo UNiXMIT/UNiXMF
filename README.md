@@ -18,7 +18,7 @@
 
 ## Documentation
 - [MFESDIAGS Enterprise Server Diagnostic Collection Script](https://my.rocketsoftware.com/RocketCommunity/s/article/MFESDIAGS-Enterprise-Server-Diagnostic-Collection-Script-1739543924588)
-- [Installing Visual COBOL in an Offline Environment](https://docs.rocketsoftware.com/search?labelkey=prod_enterprise_developer&q=Installing%20Visual%20COBOL%20in%20an%20Offline%20Environment)
-- [Run-time System Files to Ship](https://docs.rocketsoftware.com/search?labelkey=prod_enterprise_developer&q=Run-time%20System%20Files%20to%20Ship)
-- [Microsoft Package Dependencies](https://docs.rocketsoftware.com/search?labelkey=prod_enterprise_developer&q=Microsoft%20Package%20Dependencies)
-- [Security Reference Information](https://docs.rocketsoftware.com/search?labelkey=prod_enterprise_developer&q=Security%20Reference%20Information)
+- [Installing Visual COBOL in an Offline Environment](https://docs.rocketsoftware.com/search?labelkey=enterprise_developer_11.0&q=Installing%20Visual%20COBOL%20in%20an%20Offline%20Environment)
+- [Run-time System Files to Ship](https://docs.rocketsoftware.com/search?labelkey=enterprise_developer_11.0&q=Run-time%20System%20Files%20to%20Ship)
+- [Microsoft Package Dependencies](https://docs.rocketsoftware.com/search?labelkey=enterprise_developer_11.0&q=Microsoft%20Package%20Dependencies)
+- [Security Reference Information](https://docs.rocketsoftware.com/search?labelkey=enterprise_developer_11.0&q=Security%20Reference%20Information)
