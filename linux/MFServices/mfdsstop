@@ -1,0 +1,5 @@
+#!/bin/bash
+source /tmp/setenvmf
+. $MFCOBOL/bin/cobsetenv
+$COBDIR/bin/mfds64 -s 2 SYSAD SYSAD
+sleep 5

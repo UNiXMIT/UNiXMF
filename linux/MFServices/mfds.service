@@ -1,0 +1,11 @@
+[Unit]
+Description=Micro Focus Directory Server
+
+[Service]
+Type=simple
+ExecStart=/etc/systemd/system/mfdsstart
+ExecStop=/etc/systemd/system/mfdsstop
+TimeoutStartSec=0
+
+[Install]
+WantedBy=default.target

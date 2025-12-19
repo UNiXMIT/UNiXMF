@@ -1,5 +1,5 @@
 #!/bin/bash
-# The startmf.sh/setupmf.sh scripts, run after this to start/stop services, will use the environment set here.
+# The startmf.sh/setupmf.sh scripts and services, run after this to start/stop services, will use the environment set here.
 
 # MF_OPT is the default location of all your MFCOBOL installations
 export MF_OPT=/home/products
@@ -23,6 +23,7 @@ set_mf()
 
     # Set environment.
     . $MFCOBOL/bin/cobsetenv
+    echo "export MFCOBOL=\"$MFCOBOL\"" > /tmp/.setenvmf
 }
 
 set_mf

@@ -1,0 +1,11 @@
+[Unit]
+Description=Fileshare
+
+[Service]
+Type=simple
+ExecStart=/etc/systemd/system/fsstart
+ExecStop=/etc/systemd/system/fsstop
+TimeoutStartSec=0
+
+[Install]
+WantedBy=default.target
