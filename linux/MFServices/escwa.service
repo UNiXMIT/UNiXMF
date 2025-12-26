@@ -2,10 +2,12 @@
 Description=ESCWA
 
 [Service]
-Type=simple
-ExecStart=/etc/systemd/system/escwastart
-ExecStop=/etc/systemd/system/escwastop
+Type=oneshot
+ExecStart=/etc/systemd/system/escwaService.sh start
+ExecStop=/etc/systemd/system/escwaService.sh stop
+ExecReload=/etc/systemd/system/escwaService.sh restart
 TimeoutStartSec=0
+RemainAfterExit=yes
 
 [Install]
-WantedBy=default.target
+WantedBy=multi-user.target

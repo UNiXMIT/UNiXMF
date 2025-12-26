@@ -1,7 +1,0 @@
-#!/bin/bash
-source /tmp/.setenvmf
-. $MFCOBOL/bin/cobsetenv
-fsState=$MFCOBOL/.fsstate
-$COBDIR/bin/fs -s FSSERVER
-# export CCITCPS_FSSERVER=MFPORT:55555 && $COBDIR/bin/fs -s FSSERVER
-echo $! > $MFCOBOL/.fspid

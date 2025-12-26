@@ -2,11 +2,12 @@
 Description=Micro Focus Directory Server
 
 [Service]
-Type=simple
-ExecStart=/etc/systemd/system/runMFDS start
-ExecStop=/etc/systemd/system/runMFDS stop
-ExecReload=/etc/systemd/system/runMFDS restart
+Type=oneshot
+ExecStart=/etc/systemd/system/mfdsService.sh start
+ExecStop=/etc/systemd/system/mfdsService.sh stop
+ExecReload=/etc/systemd/system/mfdsService.sh restart
 TimeoutStartSec=0
+RemainAfterExit=yes
 
 [Install]
-WantedBy=default.target
+WantedBy=multi-user.target

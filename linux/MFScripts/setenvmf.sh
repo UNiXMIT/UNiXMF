@@ -14,4 +14,5 @@ do export MFCOBOL=$(echo $MFDIR/$MF | sed -e "s/\/*$//"); break;  done
 cd $CURRENT_DIR
 
 . $MFCOBOL/bin/cobsetenv
-echo "export MFCOBOL=\"$MFCOBOL\"" > /tmp/.setenvmf
+rm -f /tmp/.mf.env
+echo "export MFCOBOL=\"$MFCOBOL\"" > /tmp/.mf.env

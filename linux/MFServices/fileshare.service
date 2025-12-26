@@ -2,10 +2,12 @@
 Description=Fileshare
 
 [Service]
-Type=simple
-ExecStart=/etc/systemd/system/fsstart
-ExecStop=/etc/systemd/system/fsstop
+Type=oneshot
+ExecStart=/etc/systemd/system/fsService.sh start
+ExecStop=/etc/systemd/system/fsService.sh stop
+ExecReload=/etc/systemd/system/fsService.sh restart
 TimeoutStartSec=0
+RemainAfterExit=yes
 
 [Install]
-WantedBy=default.target
+WantedBy=multi-user.target

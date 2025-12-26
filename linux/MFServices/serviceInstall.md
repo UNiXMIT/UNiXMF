@@ -2,8 +2,8 @@
 
 ## Install Services
 ```
-chmod +x services/*
-sudo ln -s /home/support/MFSupport/MFServices/* /etc/systemd/system/
+chmod +x /home/support/MFSupport/MFServices/*.sh
+sudo ln -s /home/support/MFSupport/MFServices/*.service /etc/systemd/system/
 sudo systemctl daemon-reload
 ```
 
@@ -11,4 +11,5 @@ sudo systemctl daemon-reload
 ```
 sudo systemctl start serviceName
 sudo systemctl stop serviceName
+sudo systemctl restart serviceName
 ```
