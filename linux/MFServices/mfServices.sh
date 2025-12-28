@@ -6,7 +6,7 @@ escwaState=$MFCOBOL/.escwastate
 # fsState=$MFCOBOL/.fsstate
 
 mfds() {
-    case "$2" in
+    case "$1" in
         start)
             if [ ! -f $mfdsState ]; then
                 $COBDIR/bin/mfds64 --UI-on
@@ -20,8 +20,8 @@ mfds() {
             sleep 5
             ;;
         restart)
-            $0 stop
-            $0 start
+            mfds stop
+            mfds start
             ;;
         *)
             echo -e "Incorrect parms. Usage: $0 (mfds|escwa|fileshare) (start|stop|restart)"
@@ -31,7 +31,7 @@ mfds() {
 }
 
 escwa() {
-    case "$2" in
+    case "$1" in
         start)
             if [ ! -f $escwaState ]; then
                 $COBDIR/bin/escwa --BasicConfig.MfRequestedEndpoint="tcp:*:10086" --BasicConfig.InsecureAutoSignOn=true --write=true
@@ -45,8 +45,8 @@ escwa() {
             sleep 5
             ;;
         restart)
-            $0 stop
-            $0 start
+            escwa stop
+            escwa start
             ;;
         *)
             echo -e "Incorrect parms. Usage: $0 (mfds|escwa|fileshare) (start|stop|restart)"
@@ -56,7 +56,7 @@ escwa() {
 }
 
 fileshare() {
-    case "$2" in
+    case "$1" in
         start)
             # export CCITCPS_FSSERVER=MFPORT:55555
             $COBDIR/bin/fs -s FSSERVER
@@ -81,8 +81,8 @@ fileshare() {
             fi
             ;;
         restart)
-            $0 stop
-            $0 start
+            fileshare stop
+            fileshare start
             ;;
         *)
             echo -e "Incorrect parms. Usage: $0 (mfds|escwa|fileshare) (start|stop|restart)"
@@ -93,12 +93,15 @@ fileshare() {
 
 case "$1" in
     mfds)
+        shift
         mfds $@
         ;;
     escwa)
+        shift
         escwa $@
         ;;
     fileshare)
+        shift
         fileshare $@
         ;;
     *)
