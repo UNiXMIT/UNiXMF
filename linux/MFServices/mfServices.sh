@@ -12,14 +12,14 @@ mfds() {
     case "$arg2" in
         start)
             if [ ! -f $mfdsState ]; then
-                $COBDIR/bin/mfds64 --UI-on
-                $COBDIR/bin/mfds64 --listen-all
+                $COBDIR/bin/mfds --UI-on
+                $COBDIR/bin/mfds --listen-all
                 touch $mfdsState
             fi
-            $COBDIR/bin/mfds64
+            $COBDIR/bin/mfds
             ;;
         stop)
-            $COBDIR/bin/mfds64 -s 2 SYSAD SYSAD
+            $COBDIR/bin/mfds -s 2 SYSAD SYSAD
             sleep 5
             ;;
         restart)
