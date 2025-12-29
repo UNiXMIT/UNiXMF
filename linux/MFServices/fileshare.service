@@ -2,12 +2,11 @@
 Description=Fileshare
 
 [Service]
-Type=oneshot
-ExecStart=/etc/systemd/system/fsService.sh start
-ExecStop=/etc/systemd/system/fsService.sh stop
-ExecReload=/etc/systemd/system/fsService.sh restart
+Type=simple
+ExecStart=/home/support/MFSupport/MFServices/mfServices.sh fileshare start
+ExecStop=/home/support/MFSupport/MFServices/mfServices.sh fileshare stop
+ExecReload=/home/support/MFSupport/MFServices/mfServices.sh fileshare restart
 TimeoutStartSec=0
-RemainAfterExit=yes
 
 [Install]
 WantedBy=multi-user.target

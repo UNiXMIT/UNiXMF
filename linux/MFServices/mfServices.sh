@@ -1,4 +1,7 @@
 #!/bin/bash
+arg1="$1"
+arg2="$2"
+shift 2
 source /tmp/.mf.env
 . $MFCOBOL/bin/cobsetenv
 mfdsState=$MFCOBOL/.mfdsstate
@@ -6,7 +9,7 @@ escwaState=$MFCOBOL/.escwastate
 # fsState=$MFCOBOL/.fsstate
 
 mfds() {
-    case "$1" in
+    case "$arg2" in
         start)
             if [ ! -f $mfdsState ]; then
                 $COBDIR/bin/mfds64 --UI-on
@@ -20,8 +23,9 @@ mfds() {
             sleep 5
             ;;
         restart)
-            mfds stop
-            mfds start
+            for arg2 in stop start; do
+                mfds
+            done
             ;;
         *)
             echo -e "Incorrect parms. Usage: $0 (mfds|escwa|fileshare) (start|stop|restart)"
@@ -31,7 +35,7 @@ mfds() {
 }
 
 escwa() {
-    case "$1" in
+    case "$arg2" in
         start)
             if [ ! -f $escwaState ]; then
                 $COBDIR/bin/escwa --BasicConfig.MfRequestedEndpoint="tcp:*:10086" --BasicConfig.InsecureAutoSignOn=true --write=true
@@ -45,8 +49,9 @@ escwa() {
             sleep 5
             ;;
         restart)
-            escwa stop
-            escwa start
+            for arg2 in stop start; do
+                escwa
+            done
             ;;
         *)
             echo -e "Incorrect parms. Usage: $0 (mfds|escwa|fileshare) (start|stop|restart)"
@@ -56,33 +61,26 @@ escwa() {
 }
 
 fileshare() {
-    case "$1" in
+    case "$arg2" in
         start)
             # export CCITCPS_FSSERVER=MFPORT:55555
             $COBDIR/bin/fs -s FSSERVER
-            echo $! > $MFCOBOL/.fs.pid
             ;;
         stop)
-            fsPID=$MFCOBOL/.fs.pid
-            if [ -f "$fsPID" ]; then
-            pid=$(cat "$fsPID")
-            if kill -0 "$pid" 2>/dev/null; then
-                kill "$pid"
-            else
-                echo "Process not running"
-                rm -f $MFCOBOL/.fs.pid
-            fi
-            else
-                echo "PID file not found"
-            fi
-            sleep 5
-            if kill -0 "$pid" 2>/dev/null; then
-                kill -9 "$pid"
+            fsPID=$(systemctl show -p MainPID --value fileshare.service)
+            if kill -0 "$fsPID" 2>/dev/null; then
+                kill "$fsPID"
+                sleep 5
+                if kill -0 "$fsPID" 2>/dev/null; then
+                    kill -9 "$fsPID"
+                    sleep 5
+                fi
             fi
             ;;
         restart)
-            fileshare stop
-            fileshare start
+            for arg2 in stop start; do
+                fileshare
+            done
             ;;
         *)
             echo -e "Incorrect parms. Usage: $0 (mfds|escwa|fileshare) (start|stop|restart)"
@@ -91,18 +89,15 @@ fileshare() {
     esac
 }
 
-case "$1" in
+case "$arg1" in
     mfds)
-        shift
-        mfds $@
+        mfds
         ;;
     escwa)
-        shift
-        escwa $@
+        escwa
         ;;
     fileshare)
-        shift
-        fileshare $@
+        fileshare
         ;;
     *)
         echo -e "Incorrect parms. Usage: $0 (mfds|escwa|fileshare) (start|stop|restart)"

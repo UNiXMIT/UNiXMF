@@ -2,12 +2,11 @@
 Description=ESCWA
 
 [Service]
-Type=oneshot
-ExecStart=/etc/systemd/system/escwaService.sh start
-ExecStop=/etc/systemd/system/escwaService.sh stop
-ExecReload=/etc/systemd/system/escwaService.sh restart
+Type=simple
+ExecStart=/home/support/MFSupport/MFServices/mfServices.sh escwa start
+ExecStop=/home/support/MFSupport/MFServices/mfServices.sh escwa stop
+ExecReload=/home/support/MFSupport/MFServices/mfServices.sh escwa restart
 TimeoutStartSec=0
-RemainAfterExit=yes
 
 [Install]
 WantedBy=multi-user.target

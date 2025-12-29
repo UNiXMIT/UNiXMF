@@ -1,5 +1,7 @@
 #!/bin/bash
 export MFDIR=/home/products
+export COBMODE=64
+export TERM=xterm
 
 CURRENT_DIR=$(pwd)
 
@@ -16,3 +18,5 @@ cd $CURRENT_DIR
 . $MFCOBOL/bin/cobsetenv
 rm -f /tmp/.mf.env
 echo "export MFCOBOL=\"$MFCOBOL\"" > /tmp/.mf.env
+echo "export COBMODE=\"$COBMODE\"" >> /tmp/.mf.env
+echo "export TERM=\"$TERM\"" >> /tmp/.mf.env
