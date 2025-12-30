@@ -3,17 +3,30 @@
 # sudo (apt/yum/zypper) install -y curl
 # curl -s https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/linux/MFScripts/setupmf.sh | bash 
 
+USERPATH=/home
 user=support
+FILEPATH="$USERPATH/$user"
 
-# Setup JCL ES Region
-cd /home/$user/MFSupport/MFSamples
-[ ! -d "JCL" ] && mkdir JCL
-cd JCL
-[ ! -d "catalog" ] && mkdir catalog 
-[ ! -d "dataset" ] && mkdir dataset 
-[ ! -d "loadlib" ] && mkdir loadlib 
-[ ! -d "system" ] && mkdir system
+# Create Directories
+cd $FILEPATH/MFSupport
+sudo mkdir -p MFSamples
+sudo mkdir -p CTF
+
+# Setup CTF
+cd $FILEPATH/MFSupport/CTF
+sudo mkdir -p TEXT
+sudo mkdir -p BIN
+
+# Setup ES Regions
+cd $FILEPATH/MFSupport/MFSamples
+mkdir -p -m 775 JCL/system JCL/catalog JCL/dataset JCL/loadlib
+cd $FILEPATH/MFSupport/MFSamples/JCL
 curl -s -O https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/linux/MFScripts/JCL.xml
-mfds64 -g 5 /home/$user/MFSupport/MFSamples/JCL/JCL.xml
+curl -s -O https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/docs/es/MFBSI.cfg
+curl -s -O https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/docs/es/VSE.cfg
+mkdir -p -m 775 CICS/system CICS/dataset CICS/loadlib
+cd $FILEPATH/MFSupport/MFSamples/CICS
+curl -s -O https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/linux/MFScripts/CICS.xml
+mfds -g 5 $FILEPATH/MFSupport/MFSamples/JCL/JCL.xml
 
-cd /home/$user/MFSupport
+cd $FILEPATH/MFSupport
