@@ -1,0 +1,13 @@
+[Unit]
+Description=Micro Focus HA Cloud
+
+[Service]
+Type=simple
+User=support
+ExecStart=/home/support/MFSupport/MFServices/mfServices.sh hacloud start
+ExecStop=/home/support/MFSupport/MFServices/mfServices.sh hacloud stop
+ExecReload=/home/support/MFSupport/MFServices/mfServices.sh hacloud restart
+TimeoutStartSec=0
+
+[Install]
+WantedBy=multi-user.target

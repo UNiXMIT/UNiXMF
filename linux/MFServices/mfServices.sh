@@ -6,7 +6,6 @@ source /tmp/.mf.env
 . $MFCOBOL/bin/cobsetenv
 mfdsState=$MFCOBOL/.mfdsstate
 escwaState=$MFCOBOL/.escwastate
-# fsState=$MFCOBOL/.fsstate
 
 mfds() {
     case "$arg2" in
@@ -28,7 +27,7 @@ mfds() {
             done
             ;;
         *)
-            echo -e "Incorrect parms. Usage: $0 (mfds|escwa|fileshare) (start|stop|restart)"
+            echo -e "Incorrect parms. Usage: $0 (mfds|escwa|fileshare|hacloud) (start|stop|restart)"
             exit 1;
             ;;
     esac
@@ -54,7 +53,7 @@ escwa() {
             done
             ;;
         *)
-            echo -e "Incorrect parms. Usage: $0 (mfds|escwa|fileshare) (start|stop|restart)"
+            echo -e "Incorrect parms. Usage: $0 (mfds|escwa|fileshare|hacloud) (start|stop|restart)"
             exit 1;
             ;;
     esac
@@ -83,7 +82,27 @@ fileshare() {
             done
             ;;
         *)
-            echo -e "Incorrect parms. Usage: $0 (mfds|escwa|fileshare) (start|stop|restart)"
+            echo -e "Incorrect parms. Usage: $0 (mfds|escwa|fileshare|hacloud) (start|stop|restart)"
+            exit 1;
+            ;;
+    esac
+}
+
+hacloud() {
+    case "$arg2" in
+        start)
+            $COBDIR/bin/startsessionserver.sh
+            ;;
+        stop)
+            $COBDIR/bin/stopsessionserver.sh
+            ;;
+        restart)
+            for arg2 in stop start; do
+                hacloud
+            done
+            ;;
+        *)
+            echo -e "Incorrect parms. Usage: $0 (mfds|escwa|fileshare|hacloud) (start|stop|restart)"
             exit 1;
             ;;
     esac
@@ -98,6 +117,9 @@ case "$arg1" in
         ;;
     fileshare)
         fileshare
+        ;;
+    hacloud)
+        hacloud
         ;;
     *)
         echo -e "Incorrect parms. Usage: $0 (mfds|escwa|fileshare) (start|stop|restart)"
