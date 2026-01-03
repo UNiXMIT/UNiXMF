@@ -95,6 +95,7 @@ hacloud() {
             ;;
         stop)
             $COBDIR/bin/stopsessionserver.sh
+            sleep 5
             ;;
         restart)
             for arg2 in stop start; do
