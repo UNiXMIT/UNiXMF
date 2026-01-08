@@ -127,10 +127,16 @@ Generate a PL/I BMS mapset:
 | **pfshow on/off** | Turns function key (PF key) labels **on or off** to show available key assignments.                         |
 | **jc cb**         | Inserts or **prepends a job card** (JOB statement) named **CB** to your JCL source.                         |
 | **sub**           | **Submits** the current JCL job to JES for execution.                                                       |
-| **st**            | Displays the **status** of submitted jobs (e.g., active, output, held).                                     |
+| **s.st**            | Displays the **status** of submitted jobs (e.g., active, output, held).                                     |
 | **res**           | **Resets** or clears information from the source or current editing session.                                |
 | **cab**           | **Cancels** the current action and exits **without saving** changes.                                        |
 | **jcl override**  | Issues a **JCL override** command, such as `/r 0111,ok`, to reroute or restart jobs.                        |
 | **=**             | The **jump function** — quickly **navigates to another panel** or screen by entering its ID (e.g., `=3.4`). |
 
 https://www.ibm.com/docs/en/zos/3.2.0?topic=selection-ispf-system-commands  
+
+### TN3270 Commands
+| Command               | Description              |
+| --------------------- | ------------------------ |
+| **Ctrl + R**          | RESET locked terminal    |
+| **Ctrl + Shift + Z**  | CLEAR Terminal           |
