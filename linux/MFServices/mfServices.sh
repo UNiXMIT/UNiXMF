@@ -12,6 +12,7 @@ mfds() {
         start)
             if [ ! -f $mfdsState ]; then
                 install -m 775 /dev/null $mfdsState
+                $COBDIR/bin/mfds -f root
                 $COBDIR/bin/mfds --UI-on
                 $COBDIR/bin/mfds --listen-all
             fi
