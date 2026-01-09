@@ -11,9 +11,9 @@ mfds() {
     case "$arg2" in
         start)
             if [ ! -f $mfdsState ]; then
+                install -m 775 /dev/null $mfdsState
                 $COBDIR/bin/mfds --UI-on
                 $COBDIR/bin/mfds --listen-all
-                touch $mfdsState
             fi
             $COBDIR/bin/mfds
             ;;
@@ -37,8 +37,8 @@ escwa() {
     case "$arg2" in
         start)
             if [ ! -f $escwaState ]; then
+                install -m 777 /dev/null $escwaState
                 $COBDIR/bin/escwa --BasicConfig.MfRequestedEndpoint="tcp:*:10086" --BasicConfig.InsecureAutoSignOn=true --write=true
-                touch $escwaState
             else
                 $COBDIR/bin/escwa
             fi
