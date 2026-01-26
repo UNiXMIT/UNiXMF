@@ -12,14 +12,14 @@ mfds() {
         start)
             if [ ! -f $mfdsState ]; then
                 touch $mfdsState
-                $COBDIR/bin/mfds -f root
-                $COBDIR/bin/mfds --UI-on
-                $COBDIR/bin/mfds --listen-all
+                $COBDIR/bin/mfds$COBMODE -f root
+                $COBDIR/bin/mfds$COBMODE --UI-on
+                $COBDIR/bin/mfds$COBMODE --listen-all
             fi
-            $COBDIR/bin/mfds
+            $COBDIR/bin/mfds$COBMODE
             ;;
         stop)
-            $COBDIR/bin/mfds -s 2 SYSAD SYSAD
+            $COBDIR/bin/mfds$COBMODE -s 2 SYSAD SYSAD
             sleep 5
             ;;
         restart)
