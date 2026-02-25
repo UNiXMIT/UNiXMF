@@ -1,7 +1,7 @@
 # z/OS Notes
 
 ### Data Set Definitions
-JCL, SRCE and CPYLIB:
+JCL, SRCE, CPYLIB and PROCLIB:
 ```
 Space Units - CYLINDER  
 Primary Quantity - 4  
