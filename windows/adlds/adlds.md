@@ -7,7 +7,7 @@ Authorized ID: CN=MFReader,CN=ADAM Users,CN=Micro Focus,CN=Program Data,DC=local
 
 ```
 [LDAP]
-BASE=CN=Micro Focus,CN=Program Data,DC=local
+base=CN=Micro Focus,CN=Program Data,DC=local
 user class=microfocus-MFDS-User
 user container=CN=Enterprise Server Users
 group container=CN=Enterprise Server User Groups
@@ -18,14 +18,14 @@ set login count=yes
 signon attempts=3
 
 [Verify]
-Mode=MF-hash
+mode=MF-hash
 
 [Trace]
-Modify=y
-Rule=y
-Groups=y
-Search=y
-Bind=n
-Trace1=verify:*:debug
-Trace2=auth:*:*:**:debug
+modify=y
+rule=y
+groups=y
+search=y
+bind=n
+trace1=verify:*:debug
+trace2=auth:*:*:**:debug
 ```
