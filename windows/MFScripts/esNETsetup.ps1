@@ -30,7 +30,7 @@ function Enable-Feature {
 
 $restartNeeded = $false
 
-# ── .NET / WCF Features ────────────────────────────────────────────────────────
+# .NET / WCF FEATURES 
 Write-Log "[1/6] Enabling .NET Framework Features..."
 
 $dotnetFeatures = @(
@@ -50,7 +50,7 @@ $tcpFeature = if ($build -ge 10240) { "WCF-TCP-Activation45" } else { "WCF-NonHT
 Write-Log "Using activation feature: $tcpFeature (OS build $build)"
 $restartNeeded = (Enable-Feature $tcpFeature) -or $restartNeeded
 
-# ── IIS Management Tools ───────────────────────────────────────────────────────
+# IIS MANAGEMENT TOOLS
 Write-Log "[2/6] Enabling IIS Web Management Tools..."
 
 $iisManagement = @(
@@ -64,7 +64,7 @@ foreach ($f in $iisManagement) {
     $restartNeeded = (Enable-Feature $f) -or $restartNeeded
 }
 
-# ── IIS World Wide Web Services ────────────────────────────────────────────────
+# IIS WORLD WIDE WEB SERVICES
 Write-Log "[3/6] Enabling IIS World Wide Web Services..."
 
 $iisWeb = @(
@@ -81,7 +81,7 @@ foreach ($f in $iisWeb) {
     $restartNeeded = (Enable-Feature $f) -or $restartNeeded
 }
 
-# ── IIS Security ───────────────────────────────────────────────────────────────
+# IIS SECURITY
 Write-Log "[4/6] Enabling IIS Security Features..."
 
 $iisSecurity = @(
@@ -93,7 +93,7 @@ foreach ($f in $iisSecurity) {
     $restartNeeded = (Enable-Feature $f) -or $restartNeeded
 }
 
-# ── SQL Server ────────────────────────────────────────────────────────────────── 
+# SQL SERVER INSTALLATION
 Write-Log "[5/6] Installing SQL Server..."
 
 if (-not (Get-Command choco -ErrorAction SilentlyContinue)) {
@@ -119,7 +119,7 @@ try {
     exit 1
 }
 
-# ── SQL Server Configuration ───────────────────────────────────────────────────
+# SQL SERVER CONFIGURATION
 Write-Log "[6/6] Configuring SQL Server permissions..."
 
 $sqlcmd = $null
@@ -179,7 +179,7 @@ if (-not $sqlcmd) {
     }
 }
 
-# ── Done ───────────────────────────────────────────────────────────────────────
+# DONE
 Write-Log ""
 Write-Log "============================================"
 Write-Log " All steps completed! Log saved to: $LogFile"
