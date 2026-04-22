@@ -11,7 +11,7 @@
 # =============================================================================
 $DomainName       = "corp.example.com"
 $NetBIOSName      = "CORP"
-$AdminPassword    = "strongPassword#123"
+$AdminPassword    = "Unidos30"
 $DNSForwarder     = @("169.254.169.253", "1.1.1.1", "8.8.8.8")
 $DomainDN         = "DC=corp,DC=example,DC=com"
 $Partition        = "Micro Focus"
@@ -31,6 +31,23 @@ function Write-Warn { param([string]$Msg) Write-Host "  !!  $Msg" -ForegroundCol
 
 # STAGE 1
 if (-not (Test-Path $resumeFile)) {
+    # 0 - Detect and remove ADLDS
+    Write-Step "0/5 - Checking for ADLDS instances"
+    $adldsFeature = Get-WindowsFeature -Name ADLDS
+    if ($adldsFeature.Installed -eq $true) {
+        $instanceName = "ADLDS"
+        Stop-Service "ADAM_$instanceName" -Force -ErrorAction SilentlyContinue
+        C:\Windows\ADAM\adamuninstall.exe /i:$instanceName /q /force
+        Start-Sleep -Seconds 5
+        Write-Host "Removing AD LDS feature..." -ForegroundColor Cyan
+        Remove-WindowsFeature -Name ADLDS
+        Write-Host "Removing AD LDS RSAT tools..." -ForegroundColor Cyan
+        Remove-WindowsFeature -Name "RSAT-AD-LDS" -ErrorAction SilentlyContinue
+        Write-OK "ADLDS removal completed!"
+    } else {
+        Write-OK "ADLDS feature is not installed. Nothing to remove."
+    }
+
     # 1 - Hostname
     Write-Step "1/5 - Checking hostname"
     Write-OK "Hostname: $env:COMPUTERNAME  will be promoted as $env:COMPUTERNAME.$DomainName"
@@ -102,6 +119,7 @@ if (Test-Path $resumeFile) {
         Write-Error "NTDS is not running. Ensure DC promotion reboot has completed."
         exit 1
     }
+    Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\NTDS\Parameters" -Name "LDAPServerIntegrity" -Value 0 -Type DWord
     Write-OK "AD DS running."
     Import-Module ActiveDirectory
 
