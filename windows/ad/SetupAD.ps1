@@ -11,7 +11,7 @@
 # =============================================================================
 $DomainName       = "corp.example.com"
 $NetBIOSName      = "CORP"
-$AdminPassword    = "Unidos30"
+$AdminPassword    = "strongPassword#123"
 $DNSForwarder     = @("169.254.169.253", "1.1.1.1", "8.8.8.8")
 $DomainDN         = "DC=corp,DC=example,DC=com"
 $Partition        = "Micro Focus"
@@ -119,8 +119,10 @@ if (Test-Path $resumeFile) {
         Write-Error "NTDS is not running. Ensure DC promotion reboot has completed."
         exit 1
     }
-    Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\NTDS\Parameters" -Name "LDAPServerIntegrity" -Value 0 -Type DWord
     Write-OK "AD DS running."
+
+    Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\NTDS\Parameters" -Name "LDAPServerIntegrity" -Value 0 -Type DWord -Force
+
     Import-Module ActiveDirectory
 
     # 2 - Create MF application partition container
