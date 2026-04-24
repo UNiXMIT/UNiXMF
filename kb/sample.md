@@ -6,10 +6,10 @@ COBOL Server
 Windows  
 Linux/UNIX  
 
-## Situation
+## Symptoms
 
 
-## Resolution
+## Solution
 
 
 ## Additional Information
