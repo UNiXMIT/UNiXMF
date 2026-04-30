@@ -12,7 +12,7 @@ expiration=90
 history=0
 minimum length=6
 maximum length=64
-required=alphabetic, mixed-case, numeric, puncutation
+required=alphabetic, mixed-case, numeric, punctuation
 complexity=2
 
 [Trace]
