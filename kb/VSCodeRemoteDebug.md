@@ -24,8 +24,9 @@ Linux/UNIX
 
 ### File locations
 #### Server 1
-Source Files, VS Code workspace and launch.json - C:\MFSamples
-##### launch.json
+Source Files, VS Code workspace and launch.json - C:\MFSamples  
+
+**launch.json**
 ```
 {
     "version": "0.2.0",
