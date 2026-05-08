@@ -114,6 +114,9 @@ removeAutoPAC() {
     curl -s -X "DELETE" "http://localhost:10086/native/v1/regions/127.0.0.1/86/REGION1" -b "cookieFile.txt" -H "accept: application/json" -H "X-Requested-With: API" -H "Content-Type: application/json" -H "Origin: http://localhost:10086"
     curl -s -X "DELETE" "http://localhost:10086/native/v1/regions/127.0.0.1/86/REGION2" -b "cookieFile.txt" -H "accept: application/json" -H "X-Requested-With: API" -H "Content-Type: application/json" -H "Origin: http://localhost:10086"
 
+    setupRedis
+    caspac -aInitPac=MYPAC -sredis,$USEDB:$REDISPORT -nMYPSOR
+
     rm -rf $SAMPLEDIR/PAC
     rm -rf /var/mfcobol/es/REGION1
     rm -rf /var/mfcobol/es/REGION2
@@ -241,8 +244,12 @@ setupDB2() {
 
 setupRedis() {
     export REDISPORT=6379
+    export REDISPASSW=$USERPASSWD
     read -e -p "Redis Hostname or IP Address [$USEDB]: " -i $USEDB USEDB
     read -e -p "Redis Port [6379]: " -i 6379 REDISPORT
+    read -e -p "Redis Password [$REDISPASSW]: " -i $REDISPASSW REDISPASSW
+
+    mffsecretsadmin write microfocus/CAS/SOR-MYPSOR-Pass $REDISPASSW
 }
 
 ESSec() {

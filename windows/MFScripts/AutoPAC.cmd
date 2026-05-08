@@ -234,7 +234,12 @@ GOTO :REDIS
 :REDIS
 timeout /T 5
 SET /p "USEDB=Redis Hostname or IP Address [%USEDB%]: "
-SET /p "REDISPORT=Redis Port [6379]: "
+SET REDISPORT=6379
+SET /p "REDISPORT=Redis Port [%REDISPORT%]: "
+SET REDISPASSW=strongPassword123
+SET /p "REDISPASSW=Redis Password [%REDISPASSW%]: "
+
+mffsecretsadmin write microfocus/CAS/SOR-MYPSOR-Pass %REDISPASSW%
 
 :ESCWA
 curl -s -X "POST" "http://localhost:10086/server/v1/config/groups/sors" -H "accept: application/json" -H "X-Requested-With: API" -H "Content-Type: application/json" -H "Origin: http://localhost:10086" -b "C:\Users\Public\Documents\cookieFile.txt" -d "{\"SorName\": \"MYPSOR\", \"SorDescription\": \"My PAC SOR\", \"SorType\": \"redis\", \"SorConnectPath\": \"%USEDB%:%REDISPORT%\", \"TLS\": false}"
@@ -271,6 +276,15 @@ curl -s -X "DELETE" "http://localhost:10086/server/v1/config/groups/pacs/%PACUID
 curl -s -X "DELETE" "http://localhost:10086/native/v1/regions/127.0.0.1/86/REGION1" -b "C:\Users\Public\Documents\cookieFile.txt" -H "accept: application/json" -H "X-Requested-With: API" -H "Content-Type: application/json" -H "Origin: http://localhost:10086"
 
 curl -s -X "DELETE" "http://localhost:10086/native/v1/regions/127.0.0.1/86/REGION2" -b "C:\Users\Public\Documents\cookieFile.txt" -H "accept: application/json" -H "X-Requested-With: API" -H "Content-Type: application/json" -H "Origin: http://localhost:10086"
+
+SET USEDB=127.0.0.1
+SET /p "USEDB=Redis Hostname or IP Address [%USEDB%]: "
+SET REDISPORT=6379
+SET /p "REDISPORT=Redis Port [%REDISPORT%]: "
+SET REDISPASSW=strongPassword123
+SET /p "REDISPASSW=Redis Password [%REDISPASSW%]: "
+
+caspac -aInitPac=MYPAC -sredis,%USEDB%:%REDISPORT% -nMYPSOR
 
 :: Remove files
 rd %SAMPLEDIR%\PAC /Q /S
