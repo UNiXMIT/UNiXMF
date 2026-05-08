@@ -113,7 +113,7 @@ IF "%choice%"=="4" GOTO :setupDB2
 GOTO :DBCHOICE
 
 :setupMSSQL
-SET DRIVERNAME="{ODBC Driver 17 for SQL Server}"
+SET DRIVERNAME="{ODBC Driver 18 for SQL Server}"
 SET MFPROVIDER=SS
 
 :: Create the MFDBFH.cfg
@@ -239,7 +239,7 @@ SET /p "REDISPORT=Redis Port [%REDISPORT%]: "
 SET REDISPASSW=strongPassword123
 SET /p "REDISPASSW=Redis Password [%REDISPASSW%]: "
 
-mffsecretsadmin write microfocus/CAS/SOR-MYPSOR-Pass %REDISPASSW%
+mfsecretsadmin write microfocus/CAS/SOR-MYPSOR-Pass %REDISPASSW%
 
 :ESCWA
 curl -s -X "POST" "http://localhost:10086/server/v1/config/groups/sors" -H "accept: application/json" -H "X-Requested-With: API" -H "Content-Type: application/json" -H "Origin: http://localhost:10086" -b "C:\Users\Public\Documents\cookieFile.txt" -d "{\"SorName\": \"MYPSOR\", \"SorDescription\": \"My PAC SOR\", \"SorType\": \"redis\", \"SorConnectPath\": \"%USEDB%:%REDISPORT%\", \"TLS\": false}"
@@ -284,7 +284,7 @@ SET /p "REDISPORT=Redis Port [%REDISPORT%]: "
 SET REDISPASSW=strongPassword123
 SET /p "REDISPASSW=Redis Password [%REDISPASSW%]: "
 
-caspac -aInitPac=MYPAC -sredis,%USEDB%:%REDISPORT% -nMYPSOR
+caspac -aInitPac=MYPAC -sredis,%USEDB%:%REDISPORT% -nMYPSOR -overwrite
 
 :: Remove files
 rd %SAMPLEDIR%\PAC /Q /S

@@ -114,6 +114,9 @@ removeAutoPAC() {
     curl -s -X "DELETE" "http://localhost:10086/native/v1/regions/127.0.0.1/86/REGION1" -b "cookieFile.txt" -H "accept: application/json" -H "X-Requested-With: API" -H "Content-Type: application/json" -H "Origin: http://localhost:10086"
     curl -s -X "DELETE" "http://localhost:10086/native/v1/regions/127.0.0.1/86/REGION2" -b "cookieFile.txt" -H "accept: application/json" -H "X-Requested-With: API" -H "Content-Type: application/json" -H "Origin: http://localhost:10086"
 
+    export USEDB="127.0.0.1"
+    export USERPASSWD="strongPassword123"
+
     setupRedis
     caspac -aInitPac=MYPAC -sredis,$USEDB:$REDISPORT -nMYPSOR
 
@@ -136,10 +139,10 @@ setupMSSQL() {
 
     # Create the MFDBFH.cfg
     dbfhconfig -add -file:$MFDBFH_CONFIG -server:MYSERVER -provider:$MFPROVIDER -comment:"MSSQL"
-    dbfhconfig -add -file:$MFDBFH_CONFIG -server:MYSERVER -dsn:$MFPROVIDER.MASTER -type:database -name:master -connect:"Driver=$DRIVERNAME;Server=$USEDB;Database=master;UID=$USERID;PWD=$USERPASSWD;"
-    dbfhconfig -add -file:$MFDBFH_CONFIG -server:MYSERVER -dsn:$MFPROVIDER.VSAMDATA -type:datastore -name:VSAMDATA -connect:"Driver=$DRIVERNAME;Server=$USEDB;Database=VSAMDATA;UID=$USERID;PWD=$USERPASSWD;"
-    dbfhconfig -add -file:$MFDBFH_CONFIG -server:MYSERVER -dsn:$MFPROVIDER.MYPAC -type:region -name:MYPAC -connect:"Driver=$DRIVERNAME;Server=$USEDB;Database=MYPAC;UID=$USERID;PWD=$USERPASSWD;"
-    dbfhconfig -add -file:$MFDBFH_CONFIG -server:MYSERVER -dsn:$MFPROVIDER.CROSSREGION -type:crossRegion -connect:"Driver=$DRIVERNAME;Server=$USEDB;Database=_\$XREGN\$;UID=$USERID;PWD=$USERPASSWD;"
+    dbfhconfig -add -file:$MFDBFH_CONFIG -server:MYSERVER -dsn:$MFPROVIDER.MASTER -type:database -name:master -connect:"$connString"
+    dbfhconfig -add -file:$MFDBFH_CONFIG -server:MYSERVER -dsn:$MFPROVIDER.VSAMDATA -type:datastore -name:VSAMDATA -connect:"$connString"
+    dbfhconfig -add -file:$MFDBFH_CONFIG -server:MYSERVER -dsn:$MFPROVIDER.MYPAC -type:region -name:MYPAC -connect:"$connString"
+    dbfhconfig -add -file:$MFDBFH_CONFIG -server:MYSERVER -dsn:$MFPROVIDER.CROSSREGION -type:crossRegion -connect:"$connString"
 
     # Create the datastore
     dbfhdeploy -configfile:$MFDBFH_CONFIG data create sql://MYSERVER/VSAMDATA
@@ -249,7 +252,7 @@ setupRedis() {
     read -e -p "Redis Port [6379]: " -i 6379 REDISPORT
     read -e -p "Redis Password [$REDISPASSW]: " -i $REDISPASSW REDISPASSW
 
-    mffsecretsadmin write microfocus/CAS/SOR-MYPSOR-Pass $REDISPASSW
+    mfsecretsadmin write microfocus/CAS/SOR-MYPSOR-Pass $REDISPASSW -overwrite
 }
 
 ESSec() {
