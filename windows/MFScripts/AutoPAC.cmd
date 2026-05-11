@@ -126,7 +126,7 @@ dbfhconfig -add -file:%MFDBFH_CONFIG% -server:MYSERVER -dsn:%MFPROVIDER%.CROSSRE
 :: Create the datastore
 :: dbfhdeploy -configfile:%MFDBFH_CONFIG% data create sql://MYSERVER/VSAMDATA
 :: WORKAROUND
-dbfhadmin -script -type:datastore -provider:%MFPROVIDER% -name:MYPAC -file:%SAMPLEDIR%\PAC\createRegion.sql
+dbfhadmin -script -type:datastore -provider:%MFPROVIDER% -name:VSAMDATA -file:%SAMPLEDIR%\PAC\VSAMDATA.sql
 sqlcmd -S %USEDB%,%DBPORT% -U %USERID% -P %USERPASSWD% -N -C -i %SAMPLEDIR%\PAC\VSAMDATA.sql
 
 :: Create the region database
