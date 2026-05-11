@@ -113,26 +113,33 @@ IF "%choice%"=="4" GOTO :setupDB2
 GOTO :DBCHOICE
 
 :setupMSSQL
-SET DRIVERNAME="{ODBC Driver 18 for SQL Server}"
+SET DRIVERNAME="{ODBC Driver 17 for SQL Server}"
 SET MFPROVIDER=SS
 
 :: Create the MFDBFH.cfg
 dbfhconfig -add -file:%MFDBFH_CONFIG% -server:MYSERVER -provider:%MFPROVIDER% -comment:"MSSQL"
-dbfhconfig -add -file:%MFDBFH_CONFIG% -server:MYSERVER -dsn:%MFPROVIDER%.MASTER -type:database -name:master -connect:""Driver=%DRIVERNAME%;Server=%USEDB%,%DBPORT%;Database=master;UID=%USERID%;PWD=%USERPASSWD%;""
-dbfhconfig -add -file:%MFDBFH_CONFIG% -server:MYSERVER -dsn:%MFPROVIDER%.VSAMDATA -type:datastore -name:VSAMDATA -connect:""Driver=%DRIVERNAME%;Server=%USEDB%,%DBPORT%;Database=VSAMDATA;UID=%USERID%;PWD=%USERPASSWD%;""
-dbfhconfig -add -file:%MFDBFH_CONFIG% -server:MYSERVER -dsn:%MFPROVIDER%.MYPAC -type:region -name:MYPAC -connect:""Driver=%DRIVERNAME%;Server=%USEDB%,%DBPORT%;Database=MYPAC;UID=%USERID%;PWD=%USERPASSWD%;""
-dbfhconfig -add -file:%MFDBFH_CONFIG% -server:MYSERVER -dsn:%MFPROVIDER%.CROSSREGION -type:crossRegion -connect:""Driver=%DRIVERNAME%;Server=%USEDB%,%DBPORT%;Database=_$XREGN$;UID=%USERID%;PWD=%USERPASSWD%;""
+dbfhconfig -add -file:%MFDBFH_CONFIG% -server:MYSERVER -dsn:%MFPROVIDER%.MASTER -type:database -name:master -connect:""Driver=%DRIVERNAME%;Server=%USEDB%,%DBPORT%;Database=master;UID=%USERID%;PWD=%USERPASSWD%;Encrypt=True;TrustServerCertificate=True;""
+dbfhconfig -add -file:%MFDBFH_CONFIG% -server:MYSERVER -dsn:%MFPROVIDER%.VSAMDATA -type:datastore -name:VSAMDATA -connect:""Driver=%DRIVERNAME%;Server=%USEDB%,%DBPORT%;Database=VSAMDATA;UID=%USERID%;PWD=%USERPASSWD%;Encrypt=True;TrustServerCertificate=True;""
+dbfhconfig -add -file:%MFDBFH_CONFIG% -server:MYSERVER -dsn:%MFPROVIDER%.MYPAC -type:region -name:MYPAC -connect:""Driver=%DRIVERNAME%;Server=%USEDB%,%DBPORT%;Database=MYPAC;UID=%USERID%;PWD=%USERPASSWD%;Encrypt=True;TrustServerCertificate=True;""
+dbfhconfig -add -file:%MFDBFH_CONFIG% -server:MYSERVER -dsn:%MFPROVIDER%.CROSSREGION -type:crossRegion -connect:""Driver=%DRIVERNAME%;Server=%USEDB%,%DBPORT%;Database=_$XREGN$;UID=%USERID%;PWD=%USERPASSWD%;Encrypt=True;TrustServerCertificate=True;""
 
 :: Create the datastore
-dbfhdeploy -configfile:%MFDBFH_CONFIG% data create sql://MYSERVER/VSAMDATA
+:: dbfhdeploy -configfile:%MFDBFH_CONFIG% data create sql://MYSERVER/VSAMDATA
+:: WORKAROUND
+dbfhadmin -script -type:datastore -provider:%MFPROVIDER% -name:MYPAC -file:%SAMPLEDIR%\PAC\createRegion.sql
+sqlcmd -S %USEDB%,%DBPORT% -U %USERID% -P %USERPASSWD% -N -C -i %SAMPLEDIR%\PAC\VSAMDATA.sql
 
 :: Create the region database
 dbfhadmin -script -type:region -provider:%MFPROVIDER% -name:MYPAC -file:%SAMPLEDIR%\PAC\createRegion.sql
-dbfhadmin -createdb -usedb:%USEDB% -provider:%MFPROVIDER% -type:region -file:%SAMPLEDIR%\PAC\createRegion.sql -user:%USERID% -password:%USERPASSWD%
+:: dbfhadmin -createdb -usedb:%USEDB% -provider:%MFPROVIDER% -type:region -file:%SAMPLEDIR%\PAC\createRegion.sql -user:%USERID% -password:%USERPASSWD%
+:: WORKAROUND
+sqlcmd -S %USEDB%,%DBPORT% -U %USERID% -P %USERPASSWD% -N -C -i %SAMPLEDIR%\PAC\createRegion.sql
 
 :: Create the crossregion database
 dbfhadmin -script -type:crossregion -provider:%MFPROVIDER% -file:%SAMPLEDIR%\PAC\CreateCrossRegion.sql
-dbfhadmin -createdb -usedb:%USEDB% -provider:%MFPROVIDER% -type:crossregion -file:%SAMPLEDIR%\PAC\CreateCrossRegion.sql -user:%USERID% -password:%USERPASSWD%
+:: dbfhadmin -createdb -usedb:%USEDB% -provider:%MFPROVIDER% -type:crossregion -file:%SAMPLEDIR%\PAC\CreateCrossRegion.sql -user:%USERID% -password:%USERPASSWD%
+:: WORKAROUND
+sqlcmd -S %USEDB%,%DBPORT% -U %USERID% -P %USERPASSWD% -N -C -i %SAMPLEDIR%\PAC\CreateCrossRegion.sql
 
 GOTO :REDIS
 

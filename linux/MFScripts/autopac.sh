@@ -135,7 +135,7 @@ DBDetails() {
 setupMSSQL() {
     export DRIVERNAME="{ODBC Driver 17 for SQL Server}"
     export MFPROVIDER=SS
-    export connString="Driver=$DRIVERNAME;Server=$USEDB,$DBPORT;Database=master;UID=$USERID;PWD=$USERPASSWD;"
+    export connString="Driver=$DRIVERNAME;Server=$USEDB,$DBPORT;Database=master;UID=$USERID;PWD=$USERPASSWD;Encrypt=True;TrustServerCertificate=True;"
 
     # Create the MFDBFH.cfg
     dbfhconfig -add -file:$MFDBFH_CONFIG -server:MYSERVER -provider:$MFPROVIDER -comment:"MSSQL"
@@ -145,15 +145,22 @@ setupMSSQL() {
     dbfhconfig -add -file:$MFDBFH_CONFIG -server:MYSERVER -dsn:$MFPROVIDER.CROSSREGION -type:crossRegion -connect:"$connString"
 
     # Create the datastore
-    dbfhdeploy -configfile:$MFDBFH_CONFIG data create sql://MYSERVER/VSAMDATA
+    # dbfhdeploy -configfile:$MFDBFH_CONFIG data create sql://MYSERVER/VSAMDATA
+    # WORKAROUND
+    dbfhadmin -script -type:datastore -provider:$MFPROVIDER -name:VSAMDATA -file:$SAMPLEDIR/PAC/VSAMDATA.sql
+    sqlcmd -S $USEDB,$DBPORT -U $USERID -P $USERPASSWD -N -C -i $SAMPLEDIR/PAC/VSAMDATA.sql
 
     # Create the region database
     dbfhadmin -script -type:region -provider:$MFPROVIDER -name:MYPAC -file:$SAMPLEDIR/PAC/createRegion.sql
-    dbfhadmin -createdb -usedb:$USEDB -provider:$MFPROVIDER -type:region -file:$SAMPLEDIR/PAC/createRegion.sql -user:$USERID -password:$USERPASSWD
+    # dbfhadmin -createdb -usedb:$USEDB -provider:$MFPROVIDER -type:region -file:$SAMPLEDIR/PAC/createRegion.sql -user:$USERID -password:$USERPASSWD
+    # WORKAROUND
+    sqlcmd -S $USEDB,$DBPORT -U $USERID -P $USERPASSWD -N -C -i $SAMPLEDIR/PAC/createRegion.sql
 
     # Create the crossregion database
     dbfhadmin -script -type:crossregion -provider:$MFPROVIDER -file:$SAMPLEDIR/PAC/CreateCrossRegion.sql
-    dbfhadmin -createdb -usedb:$USEDB -provider:$MFPROVIDER -type:crossregion -file:$SAMPLEDIR/PAC/CreateCrossRegion.sql -user:$USERID -password:$USERPASSWD
+    # dbfhadmin -createdb -usedb:$USEDB -provider:$MFPROVIDER -type:crossregion -file:$SAMPLEDIR/PAC/CreateCrossRegion.sql -user:$USERID -password:$USERPASSWD
+    # WORKAROUND
+    sqlcmd -S $USEDB,$DBPORT -U $USERID -P $USERPASSWD -N -C -i $SAMPLEDIR/PAC/CreateCrossRegion.sql
 }
 
 setupPG() {
