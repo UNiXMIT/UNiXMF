@@ -17,7 +17,9 @@ $DomainDN         = "DC=corp,DC=example,DC=com"
 $Partition        = "Micro Focus"
 $PartitionDN      = "CN=$Partition,$DomainDN"
 $ESBaseURL        = "http://localhost:10086"
-$resumeFile       = Join-Path $PSScriptRoot ".SetupADResume"
+$regPath          = "HKLM:\Software\Rocket Software\SetupAD"
+$valueName        = "Stage"
+$valueData        = "Stage1Complete"
 $ScriptPath       = $MyInvocation.MyCommand.Path
 # =============================================================================
 
@@ -30,7 +32,7 @@ function Write-OK   { param([string]$Msg) Write-Host "  OK  $Msg" -ForegroundCol
 function Write-Warn { param([string]$Msg) Write-Host "  !!  $Msg" -ForegroundColor Yellow }
 
 # STAGE 1
-if (-not (Test-Path $resumeFile)) {
+if (-not (Test-Path $regPath)) {
     # 0 - Detect and remove ADLDS
     Write-Step "0/5 - Checking for ADLDS instances"
     $adldsFeature = Get-WindowsFeature -Name ADLDS
@@ -101,7 +103,14 @@ if (-not (Test-Path $resumeFile)) {
         -InstallDns -Force -NoRebootOnCompletion:$true
     Write-OK "Forest promotion complete."
 
-    New-Item -Path $resumeFile -ItemType File | Out-Null
+    # Create Registry key to indicate that Stage 1 is complete and Stage 2 should run on next boot
+    New-Item -Path $regPath -Force | Out-Null
+    New-ItemProperty `
+        -Path $regPath `
+        -Name $valueName `
+        -Value $valueData `
+        -PropertyType String `
+        -Force | Out-Null
 
     Write-Host "`nAfter reboot, log back in as $NetBIOSName\Administrator." -ForegroundColor Yellow
     Write-Host "Execute the script ($ScriptPath) again to finish the setup." -ForegroundColor Yellow
@@ -111,7 +120,7 @@ if (-not (Test-Path $resumeFile)) {
 }
 
 # STAGE 2
-if (Test-Path $resumeFile) {
+if (Test-Path $regPath) {
     # 1 - Verify AD DS
     Write-Step "1/4 - Verifying AD DS"
     $svc = Get-Service -Name "NTDS" -ErrorAction SilentlyContinue
@@ -165,14 +174,14 @@ if (Test-Path $resumeFile) {
         -WebSession $session
     Write-OK "Logon response: $logonResponse"
 
-    $MFReaderDN = "CN=Administrator,CN=Users,$DomainDN"
+    # $MFReaderDN = "CN=Administrator,CN=Users,$DomainDN"
 
     $ESMBody = @{
         Name           = "ADESM"
         Description    = "AD ESM"
         Module         = "mldap_esm"
         ConnectionPath = "localhost:389"
-        AuthorizedID   = $MFReaderDN
+        AuthorizedID   = "$NetBIOSName\Administrator"
         Password       = $AdminPassword
         Enabled        = $true
         CacheLimit     = 1024
@@ -185,7 +194,7 @@ if (Test-Path $resumeFile) {
         description         = "AD ESM"
         mfESMModule         = "mldap_esm"
         mfESMConnectionPath = "localhost:389"
-        mfESMID             = $MFReaderDN
+        mfESMID             = "$NetBIOSName\Administrator"
         mfESMPwd            = $AdminPassword
         mfESMStatus         = "Enabled"
         mfESMCacheLimit     = 1024
@@ -206,5 +215,6 @@ if (Test-Path $resumeFile) {
         -Body $NativeBody
 
     # DONE
+    Remove-Item -Path $regPath -Recurse -Force
     Write-Host "`nAD + ESM configuration complete." -ForegroundColor Green
 }
