@@ -121,7 +121,7 @@ if (Test-Path $resumeFile) {
     }
     Write-OK "AD DS running."
 
-    Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\NTDS\Parameters" -Name "LDAPServerIntegrity" -Value 0 -Type DWord -Force
+    # Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\NTDS\Parameters" -Name "LDAPServerIntegrity" -Value 0 -Type DWord -Force
 
     Import-Module ActiveDirectory
 
@@ -145,7 +145,7 @@ if (Test-Path $resumeFile) {
     # 4 - ESM config via ESCWA REST API
     Write-Step "4/4 - Configuring ESM module"
 
-    $LDAPConfig = "[LDAP]`nBASE=$PartitionDN`nuser class=microfocus-MFDS-User`nuser container=CN=Enterprise Server Users`ngroup container=CN=Enterprise Server User Groups`nresource container=CN=Enterprise Server Resources`n`n[Operation]`nset login count=yes`nsignon attempts=3`n`n[Verify]`nMode=MF-hash`n`n[Trace]`nModify=y`nRule=y`nGroups=y`nSearch=y`nBind=n`nTrace1=verify:*:debug`nTrace2=auth:*:*:**:debug"
+    $LDAPConfig = "[LDAP]`nbind=negotiate`nBASE=$PartitionDN`nuser class=microfocus-MFDS-User`nuser container=CN=Enterprise Server Users`ngroup container=CN=Enterprise Server User Groups`nresource container=CN=Enterprise Server Resources`n`n[Operation]`nset login count=yes`nsignon attempts=3`n`n[Verify]`nMode=MF-hash`n`n[Trace]`nModify=y`nRule=y`nGroups=y`nSearch=y`nBind=n`nTrace1=verify:*:debug`nTrace2=auth:*:*:**:debug"
 
     $ESUser = "SYSAD"
     $ESPass = "SYSAD"

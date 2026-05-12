@@ -3,10 +3,11 @@
 Name: ADLDS  
 Module: mldap_esm  
 Connection Path: localhost:389  
-Authorized ID: CN=MFReader,CN=ADAM Users,CN=Micro Focus,CN=Program Data,DC=local  
+Authorized ID: Administrator  
 
 ```
 [LDAP]
+bind=negotiate
 base=CN=Micro Focus,CN=Program Data,DC=local
 user class=microfocus-MFDS-User
 user container=CN=Enterprise Server Users

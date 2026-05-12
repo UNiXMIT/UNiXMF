@@ -7,6 +7,7 @@ Authorized ID: CN=Administrator,CN=Users,DC=corp,DC=example,DC=com
 
 ```
 [LDAP]
+bind=negotiate
 base=CN=Micro Focus,DC=corp,DC=example,DC=com
 user class=microfocus-MFDS-User
 user container=CN=Enterprise Server Users
