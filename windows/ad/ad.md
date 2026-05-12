@@ -3,7 +3,7 @@
 Name: ADESM
 Module: mldap_esm  
 Connection Path: localhost:389  
-Authorized ID: CN=Administrator,CN=Users,DC=corp,DC=example,DC=com
+Authorized ID: CORP\Administrator
 
 ```
 [LDAP]
