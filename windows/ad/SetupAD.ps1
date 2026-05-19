@@ -1,9 +1,13 @@
 #Requires -RunAsAdministrator
 <#
-.SYNOPSIS  Full Active Directory + Micro Focus Enterprise Server setup.
+.SYNOPSIS  
+    Full Active Directory + Micro Focus Enterprise Server setup.
 .NOTES
     Stage 1: Sets static IP, installs AD DS/DNS, promotes forest DC, reboots.
     Stage 2: Verifies AD DS, creates MF partition, runs ES LDAP setup, configures ESM.
+
+    169.254.169.253 is the AWS-provided Route 53 resolver available in VPCs with DNS support enabled. It forwards to the VPC's configured DNS servers, and is recommended as the primary forwarder for reliability and to ensure resolution of AWS-specific names (e.g. instance metadata). Additional public DNS servers are included as fallbacks.
+    1.1.1.1 and 8.8.8.8 are public DNS servers that can be used as secondary forwarders in case the AWS resolver is unavailable for any reason.
 #>
 
 # =============================================================================
@@ -11,51 +15,79 @@
 # =============================================================================
 $DomainName       = "corp.example.com"
 $NetBIOSName      = "CORP"
-$AdminPassword    = "strongPassword#123"
-$DNSForwarder     = @("169.254.169.253", "1.1.1.1", "8.8.8.8")
 $DomainDN         = "DC=corp,DC=example,DC=com"
 $Partition        = "Micro Focus"
 $PartitionDN      = "CN=$Partition,$DomainDN"
+$AdminPassword    = "strongPassword#123"
+$DNSForwarder     = @("169.254.169.253", "1.1.1.1", "8.8.8.8")
 $ESBaseURL        = "http://localhost:10086"
-$regPath          = "HKLM:\Software\Rocket Software\SetupAD"
-$valueName        = "Stage"
-$valueData        = "Stage1Complete"
-$ScriptPath       = $MyInvocation.MyCommand.Path
+$regPath          = "HKLM:\Software\SetupAD"
 # =============================================================================
 
 Set-StrictMode -Version Latest
-$ErrorActionPreference = "Stop"
 Set-Location $PSScriptRoot
+$ScriptPath= $MyInvocation.MyCommand.Path
+$ErrorActionPreference = "Stop"
 
-function Write-Step { param([string]$Msg) Write-Host "`n[$(Get-Date -f 'HH:mm:ss')] $Msg" -ForegroundColor Cyan }
-function Write-OK   { param([string]$Msg) Write-Host "  OK  $Msg" -ForegroundColor Green }
-function Write-Warn { param([string]$Msg) Write-Host "  !!  $Msg" -ForegroundColor Yellow }
+function Write-Step { param([string]$Msg) Write-Host "`n[$(Get-Date -f 'HH:mm:ss')] $Msg`n" -ForegroundColor Cyan }
+function Write-OK   { param([string]$Msg) Write-Host "  OK  $Msg`n" -ForegroundColor Green }
+function Write-Warn { param([string]$Msg) Write-Host "  !!  $Msg`n" -ForegroundColor Yellow }
 
-# STAGE 1
-if (-not (Test-Path $regPath)) {
-    # 0 - Detect and remove ADLDS
-    Write-Step "0/5 - Checking for ADLDS instances"
+function Get-ResumeStage {
+    $item = Get-ItemProperty -Path $regPath -ErrorAction SilentlyContinue
+    if ($item -and $item.PSObject.Properties.Match('ResumeStage')) {
+        return [int]$item.ResumeStage
+    } else {
+        return 1
+    }
+}
+
+function Set-ResumeStage([int]$Stage) {
+    if (-not (Test-Path $regPath)) { New-Item -Path $regPath -Force | Out-Null }
+    Set-ItemProperty -Path $regPath -Name "ResumeStage" -Value $Stage
+}
+
+function Clear-ResumeStage {
+    Remove-Item -Path $regPath -Force -ErrorAction SilentlyContinue
+}
+
+function Invoke-RebootAndResume([int]$ResumeAtStage) {
+    Set-ResumeStage $ResumeAtStage
+    Write-Warn "A reboot is required to continue." -ForegroundColor Yellow
+    Write-Warn "After reboot, login as $NetBIOSName\Administrator." -ForegroundColor Yellow
+    Write-Warn "Re-run this script ($ScriptPath) to complete setup. It will automatically resume at stage 2." -ForegroundColor Yellow
+    Read-Host "Press Enter to reboot now"
+    Restart-Computer -Force
+    exit
+}
+
+$currentStage = Get-ResumeStage
+
+# =============================================================================
+# STAGE 1 - AD DS + DNS Setup
+# =============================================================================
+if ($currentStage -eq 1) {
+    # STAGE 1 - STEP 1: Detect and remove ADLDS if present
+    Write-Step "1/6 - Checking for ADLDS instances"
     $adldsFeature = Get-WindowsFeature -Name ADLDS
     if ($adldsFeature.Installed -eq $true) {
         $instanceName = "ADLDS"
         Stop-Service "ADAM_$instanceName" -Force -ErrorAction SilentlyContinue
         C:\Windows\ADAM\adamuninstall.exe /i:$instanceName /q /force
         Start-Sleep -Seconds 5
-        Write-Host "Removing AD LDS feature..." -ForegroundColor Cyan
         Remove-WindowsFeature -Name ADLDS
-        Write-Host "Removing AD LDS RSAT tools..." -ForegroundColor Cyan
         Remove-WindowsFeature -Name "RSAT-AD-LDS" -ErrorAction SilentlyContinue
         Write-OK "ADLDS removal completed!"
     } else {
         Write-OK "ADLDS feature is not installed. Nothing to remove."
     }
 
-    # 1 - Hostname
-    Write-Step "1/5 - Checking hostname"
+    # STAGE 1 - STEP 2: Check hostname
+    Write-Step "2/6 - Checking hostname"
     Write-OK "Hostname: $env:COMPUTERNAME  will be promoted as $env:COMPUTERNAME.$DomainName"
 
-    # 2 - Detect private IP (IMDSv2 with fallback)
-    Write-Step "2/5 - Detecting EC2 private IP"
+    # STAGE 1 - STEP 3: Detect private IP
+    Write-Step "3/6 - Detecting EC2 private IP"
     try {
         $Token     = Invoke-RestMethod -Uri "http://169.254.169.254/latest/api/token" `
                             -Method PUT -Headers @{ "X-aws-ec2-metadata-token-ttl-seconds" = "21600" }
@@ -69,8 +101,8 @@ if (-not (Test-Path $regPath)) {
     }
     Write-OK "Private IP: $PrivateIP"
 
-    # 3 - Static IP + DNS
-    Write-Step "3/5 - Configuring static IP and DNS"
+    # STAGE 1 - STEP 4: Configure static IP and DNS
+    Write-Step "4/6 - Configuring static IP and DNS"
     $Adapter   = Get-NetAdapter | Where-Object { $_.Status -eq "Up" -and $_.Name -notmatch "Loopback" } | Select-Object -First 1
     $Idx       = $Adapter.InterfaceIndex
 
@@ -87,12 +119,13 @@ if (-not (Test-Path $regPath)) {
     Set-DnsClientServerAddress -InterfaceIndex $Idx -ServerAddresses (@("127.0.0.1") + $DNSForwarder)
     Write-OK "Static IP: $PrivateIP/$PrefixLen  GW: $GW  DNS: 127.0.0.1, $($DNSForwarder -join ', ')"
 
-    # 4 - Install roles + promote
-    Write-Step "4/5 - Installing AD DS / DNS roles"
+    # STAGE 1 - STEP 5: Install roles + promote
+    Write-Step "5/6 - Installing AD DS / DNS roles"
     Install-WindowsFeature -Name "AD-Domain-Services","DNS","RSAT-AD-Tools","RSAT-DNS-Server" -IncludeManagementTools | Out-Null
     Write-OK "Features installed."
 
-    Write-Step "4b/5 - Promoting to new AD forest ($DomainName)"
+    # STAGE 1 - STEP 6: Promote to new AD forest
+    Write-Step "6/6 - Promoting to new AD forest ($DomainName)"
     Import-Module ADDSDeployment
     Install-ADDSForest `
         -DomainName                    $DomainName `
@@ -103,25 +136,14 @@ if (-not (Test-Path $regPath)) {
         -InstallDns -Force -NoRebootOnCompletion:$true
     Write-OK "Forest promotion complete."
 
-    # Create Registry key to indicate that Stage 1 is complete and Stage 2 should run on next boot
-    New-Item -Path $regPath -Force | Out-Null
-    New-ItemProperty `
-        -Path $regPath `
-        -Name $valueName `
-        -Value $valueData `
-        -PropertyType String `
-        -Force | Out-Null
-
-    Write-Host "`nAfter reboot, log back in as $NetBIOSName\Administrator." -ForegroundColor Yellow
-    Write-Host "Execute the script ($ScriptPath) again to finish the setup." -ForegroundColor Yellow
-    Write-Host "Rebooting in 30 seconds..." -ForegroundColor Yellow
-    Start-Sleep -Seconds 30
-    Restart-Computer -Force
+    Invoke-RebootAndResume -ResumeAtStage 2
 }
 
-# STAGE 2
-if (Test-Path $regPath) {
-    # 1 - Verify AD DS
+# =============================================================================
+# STAGE 2 - AD + ED/ES ESM Configuration
+# =============================================================================
+if ($currentStage -eq 2) {
+    # STAGE 2 - STEP 1: Verify AD DS is running and responsive 
     Write-Step "1/4 - Verifying AD DS"
     $svc = Get-Service -Name "NTDS" -ErrorAction SilentlyContinue
     if (-not $svc -or $svc.Status -ne "Running") {
@@ -130,12 +152,9 @@ if (Test-Path $regPath) {
     }
     Write-OK "AD DS running."
 
-    # Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\NTDS\Parameters" -Name "LDAPServerIntegrity" -Value 0 -Type DWord -Force
-
-    Import-Module ActiveDirectory
-
-    # 2 - Create MF application partition container
+    # STAGE 2 - STEP 2: Create MF application partition container
     Write-Step "2/4 - Creating '$Partition' container"
+    Import-Module ActiveDirectory
     $existing = Get-ADObject -Filter { DistinguishedName -eq $PartitionDN } -ErrorAction SilentlyContinue
     if ($existing) {
         Write-Warn "Container already exists, skipping."
@@ -144,14 +163,14 @@ if (Test-Path $regPath) {
         Write-OK "Container created at: $PartitionDN"
     }
 
-    # 3 - ES LDAP setup
+    # STAGE 2 - STEP 3: ES LDAP setup
     Write-Step "3/4 - Running ES LDAP setup"
     Copy-Item "C:\Program Files (x86)\Micro Focus\Enterprise Developer\etc\cas\dfhdrdat" -Destination $PSScriptRoot
     $ESLdapCmd = "C:\Program Files (x86)\Micro Focus\Enterprise Developer\bin\es-ldap-setup.cmd"
     (Get-Content $ESLdapCmd) -Replace 'pause', ' ' | Set-Content $ESLdapCmd
     & $ESLdapCmd /ad - - "$PartitionDN" localhost:389
 
-    # 4 - ESM config via ESCWA REST API
+    # STAGE 2 - STEP 4: Configure ESM module for AD
     Write-Step "4/4 - Configuring ESM module"
 
     $LDAPConfig = "[LDAP]`nbind=negotiate`nBASE=$PartitionDN`nuser class=microfocus-MFDS-User`nuser container=CN=Enterprise Server Users`ngroup container=CN=Enterprise Server User Groups`nresource container=CN=Enterprise Server Resources`n`n[Operation]`nset login count=yes`nsignon attempts=3`n`n[Verify]`nMode=MF-hash`n`n[Trace]`nModify=y`nRule=y`nGroups=y`nSearch=y`nBind=n`nTrace1=verify:*:debug`nTrace2=auth:*:*:**:debug"
@@ -173,8 +192,6 @@ if (Test-Path $regPath) {
         -Body $LogonBody  `
         -WebSession $session
     Write-OK "Logon response: $logonResponse"
-
-    # $MFReaderDN = "CN=Administrator,CN=Users,$DomainDN"
 
     $ESMBody = @{
         Name           = "ADESM"
@@ -213,8 +230,11 @@ if (Test-Path $regPath) {
         -ContentType "application/json" `
         -WebSession $session `
         -Body $NativeBody
-
-    # DONE
-    Remove-Item -Path $regPath -Recurse -Force
-    Write-Host "`nAD + ESM configuration complete." -ForegroundColor Green
 }
+
+# =============================================================================
+# DONE
+# =============================================================================
+Clear-ResumeStage
+Write-Host "==============DONE==============" -ForegroundColor Green
+Write-Host "AD + ESM configuration complete." -ForegroundColor Green
