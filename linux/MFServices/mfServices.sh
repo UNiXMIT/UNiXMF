@@ -13,7 +13,7 @@ mfds() {
             if [ ! -f $mfdsState ]; then
                 touch $mfdsState
                 # $COBDIR/bin/mfds$COBMODE -f root
-                $COBDIR/bin/mfds$COBMODE --UI-on
+                # $COBDIR/bin/mfds$COBMODE --UI-on
                 $COBDIR/bin/mfds$COBMODE --listen-all
             fi
             $COBDIR/bin/mfds$COBMODE
