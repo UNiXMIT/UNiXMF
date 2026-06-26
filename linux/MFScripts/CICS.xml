@@ -387,7 +387,7 @@ listener=Web Services and J2EE
           <objectclass>mfJESInitiator</objectclass>
           <mfStructVersion>1</mfStructVersion>
           <mfUID>1.3.6.1.4.1.5043.1.21.12.6543a92b.4896.140312286593039</mfUID>
-          <mfServerUID>1.3.6.1.4.1.5043.1.21.1.6543a92b.4896.2</mfServerUID>
+          <mfServerUID>1.3.6.1.4.1.5043.1.22.1.66f560a9.6472.2</mfServerUID>
           <cn>INITALL</cn>
           <mfJESInitiatorClass>ABCDEFGHIJKLMNOPQRSTUVWXYZ01234567</mfJESInitiatorClass>
           <description> </description>
