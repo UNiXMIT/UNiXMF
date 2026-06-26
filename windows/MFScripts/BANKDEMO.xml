@@ -121,6 +121,7 @@ MF_CHARSET=E</mfCustomConfiguration>
           <objectclass>mfCommsServer</objectclass>
           <mfStructVersion>5</mfStructVersion>
           <mfUID>1.2.840.5043.06.004.1332331680.2</mfUID>
+          <mfServerUID>1.2.840.5043.01.025.1332331680.1002</mfServerUID>
           <mfInstance>1</mfInstance>
           <mfServerStatus>Stopped</mfServerStatus>
           <mfRequestedEndpoint>tcp:*:*</mfRequestedEndpoint>
@@ -152,6 +153,7 @@ region=BANKDEMO
               <objectclass>mflistener</objectclass>
               <mfStructVersion>18</mfStructVersion>
               <mfUID>1.2.840.5043.02.017.1332331680.4</mfUID>
+              <mfServerUID>1.2.840.5043.06.004.1332331680.2</mfServerUID>
               <cn>Web Services and J2EE</cn>
               <mfListenerStatus>Stopped</mfListenerStatus>
               <mfRequestedEndpoint>tcp:*:*</mfRequestedEndpoint>
@@ -182,6 +184,7 @@ region=BANKDEMO
               <objectclass>mflistener</objectclass>
               <mfStructVersion>18</mfStructVersion>
               <mfUID>1.2.840.5043.02.017.1332331680.5</mfUID>
+              <mfServerUID>1.2.840.5043.06.004.1332331680.2</mfServerUID>
               <cn>Web</cn>
               <mfListenerStatus>Stopped</mfListenerStatus>
               <mfRequestedEndpoint>tcp:*:*</mfRequestedEndpoint>
@@ -220,6 +223,7 @@ uploads=*.txt *.car *.wsdl
               <objectclass>mflistener</objectclass>
               <mfStructVersion>18</mfStructVersion>
               <mfUID>1.2.840.5043.02.017.1332331680.6</mfUID>
+              <mfServerUID>1.2.840.5043.06.004.1332331680.2</mfServerUID>
               <cn>TN3270</cn>
               <mfListenerStatus>Stopped</mfListenerStatus>
               <mfRequestedEndpoint>tcp:*:5555</mfRequestedEndpoint>
@@ -254,6 +258,7 @@ uploads=*.txt *.car *.wsdl
           <objectclass>mfHandler</objectclass>
           <mfStructVersion>2</mfStructVersion>
           <mfUID>1.3.6.1.4.1.5043.05.002.1650446097.1</mfUID>
+          <mfServerUID>1.2.840.5043.01.025.1332331680.1002</mfServerUID>
           <cn>MFRHJSON</cn>
           <mfHandlerStatus>Enabled</mfHandlerStatus>
           <description>Handles REST requests</description>
@@ -264,6 +269,7 @@ uploads=*.txt *.car *.wsdl
           <objectclass>mfHandler</objectclass>
           <mfStructVersion>2</mfStructVersion>
           <mfUID>1.2.840.5043.05.002.1332331680.4</mfUID>
+          <mfServerUID>1.2.840.5043.01.025.1332331680.1002</mfServerUID>
           <cn>MFRHBINP</cn>
           <mfHandlerStatus>Enabled</mfHandlerStatus>
           <description>Handles J2EE requests</description>
@@ -274,6 +280,7 @@ uploads=*.txt *.car *.wsdl
           <objectclass>mfHandler</objectclass>
           <mfStructVersion>2</mfStructVersion>
           <mfUID>1.2.840.5043.05.002.1332331680.5</mfUID>
+          <mfServerUID>1.2.840.5043.01.025.1332331680.1002</mfServerUID>
           <cn>MFRHSOAP</cn>
           <mfHandlerStatus>Enabled</mfHandlerStatus>
           <description>Handles SOAP requests</description>
@@ -284,6 +291,7 @@ uploads=*.txt *.car *.wsdl
           <objectclass>mfHandler</objectclass>
           <mfStructVersion>2</mfStructVersion>
           <mfUID>1.2.840.5043.05.002.1332331680.6</mfUID>
+          <mfServerUID>1.2.840.5043.01.025.1332331680.1002</mfServerUID>
           <cn>MFRHJCL</cn>
           <mfHandlerStatus>Enabled</mfHandlerStatus>
           <description>Handles batch requests</description>
@@ -296,6 +304,7 @@ uploads=*.txt *.car *.wsdl
           <objectclass>mfService</objectclass>
           <mfStructVersion>16</mfStructVersion>
           <mfUID>1.2.840.5043.03.016.1332331680.5</mfUID>
+          <mfServerUID>1.2.840.5043.01.025.1332331680.1002</mfServerUID>
           <cn>Deployer</cn>
           <mfSearchOrder>1</mfSearchOrder>
           <mfServiceStatus>Available</mfServiceStatus>
@@ -320,6 +329,7 @@ listener=Web Services and J2EE
           <objectclass>mfService</objectclass>
           <mfStructVersion>16</mfStructVersion>
           <mfUID>1.2.840.5043.03.016.1332331680.6</mfUID>
+          <mfServerUID>1.2.840.5043.01.025.1332331680.1002</mfServerUID>
           <cn>ES</cn>
           <mfSearchOrder>1</mfSearchOrder>
           <mfServiceStatus>Available</mfServiceStatus>
@@ -337,6 +347,7 @@ listener=Web Services and J2EE
           <objectclass>mfService</objectclass>
           <mfStructVersion>16</mfStructVersion>
           <mfUID>1.2.840.5043.03.016.1332331680.7</mfUID>
+          <mfServerUID>1.2.840.5043.01.025.1332331680.1002</mfServerUID>
           <cn>CICS</cn>
           <mfSearchOrder>1</mfSearchOrder>
           <mfServiceStatus>Available</mfServiceStatus>
@@ -354,6 +365,7 @@ listener=Web Services and J2EE
           <objectclass>mfService</objectclass>
           <mfStructVersion>16</mfStructVersion>
           <mfUID>1.2.840.5043.03.016.1332331680.8</mfUID>
+          <mfServerUID>1.2.840.5043.01.025.1332331680.1002</mfServerUID>
           <cn>JES</cn>
           <mfSearchOrder>1</mfSearchOrder>
           <mfServiceStatus>Available</mfServiceStatus>
@@ -375,6 +387,7 @@ listener=Web Services and J2EE
           <objectclass>mfJESInitiator</objectclass>
           <mfStructVersion>1</mfStructVersion>
           <mfUID>1.2.840.5043.12.001.1332331680.2</mfUID>
+          <mfServerUID>1.2.840.5043.01.025.1332331680.1002</mfServerUID>
           <cn>INITA</cn>
           <mfJESInitiatorClass>A</mfJESInitiatorClass>
           <description/>
