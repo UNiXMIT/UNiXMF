@@ -1,26 +1,21 @@
 #!/bin/bash
-
 export MFDIR=/home/products
 export COBMODE=64
 export TERM=xterm
-
 CURRENT_DIR=$(pwd)
 
 cd "$MFDIR" || exit 1
 array=(*/)
-
 echo
 
 if [[ -n "$1" ]]; then
     # Non-interactive mode
     index=$(( $1 - 1 ))
-
     if (( index < 0 || index >= ${#array[@]} )); then
         echo "Invalid selection: $1"
         echo "Valid selections are 1-${#array[@]}"
         exit 1
     fi
-
     MF="${array[$index]}"
 else
     # Interactive mode
@@ -34,7 +29,6 @@ fi
 export MFCOBOL="${MFDIR}/${MF%/}"
 
 cd "$CURRENT_DIR" || exit 1
-
 set --
 . "$MFCOBOL/bin/cobsetenv"
 
@@ -43,3 +37,4 @@ export MFCOBOL="$MFCOBOL"
 export COBMODE="$COBMODE"
 export TERM="$TERM"
 EOF
+chmod 775 /tmp/.mf.env
