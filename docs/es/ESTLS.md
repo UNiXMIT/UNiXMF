@@ -2,7 +2,7 @@
 ### TLS Certificate/Key 
 For example:  
 ```
-minica --domains '*.eu-west-2.compute.amazonaws.com'
+minica --domains '*.eu-west-2.compute.amazonaws.com,*.eu-west-2.compute.internal,support'
 ```
 
 ### Environment Variables
@@ -30,6 +30,10 @@ certificate=""
 keyfile=""
 
 [TN3270/SSL/passphrases]
+certificate=""
+keyfile=""
+
+[RFA/SSL/passphrases]
 certificate=""
 keyfile=""
 ```
