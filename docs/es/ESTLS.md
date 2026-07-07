@@ -5,6 +5,15 @@ For example:
 step ca certificate aws aws/aws.crt aws/aws.key --san "*.eu-west-2.compute.amazonaws.com" --san "*.eu-west-2.compute.internal"  --san "support" --not-after=8760h
 ```
 
+### Modify Hostname
+```
+# Windows
+Rename-Computer -NewName "support”
+
+# Linux
+sudo hostnamectl set-hostname support
+```
+
 ### Environment Variables
 ```
 MF_ROOT_CERT=fullchain_ca.crt 

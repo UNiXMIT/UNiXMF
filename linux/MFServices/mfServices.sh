@@ -7,6 +7,9 @@ source /tmp/.mf.env
 mfdsState=$MFCOBOL/.mfdsstate
 escwaState=$MFCOBOL/.escwastate
 
+# export MF_ROOT_CERT=/home/support/fullchain_ca.crt 
+# export MFDS_DNS_RESOLVE=Y 
+
 mfds() {
     case "$arg2" in
         start)
