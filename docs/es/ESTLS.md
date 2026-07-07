@@ -2,12 +2,12 @@
 ### TLS Certificate/Key 
 For example:  
 ```
-minica --domains '*.eu-west-2.compute.amazonaws.com,*.eu-west-2.compute.internal,support'
+step ca certificate aws aws/aws.crt aws/aws.key --san "*.eu-west-2.compute.amazonaws.com" --san "*.eu-west-2.compute.internal"  --san "support" --not-after=8760h
 ```
 
 ### Environment Variables
 ```
-MF_ROOT_CERT=RootCA.pem  
+MF_ROOT_CERT=fullchain_ca.crt 
 MFDS_DNS_RESOLVE=Y  
 ```
 Restart ESCWA and MFDS.  
@@ -44,10 +44,10 @@ Windows: %COBDIR%\bin
 LINUX: $COBDIR/etc  
 ```
 [TLS]
-root=RootCA.pem
+root=fullchain_ca.crt
 ```
 
 ### Display the contents of a certificate
 ```
-openssl x509 -in cert.pem -noout -text
+openssl x509 -in aws.crt -noout -text
 ```
