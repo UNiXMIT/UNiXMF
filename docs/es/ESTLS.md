@@ -2,19 +2,10 @@
 ### TLS Certificate/Key 
 https://unixmit.github.io/UNiXPod/smallstep.html#generate-server-certificate--key  
 
-### Modify Hostname
-```
-# Windows
-Rename-Computer -NewName "support”
-
-# Linux
-sudo hostnamectl set-hostname support
-```
-
 ### Environment Variables
 Set the MF_ROOT_CERT environment variable to point to the file containing the CA certificate(s) needed to verify the certificate used by the MF Directory Server.  
 ```
-MF_ROOT_CERT=fullchain_ca.crt  
+MF_ROOT_CERT=fullchain_ca.crt
 ```
 If your TLS certificate's CN and Subject Alternative Names (SANs) are using hostnames rather than IP addresses, then you must ensure the MFDS_DNS_RESOLVE environment variable is set to Y for the Directory Server, otherwise TLS connections will fail.  
 ```
