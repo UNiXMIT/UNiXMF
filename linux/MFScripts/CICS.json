@@ -330,5 +330,10 @@
       "mfIMSMPRList": [],
       "mfMQListenerList": []
     }
-  ]
+  ],
+  "Options": {
+    "ClearRequestedEndpointTLS": true,
+    "ClearRequestedEndpointHost": true,
+    "ClearRequestedEndpointPort": false
+  }
 }
