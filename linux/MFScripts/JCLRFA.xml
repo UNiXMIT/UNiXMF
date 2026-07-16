@@ -17,7 +17,7 @@
       <mfESRetries>1</mfESRetries>
       <mfCustomConfiguration>[ES-Environment]
 MFROOT=/home/support/MFSupport/MFSamples/JCL
-</mfCustomConfiguration>
+ES_DFS_STR_CACHEDIR=$MFROOT/cache</mfCustomConfiguration>
       <mfServerExtendedConfiguration>
         <mfServerCASConfiguration>
           <mfCASStructVersion>33</mfCASStructVersion>
