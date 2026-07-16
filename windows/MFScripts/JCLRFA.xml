@@ -1,12 +1,11 @@
-
-<mfDirectoryServerRepository mfDirectoryServerVersion="1.31.24" mfRepositoryLocation="C:\ProgramData\Micro Focus\Enterprise Developer\" mfXMLReposVersion="2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="mfds1.31.24.xsd">
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mfDirectoryServerRepository mfDirectoryServerVersion="1.26.69" mfRepositoryLocation="C:\ProgramData\Micro Focus\Enterprise Developer\" mfXMLReposVersion="2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="mfds1.26.69.xsd">
 
   <mfServerList>
     <mfServer>
       <objectclass>mfServer</objectclass>
       <mfStructVersion>26</mfStructVersion>
-      <mfInstanceVersion>0</mfInstanceVersion>
-      <mfUID>1.3.6.1.4.1.5043.1.23.1.6a4f768e.3460.17</mfUID>
+      <mfUID>1.3.6.1.4.1.5043.1.21.1.615ac6ae.2820.2</mfUID>
       <mfServerStatus>Stopped</mfServerStatus>
       <mfServerType>MFES</mfServerType>
       <cn>JCL</cn>
@@ -17,21 +16,21 @@
       <mfESRetries>1</mfESRetries>
       <mfCustomConfiguration>[ES-Environment]
 MFROOT=C:\MFSamples\JCL
-ES_DFS_STR_CACHEDIR=$MFROOT\cache</mfCustomConfiguration>
+</mfCustomConfiguration>
+      <mfCustomConfiguration/>
       <mfServerExtendedConfiguration>
         <mfServerCASConfiguration>
           <mfCASStructVersion>33</mfCASStructVersion>
           <mfServerCASStartupOptions>
             <mfCASPAC/>
             <mfCASSOR/>
-            <mfConfigManagerData/>
             <mfCASShMemPages>512</mfCASShMemPages>
             <mfCASSICount>2</mfCASSICount>
             <mfCASShMemCushion>32</mfCASShMemCushion>
             <mfCASTraceTableSize>341</mfCASTraceTableSize>
             <mfCASLocalTraceSize>341</mfCASLocalTraceSize>
             <mfCASTraceMaxSize>0</mfCASTraceMaxSize>
-            <mfCASRequestedLicenses>0</mfCASRequestedLicenses>
+            <mfCASRequestedLicenses>10</mfCASRequestedLicenses>
             <mfCASSysDir>$MFROOT\system</mfCASSysDir>
             <mfCASHSFEnabled>0</mfCASHSFEnabled>
             <mfCASHSFWriteToDisk>0</mfCASHSFWriteToDisk>
@@ -46,7 +45,7 @@ ES_DFS_STR_CACHEDIR=$MFROOT\cache</mfCustomConfiguration>
             <mfCASAuxiliaryTrace>0</mfCASAuxiliaryTrace>
             <mfCASShowConsole>0</mfCASShowConsole>
             <mfCASRemoteDebug>1</mfCASRemoteDebug>
-            <mfCASIRDSWarmStart>0</mfCASIRDSWarmStart>
+            <mfCASIRDSWarmStart>1</mfCASIRDSWarmStart>
             <mfCASIRDSFileName/>
             <mfCASIRDSMaxSize>0</mfCASIRDSMaxSize>
             <mfCASIRDSBufferQueueCount>0</mfCASIRDSBufferQueueCount>
@@ -63,7 +62,7 @@ ES_DFS_STR_CACHEDIR=$MFROOT\cache</mfCustomConfiguration>
             <mfCASCICSPersonality>1</mfCASCICSPersonality>
             <mfCASBatchEnabled>1</mfCASBatchEnabled>
             <mfCASIMSEnabled>0</mfCASIMSEnabled>
-            <mfCASPLIEnabled>1</mfCASPLIEnabled>
+            <mfCASPLIEnabled>0</mfCASPLIEnabled>
             <mfMQLEnabled>0</mfMQLEnabled>
           </mfServerCASStartupOptions>
           <mfServerCASTraceOptions>
@@ -105,18 +104,22 @@ ES_DFS_STR_CACHEDIR=$MFROOT\cache</mfCustomConfiguration>
             <mfCASIMSTMMQColdStart>N</mfCASIMSTMMQColdStart>
             <mfCASIMSTMMQPersistColdStart>0</mfCASIMSTMMQPersistColdStart>
           </mfServerIMSConfiguration>
+          <mfServerPLIConfiguration>
+            <mfCASPLIUseJavaDebug>0</mfCASPLIUseJavaDebug>
+            <mfCASPLIPromptPLITEST>0</mfCASPLIPromptPLITEST>
+          </mfServerPLIConfiguration>
         </mfServerCASConfiguration>
       </mfServerExtendedConfiguration>
       <mfCommsProcessList>
         <mfCommsProcess>
           <objectclass>mfCommsServer</objectclass>
           <mfStructVersion>5</mfStructVersion>
-          <mfUID>1.3.6.1.4.1.5043.1.23.6.6a4f768e.3460.18</mfUID>
-          <mfServerUID>1.3.6.1.4.1.5043.1.23.1.6a4f768e.3460.17</mfServerUID>
+          <mfUID>1.3.6.1.4.1.5043.1.21.6.615ac6ae.2820.3</mfUID>
+          <mfServerUID>1.3.6.1.4.1.5043.1.21.1.615ac6ae.2820.2</mfServerUID>
           <mfInstance>1</mfInstance>
           <mfServerStatus>Stopped</mfServerStatus>
           <mfRequestedEndpoint>tcp:*:*</mfRequestedEndpoint>
-          <mfActualEndpoint>tcp:0.0.0.0:0</mfActualEndpoint>
+          <mfActualEndpoint>tcp:,MFNODE:10.0.2.15,MFPORT:61831</mfActualEndpoint>
           <mfSSLCertificate/>
           <mfSSLKeyfile/>
           <mfSSLClientOption>1</mfSSLClientOption>
@@ -143,14 +146,14 @@ region=AJCL
             <mfListener>
               <objectclass>mflistener</objectclass>
               <mfStructVersion>18</mfStructVersion>
-              <mfUID>1.3.6.1.4.1.5043.1.23.2.6a4f768e.3460.19</mfUID>
-              <mfServerUID>1.3.6.1.4.1.5043.1.23.6.6a4f768e.3460.18</mfServerUID>
+              <mfUID>1.3.6.1.4.1.5043.1.21.2.615ac6ae.2820.4</mfUID>
+              <mfServerUID>1.3.6.1.4.1.5043.1.21.6.615ac6ae.2820.3</mfServerUID>
               <cn>Web Services and J2EE</cn>
               <mfListenerStatus>Stopped</mfListenerStatus>
               <mfRequestedEndpoint>tcp:*:55550</mfRequestedEndpoint>
               <mfActualEndpoint>tcp:0.0.0.0:0</mfActualEndpoint>
               <mfConnector>mfcs-mp::mfcs-mp</mfConnector>
-              <mfError/>
+              <mfError>OK</mfError>
               <description>SOAP/REST Web Services and J2EE</description>
               <mfSSLCertificate/>
               <mfSSLKeyfile/>
@@ -174,14 +177,14 @@ region=AJCL
             <mfListener>
               <objectclass>mflistener</objectclass>
               <mfStructVersion>18</mfStructVersion>
-              <mfUID>1.3.6.1.4.1.5043.1.23.2.6a4f768e.3460.20</mfUID>
-              <mfServerUID>1.3.6.1.4.1.5043.1.23.6.6a4f768e.3460.18</mfServerUID>
+              <mfUID>1.3.6.1.4.1.5043.1.21.2.615ac6ae.2820.5</mfUID>
+              <mfServerUID>1.3.6.1.4.1.5043.1.21.6.615ac6ae.2820.3</mfServerUID>
               <cn>Web</cn>
               <mfListenerStatus>Disabled</mfListenerStatus>
               <mfRequestedEndpoint>tcp:*:*</mfRequestedEndpoint>
-              <mfActualEndpoint>tcp:0.0.0.0:0</mfActualEndpoint>
+              <mfActualEndpoint>tcp:,MFNODE:0.0.0.0,MFPORT:0</mfActualEndpoint>
               <mfConnector>http-switch::http-switch</mfConnector>
-              <mfError/>
+              <mfError>Starting endpoint...</mfError>
               <description>Basic HTTP web server</description>
               <mfSSLCertificate/>
               <mfSSLKeyfile/>
@@ -214,7 +217,7 @@ uploads=*.txt *.car *.wsdl
               <objectclass>mflistener</objectclass>
               <mfStructVersion>18</mfStructVersion>
               <mfUID>1.3.6.1.4.1.5043.1.23.2.6a4f768e.3460.21</mfUID>
-              <mfServerUID>1.3.6.1.4.1.5043.1.23.6.6a4f768e.3460.18</mfServerUID>
+              <mfServerUID>1.3.6.1.4.1.5043.1.21.6.615ac6ae.2820.3</mfServerUID>
               <cn>RFA</cn>
               <mfListenerStatus>Stopped</mfListenerStatus>
               <mfRequestedEndpoint>tcp:*:55552</mfRequestedEndpoint>
@@ -248,8 +251,8 @@ uploads=*.txt *.car *.wsdl
         <mfHandler>
           <objectclass>mfHandler</objectclass>
           <mfStructVersion>2</mfStructVersion>
-          <mfUID>1.3.6.1.4.1.5043.1.23.5.6a4f768e.3460.22</mfUID>
-          <mfServerUID>1.3.6.1.4.1.5043.1.23.1.6a4f768e.3460.17</mfServerUID>
+          <mfUID>1.3.6.1.4.1.5043.1.21.5.615ac6ae.2820.6</mfUID>
+          <mfServerUID>1.3.6.1.4.1.5043.1.21.1.615ac6ae.2820.2</mfServerUID>
           <cn>MFRHBINP</cn>
           <mfHandlerStatus>Enabled</mfHandlerStatus>
           <description>Handles J2EE requests</description>
@@ -259,8 +262,8 @@ uploads=*.txt *.car *.wsdl
         <mfHandler>
           <objectclass>mfHandler</objectclass>
           <mfStructVersion>2</mfStructVersion>
-          <mfUID>1.3.6.1.4.1.5043.1.23.5.6a4f768e.3460.23</mfUID>
-          <mfServerUID>1.3.6.1.4.1.5043.1.23.1.6a4f768e.3460.17</mfServerUID>
+          <mfUID>1.3.6.1.4.1.5043.1.21.5.615ac6ae.2820.7</mfUID>
+          <mfServerUID>1.3.6.1.4.1.5043.1.21.1.615ac6ae.2820.2</mfServerUID>
           <cn>MFRHSOAP</cn>
           <mfHandlerStatus>Enabled</mfHandlerStatus>
           <description>Handles SOAP requests</description>
@@ -270,8 +273,8 @@ uploads=*.txt *.car *.wsdl
         <mfHandler>
           <objectclass>mfHandler</objectclass>
           <mfStructVersion>2</mfStructVersion>
-          <mfUID>1.3.6.1.4.1.5043.1.23.5.6a4f768e.3460.24</mfUID>
-          <mfServerUID>1.3.6.1.4.1.5043.1.23.1.6a4f768e.3460.17</mfServerUID>
+          <mfUID>1.3.6.1.4.1.5043.1.21.5.615ac6ae.2820.8</mfUID>
+          <mfServerUID>1.3.6.1.4.1.5043.1.21.1.615ac6ae.2820.2</mfServerUID>
           <cn>MFRHJCL</cn>
           <mfHandlerStatus>Enabled</mfHandlerStatus>
           <description>Handles batch requests</description>
@@ -281,8 +284,8 @@ uploads=*.txt *.car *.wsdl
         <mfHandler>
           <objectclass>mfHandler</objectclass>
           <mfStructVersion>2</mfStructVersion>
-          <mfUID>1.3.6.1.4.1.5043.1.23.5.6a4f768f.3460.25</mfUID>
-          <mfServerUID>1.3.6.1.4.1.5043.1.23.1.6a4f768e.3460.17</mfServerUID>
+          <mfUID>1.3.6.1.4.1.5043.1.21.5.615ac6ae.2820.9</mfUID>
+          <mfServerUID>1.3.6.1.4.1.5043.1.21.1.615ac6ae.2820.2</mfServerUID>
           <cn>MFRHJSON</cn>
           <mfHandlerStatus>Enabled</mfHandlerStatus>
           <description>Handles REST requests</description>
@@ -294,26 +297,8 @@ uploads=*.txt *.car *.wsdl
         <mfService>
           <objectclass>mfService</objectclass>
           <mfStructVersion>16</mfStructVersion>
-          <mfUID>1.3.6.1.4.1.5043.1.23.3.6a4f768f.3460.26</mfUID>
-          <mfServerUID>1.3.6.1.4.1.5043.1.23.1.6a4f768e.3460.17</mfServerUID>
-          <cn>ES</cn>
-          <mfSearchOrder>1</mfSearchOrder>
-          <mfServiceStatus>Available</mfServiceStatus>
-          <mfServiceClass>MF ES</mfServiceClass>
-          <description>ES utility service</description>
-          <mfTRMode>Unknown</mfTRMode>
-          <mfLogMode>Off</mfLogMode>
-          <mfError/>
-          <mfCustomConfiguration/>
-          <mfListenerUID>
-            <mfUID>1.3.6.1.4.1.5043.1.23.2.6a4f768e.3460.19</mfUID>
-          </mfListenerUID>
-        </mfService>
-        <mfService>
-          <objectclass>mfService</objectclass>
-          <mfStructVersion>16</mfStructVersion>
-          <mfUID>1.3.6.1.4.1.5043.1.23.3.6a4f768f.3460.27</mfUID>
-          <mfServerUID>1.3.6.1.4.1.5043.1.23.1.6a4f768e.3460.17</mfServerUID>
+          <mfUID>1.3.6.1.4.1.5043.1.21.3.615ac6ae.2820.10</mfUID>
+          <mfServerUID>1.3.6.1.4.1.5043.1.21.1.615ac6ae.2820.2</mfServerUID>
           <cn>Deployer</cn>
           <mfSearchOrder>1</mfSearchOrder>
           <mfServiceStatus>Available</mfServiceStatus>
@@ -331,14 +316,32 @@ accept=application/x-zip-compressed
 listener=Web Services and J2EE
 </mfCustomConfiguration>
           <mfListenerUID>
-            <mfUID>1.3.6.1.4.1.5043.1.23.2.6a4f768e.3460.20</mfUID>
+            <mfUID>1.3.6.1.4.1.5043.1.21.2.615ac6ae.2820.5</mfUID>
           </mfListenerUID>
         </mfService>
         <mfService>
           <objectclass>mfService</objectclass>
           <mfStructVersion>16</mfStructVersion>
-          <mfUID>1.3.6.1.4.1.5043.1.23.3.6a4f768f.3460.28</mfUID>
-          <mfServerUID>1.3.6.1.4.1.5043.1.23.1.6a4f768e.3460.17</mfServerUID>
+          <mfUID>1.3.6.1.4.1.5043.1.21.3.615ac6ae.2820.11</mfUID>
+          <mfServerUID>1.3.6.1.4.1.5043.1.21.1.615ac6ae.2820.2</mfServerUID>
+          <cn>ES</cn>
+          <mfSearchOrder>1</mfSearchOrder>
+          <mfServiceStatus>Available</mfServiceStatus>
+          <mfServiceClass>MF ES</mfServiceClass>
+          <description>ES utility service</description>
+          <mfTRMode>Unknown</mfTRMode>
+          <mfLogMode>Off</mfLogMode>
+          <mfError/>
+          <mfCustomConfiguration/>
+          <mfListenerUID>
+            <mfUID>1.3.6.1.4.1.5043.1.21.2.615ac6ae.2820.4</mfUID>
+          </mfListenerUID>
+        </mfService>
+        <mfService>
+          <objectclass>mfService</objectclass>
+          <mfStructVersion>16</mfStructVersion>
+          <mfUID>1.3.6.1.4.1.5043.1.21.3.615ac6ae.2820.12</mfUID>
+          <mfServerUID>1.3.6.1.4.1.5043.1.21.1.615ac6ae.2820.2</mfServerUID>
           <cn>CICS</cn>
           <mfSearchOrder>1</mfSearchOrder>
           <mfServiceStatus>Available</mfServiceStatus>
@@ -349,14 +352,14 @@ listener=Web Services and J2EE
           <mfError/>
           <mfCustomConfiguration/>
           <mfListenerUID>
-            <mfUID>1.3.6.1.4.1.5043.1.23.2.6a4f768e.3460.19</mfUID>
+            <mfUID>1.3.6.1.4.1.5043.1.21.2.615ac6ae.2820.4</mfUID>
           </mfListenerUID>
         </mfService>
         <mfService>
           <objectclass>mfService</objectclass>
           <mfStructVersion>16</mfStructVersion>
-          <mfUID>1.3.6.1.4.1.5043.1.23.3.6a4f768f.3460.29</mfUID>
-          <mfServerUID>1.3.6.1.4.1.5043.1.23.1.6a4f768e.3460.17</mfServerUID>
+          <mfUID>1.3.6.1.4.1.5043.1.21.3.615ac6ae.2820.13</mfUID>
+          <mfServerUID>1.3.6.1.4.1.5043.1.21.1.615ac6ae.2820.2</mfServerUID>
           <cn>JES</cn>
           <mfSearchOrder>1</mfSearchOrder>
           <mfServiceStatus>Available</mfServiceStatus>
@@ -367,7 +370,7 @@ listener=Web Services and J2EE
           <mfError/>
           <mfCustomConfiguration/>
           <mfListenerUID>
-            <mfUID>1.3.6.1.4.1.5043.1.23.2.6a4f768e.3460.19</mfUID>
+            <mfUID>1.3.6.1.4.1.5043.1.21.2.615ac6ae.2820.4</mfUID>
           </mfListenerUID>
         </mfService>
       </mfServiceList>
@@ -377,11 +380,11 @@ listener=Web Services and J2EE
         <mfJESInitiator>
           <objectclass>mfJESInitiator</objectclass>
           <mfStructVersion>1</mfStructVersion>
-          <mfUID>1.3.6.1.4.1.5043.1.23.12.6a4f768f.3460.30</mfUID>
-          <mfServerUID>1.3.6.1.4.1.5043.1.23.1.6a4f768e.3460.17</mfServerUID>
+          <mfUID>1.3.6.1.4.1.5043.1.21.12.615ac731.2820.14</mfUID>
+          <mfServerUID>1.3.6.1.4.1.5043.1.21.1.615ac6ae.2820.2</mfServerUID>
           <cn>INITALL</cn>
           <mfJESInitiatorClass>ABCDEFGHIJKLMNOPQRSTUVWXYZ01234567</mfJESInitiatorClass>
-          <description> </description>
+          <description/>
         </mfJESInitiator>
       </mfJESInitiatorList>
       <mfJESPrinterList/>
