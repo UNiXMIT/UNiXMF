@@ -37,3 +37,4 @@ export MFCOBOL="$MFCOBOL"
 export COBMODE="$COBMODE"
 export TERM="$TERM"
 EOF
+chmod 666 /tmp/.mf.env
