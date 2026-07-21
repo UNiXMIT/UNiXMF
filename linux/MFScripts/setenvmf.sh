@@ -32,9 +32,20 @@ cd "$CURRENT_DIR" || exit 1
 set --
 . "$MFCOBOL/bin/cobsetenv"
 
-cat > /tmp/.mf.env <<EOF
+ENVFILE=/tmp/.mf.env
+
+if [ -e "$ENVFILE" ]; then
+    ENVCHK=true
+else
+    ENVCHK=false
+fi
+
+cat > "$ENVFILE" <<EOF
 export MFCOBOL="$MFCOBOL"
 export COBMODE="$COBMODE"
 export TERM="$TERM"
 EOF
-chmod 666 /tmp/.mf.env
+
+if [ "$ENVCHK" = false ]; then
+    chmod 666 "$ENVFILE"
+fi
