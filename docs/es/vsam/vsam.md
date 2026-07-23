@@ -16,10 +16,10 @@ required=alphabetic, mixed-case, numeric, punctuation
 complexity=2
 
 [Trace]
-Config=y
+Config=yes
 Groups=y
-Modify=y
-Update=y
+Modify=fail|all|y|yes 
+Update=y|yes|changes|all 
 Vsam=yes
 
 [VSAM timeout]
