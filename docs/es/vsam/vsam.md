@@ -16,11 +16,13 @@ required=alphabetic, mixed-case, numeric, punctuation
 complexity=2
 
 [Trace]
-Config=yes
-Groups=y
-Modify=fail|all|y|yes 
+Config=yes|no
+Groups=y|1
+Modify=all|y|yes 
 Update=y|yes|changes|all 
 Vsam=yes
+Locks=y|1
+Rule=y|1|2|3
 
 [VSAM timeout]
 retry count=30
