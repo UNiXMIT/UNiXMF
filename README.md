@@ -1,11 +1,11 @@
 # [UNiXMF](https://github.com/UNiXMIT/UNiXMF)
-## [Enterprise Developer for Visual Studio Documentation](https://docs.rocketsoftware.com/bundle?labelkey=prod_enterprise_developer&name_filter.value=Visual+Studio+2022)
+## [Enterprise Developer for Visual Studio Documentation](https://docs.rocketsoftware.com/bundle?labelkey=prod_enterprise_developer&name_filter.value=Visual+Studio)
 
 - [Enterprise Developer for Eclipse Windows Documentation](https://docs.rocketsoftware.com/bundle?labelkey=prod_enterprise_developer&name_filter.value=Eclipse+Windows)
 - [Enterprise Developer for Eclipse UNIX Documentation](https://docs.rocketsoftware.com/bundle?labelkey=prod_enterprise_developer&name_filter.value=Eclipse+UNIX)
 - [Enterprise Server for Windows Documentation](https://docs.rocketsoftware.com/bundle?labelkey=prod_enterprise_server&name_filter.value=Windows)
 - [Enterprise Server for UNIX Documentation](https://docs.rocketsoftware.com/bundle?labelkey=prod_enterprise_server&name_filter.value=UNIX)
-- [Visual Cobol for Visual Studio Documentation](https://docs.rocketsoftware.com/bundle?labelkey=prod_visual_cobol&name_filter.value=Visual+Studio+2022)
+- [Visual Cobol for Visual Studio Documentation](https://docs.rocketsoftware.com/bundle?labelkey=prod_visual_cobol&name_filter.value=Visual+Studio)
 - [Visual Cobol for Eclipse Documentation](https://docs.rocketsoftware.com/bundle?labelkey=prod_visual_cobol&name_filter.value=Eclipse)
 - [COBOL Server for Windows Documentation](https://docs.rocketsoftware.com/bundle?labelkey=prod_cobol_server&name_filter.value=Windows)
 - [COBOL Server for UNIX Documentation](https://docs.rocketsoftware.com/bundle?labelkey=prod_cobol_server&name_filter.value=UNIX)
