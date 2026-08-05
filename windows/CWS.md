@@ -2,7 +2,6 @@
 ## CWS Demos
 ### filmREST - [Tutorial: CICS Web Service Provider from JSON, RESTful](https://docs.rocketsoftware.com/search?labelkey=prod_enterprise_developer&q=Tutorial%3A+CICS+Web+Service+Provider+from+JSON%2C+RESTful)
 ```
-setenvmf
 set "regionDir=C:\MFSamples\CICS"
 set "demoSource=C:\Users\Public\Documents\Rocket Software\Enterprise Developer\Samples\Mainframe\CICS\Classic\CWS\JSON\Provider\REST"
 mkdir "%regionDir%\cache" "%regionDir%\catalog" "%regionDir%\loadlib" "%regionDir%\dataset" "%regionDir%\system"
@@ -29,6 +28,7 @@ powershell -NoProfile -Command ^
     "Set-Content -LiteralPath $p -Value $out -Encoding Ascii"
 
 cobol filmREST.cbl cicsecm copyext(cpy,CPY);
+cbllink -d -oloadlib\FILMREST filmREST.obj
 
 casstart -rCICS -uSYSAD -pSYSAD
 timeout 5 >NUL
@@ -39,8 +39,7 @@ curl -s -X POST -H "accept: application/json" -H "X-Requested-With: API" -H "Ori
 
 curl -s -X POST -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: http://awswin:10086" -H "Content-Type: application/json" -b "C:\Users\Public\Documents\cookieFile.txt" -d "{\"pplEnable\": \"Y\", \"pplRspWait\": \"DEFT\",\"pplCfgFile\": \"$MFROOT\\xml\\JSONConfig.xml\", \"pplWebDir\": \"$MFROOT\\loadlib\", \"statusCodes\": false}"
 
-curl -s -X PUT -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: http://awswin:10086" -H "Content-Type: application/json" -b "C:\Users\Public\Documents\cookieFile.txt"
-  -d "{\"description\": \"Example Startup List\", \"production\": false, \"groups\": [\"DFHBMS\", \"DFHCONS\", \"DFHEDF\", \"DFHHARDC\", \"DFHISC\", \"DFHOPER\", \"DFHSIGN\", \"DFHSPI\", \"DFHTYPE\", \"DFHVTAM\", \"DFH$ACCT\", \"DFH$IVP\", \"DFHTERM\", \"DFHWEB\", \"DFHPIPE\", \"DEMOSIT\"]}"
+curl -s -X PUT -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: http://awswin:10086" -H "Content-Type: application/json" -b "C:\Users\Public\Documents\cookieFile.txt" -d "{\"description\": \"Example Startup List\", \"production\": false, \"groups\": [\"DFHBMS\", \"DFHCONS\", \"DFHEDF\", \"DFHHARDC\", \"DFHISC\", \"DFHOPER\", \"DFHSIGN\", \"DFHSPI\", \"DFHTYPE\", \"DFHVTAM\", \"DFH$ACCT\", \"DFH$IVP\", \"DFHTERM\", \"DFHWEB\", \"DFHPIPE\", \"DEMOSIT\"]}"
 
 casstop -rCICS -uSYSAD -pSYSAD
 timeout 5 >NUL
