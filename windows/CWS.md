@@ -4,11 +4,13 @@
         - [filmRest - RESTful](#filmrest)
         - [ReverseJSON - Top-down Method](#reversejson)
         - [LoanDemoJSON - Bottom-up Method](#loandemojson)
+    - [Requester](#requester)
+        - [InvokeReverseJSON - Top-down Method](#invokereversejson)
 
 ## JSON
 ### Provider
 #### filmREST
-[Tutorial: CICS Web Service Provider from JSON, RESTful](https://docs.rocketsoftware.com/search?labelkey=prod_enterprise_developer&q=Tutorial%3A+CICS+Web+Service+Provider+from+JSON%2C+RESTful)
+[Tutorial: CICS Web Service Provider from JSON, RESTful](https://docs.rocketsoftware.com/search?labelkey=prod_enterprise_developer&q=Tutorial%3A+CICS+Web+Service+Provider+from+JSON%2C+RESTful)  
 ```
 set "regionDir=C:\MFSamples\CICS"
 :: Optional CICS Directory Cleanup
@@ -69,7 +71,7 @@ curl -X GET -H "accept: application/json" http://awswin:9003/cics/services/json/
 ```
 
 #### ReverseJSON
-[Tutorial: CICS Web Service Provider from JSON, Request-Response Top-down Method](https://docs.rocketsoftware.com/search?labelkey=prod_enterprise_developer&q=Tutorial%3A+CICS+Web+Service+Provider+from+JSON%2C+Request-Response+Top-down+Method)
+[Tutorial: CICS Web Service Provider from JSON, Request-Response Top-down Method](https://docs.rocketsoftware.com/search?labelkey=prod_enterprise_developer&q=Tutorial%3A+CICS+Web+Service+Provider+from+JSON%2C+Request-Response+Top-down+Method)  
 ```
 set "regionDir=C:\MFSamples\CICS"
 :: Optional CICS Directory Cleanup
@@ -133,7 +135,7 @@ curl -X POST -H "accept: application/json" -H "Content-Type: application/json" -
 ```
 
 #### LoanDemoJSON
-[Tutorial: CICS Web Service Provider from JSON, Request-Response Bottom-up Method](https://docs.rocketsoftware.com/search?labelkey=prod_enterprise_developer&q=Tutorial%3A+CICS+Web+Service+Provider+from+JSON%2C+Request-Response+Bottom-up+Method)
+[Tutorial: CICS Web Service Provider from JSON, Request-Response Bottom-up Method](https://docs.rocketsoftware.com/search?labelkey=prod_enterprise_developer&q=Tutorial%3A+CICS+Web+Service+Provider+from+JSON%2C+Request-Response+Bottom-up+Method)  
 ```
 set "regionDir=C:\MFSamples\CICS"
 :: Optional CICS Directory Cleanup
@@ -172,4 +174,48 @@ casstart -rCICS -uSYSAD -pSYSAD
 timeout 5 >NUL
 
 curl -X POST -H "accept: application/json" -H "Content-Type: application/json" -d "{\"loanPaym\":{\"LOANINP\":{\"principal\":\"5000\",\"loanterm\":\"36\",\"rate\":\"5.5\"}}}" http://awswin:9003/cics/services/json/loanpaym
+```
+
+### Requester
+#### InvokeReverseJSON
+[Tutorial: CICS Web Service Requester from JSON, Linkable Interface Top-down Method](https://docs.rocketsoftware.com/search?labelkey=prod_enterprise_developer&q=Tutorial%3A+CICS+Web+Service+Requester+from+JSON%2C+Linkable+Interface+Top-down+Method)  
+**Prerequisite** - [ReverseJSON](#reversejson)  
+```
+set "regionDir=C:\MFSamples\CICS"
+:: Optional CICS Directory Cleanup
+:: powershell -NoProfile -Command "Get-ChildItem -LiteralPath '%regionDir%' -Force | Remove-Item -Recurse -Force"
+set "demoSource=%PUBLIC%\Documents\Rocket Software\Enterprise Developer\Samples\Mainframe\CICS\Classic\CWS\JSON\Requester\TopDown"
+mkdir "%regionDir%\cache" "%regionDir%\catalog" "%regionDir%\loadlib" "%regionDir%\dataset" "%regionDir%\system" "%regionDir%\REQBNDL" "%regionDir%\RESPBNDL"
+robocopy "%demoSource%" "%regionDir%" /E /IS /R:1 /W:1
+
+cd %regionDir%/
+js2ls default-char-maxlength=255 inline-maxoccurs-limit=255 ^
+    pdsmem=REQ bundle=REQBNDL json-schema=schema\reverse.json ^
+    JSONTRANSFRM=REVREQUEST logfile=REVREQUEST.log
+js2ls default-char-maxlength=255 inline-maxoccurs-limit=255 ^
+    pdsmem=RESP bundle=RESPBNDL json-schema=schema\reverse.json ^
+    JSONTRANSFRM=REVRESPONSE logfile=REVRESPONSE.log
+
+cobol invkRevJ.cbl cicsecm copyext(cpy,CPY);
+cbllink -d -oloadlib\INVKREVJ invkRevJ.obj
+
+casstart -rCICS -uSYSAD -pSYSAD
+timeout 5 >NUL
+
+set ESUSER=SYSAD
+set ESPASS=SYSAD
+
+curl -s -X POST -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: http://awswin:10086" -H "Content-Type: application/json" -c "C:\Users\Public\Documents\cookieFile.txt" -d "{\"mfUser\": \"%ESUSER%\",\"mfPassword\": \"%ESPASS%\"}" http://awswin:10086/logon
+
+curl -s -X POST -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: http://awswin:10086" -H "Content-Type: application/json" -b "C:\Users\Public\Documents\cookieFile.txt" -d "{\"name\": \"DEMOSIT\", \"description\": \"Demo Group\"}" http://awswin:10086/v2/native/regions/127.0.0.1/86/CICS/groups
+
+curl -s -X POST -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: http://awswin:10086" -H "Content-Type: application/json" -b "C:\Users\Public\Documents\cookieFile.txt" -d "{\"bdlEnable\": \"Y\", \"bdlBundleDir\": \"$MFROOT\\REQBNDL\", \"statusCodes\": false}" http://awswin:10086/native/v1/regions/127.0.0.1/86/CICS/bundle/detail/DEMOSIT/REQBNDL
+
+curl -s -X POST -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: http://awswin:10086" -H "Content-Type: application/json" -b "C:\Users\Public\Documents\cookieFile.txt" -d "{\"bdlEnable\": \"Y\", \"bdlBundleDir\": \"$MFROOT\\RESPBNDL\", \"statusCodes\": false}" http://awswin:10086/native/v1/regions/127.0.0.1/86/CICS/bundle/detail/DEMOSIT/RESPBNDL
+
+curl -s -X POST -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: http://awswin:10086" -H "Content-Type: application/json" -b "C:\Users\Public\Documents\cookieFile.txt" -d "{\"uriStatus\":\"Y\",\"uriUsage\":\"2\",\"uriScheme1\":\"0\",\"uriPort\":\"5482\",\"uriHost\":\"localhost\",\"uriPath\":\"/cics/services/json/reverse\",\"statusCodes\":false}" http://awswin:10086/native/v1/regions/127.0.0.1/86/CICS/urimap/detail/DEMOSIT/CWSURI
+
+curl -s -X POST -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: http://awswin:10086" -H "Content-Type: application/json" -b "C:\Users\Public\Documents\cookieFile.txt" -d "{\"name\":\"INVJ\",\"group\":\"DEMOSIT\",\"programName\":\"INVKREVJ\",\"enabled\":true,\"inDoubt\":\"BACKOUT\",\"upperCaseTranslate\":true,\"tracing\":\"STANDARD\",\"tn3270Screen\":\"DEFAULT\",\"inboundEnabled\":true,\"inputTimeoutSystemDefault\":true,\"runawayTimeoutSystemDefault\":true,\"deadlockTimeoutSystemDefault\":true,\"transactionThresholdSystemDefault\":true}" http://awswin:10086/v2/native/regions/127.0.0.1/86/CICS/pct/defined
+
+curl -s -X PUT -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: http://awswin:10086" -H "Content-Type: application/json" -b "C:\Users\Public\Documents\cookieFile.txt" -d "{\"description\": \"Example Startup List\", \"production\": false, \"groups\": [\"DFHBMS\", \"DFHCONS\", \"DFHEDF\", \"DFHHARDC\", \"DFHISC\", \"DFHOPER\", \"DFHSIGN\", \"DFHSPI\", \"DFHTYPE\", \"DFHVTAM\", \"DFH$ACCT\", \"DFH$IVP\", \"DFHTERM\", \"DFHWEB\", \"DFHPIPE\", \"DEMOSIT\"]}" http://awswin:10086/v2/native/regions/127.0.0.1/86/CICS/sul/DEMOSTRT
 ```
