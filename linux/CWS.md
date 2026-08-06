@@ -34,12 +34,12 @@ mv films.json schema/
 mv JSONConfig.xml xml/
 
 js2ls default-char-maxlength=255 inline-maxoccurs-limit=255 \
-    pgmname=filmREST.cbl pgmint=channel pdsmem=film \
+    pgmname=FILMREST.cbl pgmint=channel pdsmem=film \
     uri=/cics/services/json/film/* modsvi=loadlib/filmREST.modsvi \
     json-schema-restful=schema/films.json contid=DFHWS-DATA \
     logfile=filmREST.log http-methods=put,post,get,delete
 
-sourceCBL="$regionDir/filmREST.cbl"
+sourceCBL="$regionDir/FILMREST.cbl"
 awk '
 BEGIN { markerCount=0 }
 {
@@ -55,7 +55,9 @@ END {
     print "       copy \"RESTLogic.cpy\"."
 }' "$sourceCBL" > "$sourceCBL.tmp" && mv "$sourceCBL.tmp" "$sourceCBL"
 
-cob -C "cicsecm copyext(cpy,CPY)" -o loadlib/FILMREST.so -Z filmREST.cbl
+# WORKAROUND
+# sed -i 's/Xtitle/title-1/g; s/Xformat/format-1/g' film01.CPY
+cob -C "cicsecm copyext(cpy,CPY)" -o loadlib/FILMREST.so -Z FILMREST.cbl
 
 casstart -rCICS -uSYSAD -pSYSAD
 
@@ -102,12 +104,12 @@ mv reverse.json schema/
 mv JSONConfig.xml xml/
 
 js2ls default-char-maxlength=255 inline-maxoccurs-limit=255 \
-    pgmname=reverseJ.cbl pgmint=channel reqmem=REQ respmem=RESP \
+    pgmname=REVERSEJ.cbl pgmint=channel reqmem=REQ respmem=RESP \
     uri=/cics/services/json/reverse modsvi=loadlib/reverseJ.modsvi \
     json-schema-request=schema/reverse.json json-schema-response=schema/reverse.json \
     contid=DFHWS-DATA logfile=reverseJ.log
 
-sourceCBL="$regionDir/reverseJ.cbl"
+sourceCBL="$regionDir/REVERSEJ.cbl"
 awk '
 BEGIN { inserted=0; markerCount=0 }
 {
@@ -129,7 +131,7 @@ END {
     print "       copy \"revLogicJ.cpy\"."
 }' "$sourceCBL" > "$sourceCBL.tmp" && mv "$sourceCBL.tmp" "$sourceCBL"
 
-cob -C "cicsecm copyext(cpy,CPY)" -o loadlib/REVERSEJ.so -Z reverseJ.cbl
+cob -C "cicsecm copyext(cpy,CPY)" -o loadlib/REVERSEJ.so -Z REVERSEJ.cbl
 
 casstart -rCICS -uSYSAD -pSYSAD
 
