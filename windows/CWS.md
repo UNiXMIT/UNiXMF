@@ -18,10 +18,11 @@ set ESPORT=10086
 set ESUSER=SYSAD
 set ESPASS=SYSAD
 set "regionDir=C:\MFSamples\CICS"
-
-:: Optional CICS Directory Cleanup
-:: powershell -NoProfile -Command "Get-ChildItem -LiteralPath '%regionDir%' -Force | Remove-Item -Recurse -Force"
+set "cookieFile=%TEMP%\cookieFile.txt"
 set "demoSource=%PUBLIC%\Documents\Rocket Software\Enterprise Developer\Samples\Mainframe\CICS\Classic\CWS\JSON\Provider\REST"
+
+:: Optional CICS directory cleanup
+:: powershell -NoProfile -Command "Get-ChildItem -LiteralPath '%regionDir%' -Force | Remove-Item -Recurse -Force"
 mkdir "%regionDir%\cache" "%regionDir%\catalog" "%regionDir%\loadlib" "%regionDir%\dataset" "%regionDir%\system"
 robocopy "%demoSource%" "%regionDir%" /E /IS /R:1 /W:1
 
@@ -53,15 +54,15 @@ cbllink -d -oloadlib\FILMREST filmREST.obj
 
 casstart -rCICS -uSYSAD -pSYSAD
 
-curl -s -X POST -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -c "C:\Users\Public\Documents\cookieFile.txt" -d "{\"mfUser\": \"%ESUSER%\",\"mfPassword\": \"%ESPASS%\"}" %ESPROTOCOL%://%ESHOST%:%ESPORT%/logon
+curl -s -X POST -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -c "%cookieFile%" -d "{\"mfUser\": \"%ESUSER%\",\"mfPassword\": \"%ESPASS%\"}" %ESPROTOCOL%://%ESHOST%:%ESPORT%/logon
 
-curl -s -X POST -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -b "C:\Users\Public\Documents\cookieFile.txt" -d "{\"name\": \"DEMOSIT\", \"description\": \"Demo Group\"}" %ESPROTOCOL%://%ESHOST%:%ESPORT%/v2/native/regions/127.0.0.1/86/CICS/groups
+curl -s -X POST -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -b "%cookieFile%" -d "{\"name\": \"DEMOSIT\", \"description\": \"Demo Group\"}" %ESPROTOCOL%://%ESHOST%:%ESPORT%/v2/native/regions/127.0.0.1/86/CICS/groups
 
-curl -s -X PUT -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -b "C:\Users\Public\Documents\cookieFile.txt" -d "{\"name\":\"DEMOSIT\",\"description\":\"MFCICS demonstration SIT\",\"startupList\":\"DEMOSTRT\",\"development\":true,\"workArea\":512,\"minimumCommarea\":0,\"systemId\":\"DEMO\",\"initialTransactionId\":\"CESN\",\"localCcsid\":37,\"forceProgramPhaseIn\":true,\"deferInstallGroups\":\"NONE\",\"addressingMode\":\"NATIVE\",\"ibmClientSessions\":0,\"cicsRelease\":\"33\",\"enqueueRnl\":true,\"autoInstallExit\":\"DFHZATDX\",\"coldStartDumpTraceDatasets\":true,\"dumpOnAbend\":false,\"dumpOnSystemAbend\":true,\"localTraceTableEntryCount\":341,\"localAuxiliaryTraceTableEntryCount\":341,\"auxTraceActive\":true,\"externalShutdown\":\"ALLOWED\",\"externalShutdownKey\":64,\"tempStorage\":{\"coldStart\":true,\"fileshareServer\":\"\",\"nonRecoverablePath\":\"\",\"recoverableColdStart\":true,\"recoverableFileshareServer\":\"\",\"recoverablePath\":\"\"},\"transientData\":{\"coldStart\":true,\"fileshareServer\":\"\",\"requireDefined\":false,\"nonRecoverablePath\":\"\",\"recoverableColdStart\":true,\"recoverableFileshareServer\":\"\",\"recoverablePath\":\"\"},\"mappingPagingCommands\":{\"retrieve\":\"/P\",\"chain\":\"/C\",\"purge\":\"/T\",\"copy\":\"/D\"}}" %ESPROTOCOL%://%ESHOST%:%ESPORT%/v2/native/regions/127.0.0.1/86/CICS2/sit/DEMOSIT
+curl -s -X PUT -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -b "%cookieFile%" -d "{\"name\":\"DEMOSIT\",\"description\":\"MFCICS demonstration SIT\",\"startupList\":\"DEMOSTRT\",\"development\":true,\"workArea\":512,\"minimumCommarea\":0,\"systemId\":\"DEMO\",\"initialTransactionId\":\"CESN\",\"localCcsid\":37,\"forceProgramPhaseIn\":true,\"deferInstallGroups\":\"NONE\",\"addressingMode\":\"NATIVE\",\"ibmClientSessions\":0,\"cicsRelease\":\"33\",\"enqueueRnl\":true,\"autoInstallExit\":\"DFHZATDX\",\"coldStartDumpTraceDatasets\":true,\"dumpOnAbend\":false,\"dumpOnSystemAbend\":true,\"localTraceTableEntryCount\":341,\"localAuxiliaryTraceTableEntryCount\":341,\"auxTraceActive\":true,\"externalShutdown\":\"ALLOWED\",\"externalShutdownKey\":64,\"tempStorage\":{\"coldStart\":true,\"fileshareServer\":\"\",\"nonRecoverablePath\":\"\",\"recoverableColdStart\":true,\"recoverableFileshareServer\":\"\",\"recoverablePath\":\"\"},\"transientData\":{\"coldStart\":true,\"fileshareServer\":\"\",\"requireDefined\":false,\"nonRecoverablePath\":\"\",\"recoverableColdStart\":true,\"recoverableFileshareServer\":\"\",\"recoverablePath\":\"\"},\"mappingPagingCommands\":{\"retrieve\":\"/P\",\"chain\":\"/C\",\"purge\":\"/T\",\"copy\":\"/D\"}}" %ESPROTOCOL%://%ESHOST%:%ESPORT%/v2/native/regions/127.0.0.1/86/CICS/sit/DEMOSIT
 
-curl -s -X POST -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -b "C:\Users\Public\Documents\cookieFile.txt" -d "{\"pplEnable\": \"Y\", \"pplRspWait\": \"DEFT\",\"pplCfgFile\": \"$MFROOT\\xml\\JSONConfig.xml\", \"pplWebDir\": \"$MFROOT\\loadlib\", \"statusCodes\": false}" %ESPROTOCOL%://%ESHOST%:%ESPORT%/native/v1/regions/127.0.0.1/86/CICS/pipeline/detail/DEMOSIT/RESTPIPE
+curl -s -X POST -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -b "%cookieFile%" -d "{\"pplEnable\": \"Y\", \"pplRspWait\": \"DEFT\",\"pplCfgFile\": \"$MFROOT\\xml\\JSONConfig.xml\", \"pplWebDir\": \"$MFROOT\\loadlib\", \"statusCodes\": false}" %ESPROTOCOL%://%ESHOST%:%ESPORT%/native/v1/regions/127.0.0.1/86/CICS/pipeline/detail/DEMOSIT/RESTPIPE
 
-curl -s -X PUT -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -b "C:\Users\Public\Documents\cookieFile.txt" -d "{\"description\": \"Example Startup List\", \"production\": false, \"groups\": [\"DFHBMS\", \"DFHCONS\", \"DFHEDF\", \"DFHHARDC\", \"DFHISC\", \"DFHOPER\", \"DFHSIGN\", \"DFHSPI\", \"DFHTYPE\", \"DFHVTAM\", \"DFH$ACCT\", \"DFH$IVP\", \"DFHTERM\", \"DFHWEB\", \"DFHPIPE\", \"DEMOSIT\"]}" %ESPROTOCOL%://%ESHOST%:%ESPORT%/v2/native/regions/127.0.0.1/86/CICS/sul/DEMOSTRT
+curl -s -X PUT -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -b "%cookieFile%" -d "{\"description\": \"Example Startup List\", \"production\": false, \"groups\": [\"DFHBMS\", \"DFHCONS\", \"DFHEDF\", \"DFHHARDC\", \"DFHISC\", \"DFHOPER\", \"DFHSIGN\", \"DFHSPI\", \"DFHTYPE\", \"DFHVTAM\", \"DFH$ACCT\", \"DFH$IVP\", \"DFHTERM\", \"DFHWEB\", \"DFHPIPE\", \"DEMOSIT\"]}" %ESPROTOCOL%://%ESHOST%:%ESPORT%/v2/native/regions/127.0.0.1/86/CICS/sul/DEMOSTRT
 
 casstop -rCICS -uSYSAD -pSYSAD
 casstart -rCICS -uSYSAD -pSYSAD
@@ -80,10 +81,11 @@ set ESPORT=10086
 set ESUSER=SYSAD
 set ESPASS=SYSAD
 set "regionDir=C:\MFSamples\CICS"
-
-:: Optional CICS Directory Cleanup
-:: powershell -NoProfile -Command "Get-ChildItem -LiteralPath '%regionDir%' -Force | Remove-Item -Recurse -Force"
+set "cookieFile=%TEMP%\cookieFile.txt"
 set "demoSource=%PUBLIC%\Documents\Rocket Software\Enterprise Developer\Samples\Mainframe\CICS\Classic\CWS\JSON\Provider\TopDown"
+
+:: Optional CICS directory cleanup
+:: powershell -NoProfile -Command "Get-ChildItem -LiteralPath '%regionDir%' -Force | Remove-Item -Recurse -Force"
 mkdir "%regionDir%\cache" "%regionDir%\catalog" "%regionDir%\loadlib" "%regionDir%\dataset" "%regionDir%\system"
 robocopy "%demoSource%" "%regionDir%" /E /IS /R:1 /W:1
 
@@ -121,15 +123,15 @@ cbllink -d -oloadlib\REVERSEJ reverseJ.obj
 
 casstart -rCICS -uSYSAD -pSYSAD
 
-curl -s -X POST -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -c "C:\Users\Public\Documents\cookieFile.txt" -d "{\"mfUser\": \"%ESUSER%\",\"mfPassword\": \"%ESPASS%\"}" %ESPROTOCOL%://%ESHOST%:%ESPORT%/logon
+curl -s -X POST -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -c "%cookieFile%" -d "{\"mfUser\": \"%ESUSER%\",\"mfPassword\": \"%ESPASS%\"}" %ESPROTOCOL%://%ESHOST%:%ESPORT%/logon
 
-curl -s -X POST -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -b "C:\Users\Public\Documents\cookieFile.txt" -d "{\"name\": \"DEMOSIT\", \"description\": \"Demo Group\"}" %ESPROTOCOL%://%ESHOST%:%ESPORT%/v2/native/regions/127.0.0.1/86/CICS/groups
+curl -s -X POST -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -b "%cookieFile%" -d "{\"name\": \"DEMOSIT\", \"description\": \"Demo Group\"}" %ESPROTOCOL%://%ESHOST%:%ESPORT%/v2/native/regions/127.0.0.1/86/CICS/groups
 
-curl -s -X PUT -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -b "C:\Users\Public\Documents\cookieFile.txt" -d "{\"name\":\"DEMOSIT\",\"description\":\"MFCICS demonstration SIT\",\"startupList\":\"DEMOSTRT\",\"development\":true,\"workArea\":512,\"minimumCommarea\":0,\"systemId\":\"DEMO\",\"initialTransactionId\":\"CESN\",\"localCcsid\":37,\"forceProgramPhaseIn\":true,\"deferInstallGroups\":\"NONE\",\"addressingMode\":\"NATIVE\",\"ibmClientSessions\":0,\"cicsRelease\":\"33\",\"enqueueRnl\":true,\"autoInstallExit\":\"DFHZATDX\",\"coldStartDumpTraceDatasets\":true,\"dumpOnAbend\":false,\"dumpOnSystemAbend\":true,\"localTraceTableEntryCount\":341,\"localAuxiliaryTraceTableEntryCount\":341,\"auxTraceActive\":true,\"externalShutdown\":\"ALLOWED\",\"externalShutdownKey\":64,\"tempStorage\":{\"coldStart\":true,\"fileshareServer\":\"\",\"nonRecoverablePath\":\"\",\"recoverableColdStart\":true,\"recoverableFileshareServer\":\"\",\"recoverablePath\":\"\"},\"transientData\":{\"coldStart\":true,\"fileshareServer\":\"\",\"requireDefined\":false,\"nonRecoverablePath\":\"\",\"recoverableColdStart\":true,\"recoverableFileshareServer\":\"\",\"recoverablePath\":\"\"},\"mappingPagingCommands\":{\"retrieve\":\"/P\",\"chain\":\"/C\",\"purge\":\"/T\",\"copy\":\"/D\"}}" %ESPROTOCOL%://%ESHOST%:%ESPORT%/v2/native/regions/127.0.0.1/86/CICS/sit/DEMOSIT
+curl -s -X PUT -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -b "%cookieFile%" -d "{\"name\":\"DEMOSIT\",\"description\":\"MFCICS demonstration SIT\",\"startupList\":\"DEMOSTRT\",\"development\":true,\"workArea\":512,\"minimumCommarea\":0,\"systemId\":\"DEMO\",\"initialTransactionId\":\"CESN\",\"localCcsid\":37,\"forceProgramPhaseIn\":true,\"deferInstallGroups\":\"NONE\",\"addressingMode\":\"NATIVE\",\"ibmClientSessions\":0,\"cicsRelease\":\"33\",\"enqueueRnl\":true,\"autoInstallExit\":\"DFHZATDX\",\"coldStartDumpTraceDatasets\":true,\"dumpOnAbend\":false,\"dumpOnSystemAbend\":true,\"localTraceTableEntryCount\":341,\"localAuxiliaryTraceTableEntryCount\":341,\"auxTraceActive\":true,\"externalShutdown\":\"ALLOWED\",\"externalShutdownKey\":64,\"tempStorage\":{\"coldStart\":true,\"fileshareServer\":\"\",\"nonRecoverablePath\":\"\",\"recoverableColdStart\":true,\"recoverableFileshareServer\":\"\",\"recoverablePath\":\"\"},\"transientData\":{\"coldStart\":true,\"fileshareServer\":\"\",\"requireDefined\":false,\"nonRecoverablePath\":\"\",\"recoverableColdStart\":true,\"recoverableFileshareServer\":\"\",\"recoverablePath\":\"\"},\"mappingPagingCommands\":{\"retrieve\":\"/P\",\"chain\":\"/C\",\"purge\":\"/T\",\"copy\":\"/D\"}}" %ESPROTOCOL%://%ESHOST%:%ESPORT%/v2/native/regions/127.0.0.1/86/CICS/sit/DEMOSIT
 
-curl -s -X POST -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -b "C:\Users\Public\Documents\cookieFile.txt" -d "{\"pplEnable\": \"Y\", \"pplRspWait\": \"DEFT\",\"pplCfgFile\": \"$MFROOT\\xml\\JSONConfig.xml\", \"pplWebDir\": \"$MFROOT\\loadlib\", \"statusCodes\": false}" %ESPROTOCOL%://%ESHOST%:%ESPORT%/native/v1/regions/127.0.0.1/86/CICS/pipeline/detail/DEMOSIT/JSONPIPE
+curl -s -X POST -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -b "%cookieFile%" -d "{\"pplEnable\": \"Y\", \"pplRspWait\": \"DEFT\",\"pplCfgFile\": \"$MFROOT\\xml\\JSONConfig.xml\", \"pplWebDir\": \"$MFROOT\\loadlib\", \"statusCodes\": false}" %ESPROTOCOL%://%ESHOST%:%ESPORT%/native/v1/regions/127.0.0.1/86/CICS/pipeline/detail/DEMOSIT/JSONPIPE
 
-curl -s -X PUT -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -b "C:\Users\Public\Documents\cookieFile.txt" -d "{\"description\": \"Example Startup List\", \"production\": false, \"groups\": [\"DFHBMS\", \"DFHCONS\", \"DFHEDF\", \"DFHHARDC\", \"DFHISC\", \"DFHOPER\", \"DFHSIGN\", \"DFHSPI\", \"DFHTYPE\", \"DFHVTAM\", \"DFH$ACCT\", \"DFH$IVP\", \"DFHTERM\", \"DFHWEB\", \"DFHPIPE\", \"DEMOSIT\"]}" %ESPROTOCOL%://%ESHOST%:%ESPORT%/v2/native/regions/127.0.0.1/86/CICS/sul/DEMOSTRT
+curl -s -X PUT -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -b "%cookieFile%" -d "{\"description\": \"Example Startup List\", \"production\": false, \"groups\": [\"DFHBMS\", \"DFHCONS\", \"DFHEDF\", \"DFHHARDC\", \"DFHISC\", \"DFHOPER\", \"DFHSIGN\", \"DFHSPI\", \"DFHTYPE\", \"DFHVTAM\", \"DFH$ACCT\", \"DFH$IVP\", \"DFHTERM\", \"DFHWEB\", \"DFHPIPE\", \"DEMOSIT\"]}" %ESPROTOCOL%://%ESHOST%:%ESPORT%/v2/native/regions/127.0.0.1/86/CICS/sul/DEMOSTRT
 
 casstop -rCICS -uSYSAD -pSYSAD
 casstart -rCICS -uSYSAD -pSYSAD
@@ -146,10 +148,11 @@ set ESPORT=10086
 set ESUSER=SYSAD
 set ESPASS=SYSAD
 set "regionDir=C:\MFSamples\CICS"
-
-:: Optional CICS Directory Cleanup
-:: powershell -NoProfile -Command "Get-ChildItem -LiteralPath '%regionDir%' -Force | Remove-Item -Recurse -Force"
+set "cookieFile=%TEMP%\cookieFile.txt"
 set "demoSource=%PUBLIC%\Documents\Rocket Software\Enterprise Developer\Samples\Mainframe\CICS\Classic\CWS\JSON\Provider\BottomUp"
+
+:: Optional CICS directory cleanup
+:: powershell -NoProfile -Command "Get-ChildItem -LiteralPath '%regionDir%' -Force | Remove-Item -Recurse -Force"
 mkdir "%regionDir%\cache" "%regionDir%\catalog" "%regionDir%\loadlib" "%regionDir%\dataset" "%regionDir%\system" "%regionDir%\schema"
 robocopy "%demoSource%" "%regionDir%" /E /IS /R:1 /W:1
 
@@ -165,15 +168,15 @@ ls2js pgmint=commarea pgmname=LOANPAYM ^
 
 casstart -rCICS -uSYSAD -pSYSAD
 
-curl -s -X POST -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -c "C:\Users\Public\Documents\cookieFile.txt" -d "{\"mfUser\": \"%ESUSER%\",\"mfPassword\": \"%ESPASS%\"}" %ESPROTOCOL%://%ESHOST%:%ESPORT%/logon
+curl -s -X POST -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -c "%cookieFile%" -d "{\"mfUser\": \"%ESUSER%\",\"mfPassword\": \"%ESPASS%\"}" %ESPROTOCOL%://%ESHOST%:%ESPORT%/logon
 
-curl -s -X POST -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -b "C:\Users\Public\Documents\cookieFile.txt" -d "{\"name\": \"DEMOSIT\", \"description\": \"Demo Group\"}" %ESPROTOCOL%://%ESHOST%:%ESPORT%/v2/native/regions/127.0.0.1/86/CICS/groups
+curl -s -X POST -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -b "%cookieFile%" -d "{\"name\": \"DEMOSIT\", \"description\": \"Demo Group\"}" %ESPROTOCOL%://%ESHOST%:%ESPORT%/v2/native/regions/127.0.0.1/86/CICS/groups
 
-curl -s -X PUT -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -b "C:\Users\Public\Documents\cookieFile.txt" -d "{\"name\":\"DEMOSIT\",\"description\":\"MFCICS demonstration SIT\",\"startupList\":\"DEMOSTRT\",\"development\":true,\"workArea\":512,\"minimumCommarea\":0,\"systemId\":\"DEMO\",\"initialTransactionId\":\"CESN\",\"localCcsid\":37,\"forceProgramPhaseIn\":true,\"deferInstallGroups\":\"NONE\",\"addressingMode\":\"NATIVE\",\"ibmClientSessions\":0,\"cicsRelease\":\"33\",\"enqueueRnl\":true,\"autoInstallExit\":\"DFHZATDX\",\"coldStartDumpTraceDatasets\":true,\"dumpOnAbend\":false,\"dumpOnSystemAbend\":true,\"localTraceTableEntryCount\":341,\"localAuxiliaryTraceTableEntryCount\":341,\"auxTraceActive\":true,\"externalShutdown\":\"ALLOWED\",\"externalShutdownKey\":64,\"tempStorage\":{\"coldStart\":true,\"fileshareServer\":\"\",\"nonRecoverablePath\":\"\",\"recoverableColdStart\":true,\"recoverableFileshareServer\":\"\",\"recoverablePath\":\"\"},\"transientData\":{\"coldStart\":true,\"fileshareServer\":\"\",\"requireDefined\":false,\"nonRecoverablePath\":\"\",\"recoverableColdStart\":true,\"recoverableFileshareServer\":\"\",\"recoverablePath\":\"\"},\"mappingPagingCommands\":{\"retrieve\":\"/P\",\"chain\":\"/C\",\"purge\":\"/T\",\"copy\":\"/D\"}}" %ESPROTOCOL%://%ESHOST%:%ESPORT%/v2/native/regions/127.0.0.1/86/CICS2/sit/DEMOSIT
+curl -s -X PUT -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -b "%cookieFile%" -d "{\"name\":\"DEMOSIT\",\"description\":\"MFCICS demonstration SIT\",\"startupList\":\"DEMOSTRT\",\"development\":true,\"workArea\":512,\"minimumCommarea\":0,\"systemId\":\"DEMO\",\"initialTransactionId\":\"CESN\",\"localCcsid\":37,\"forceProgramPhaseIn\":true,\"deferInstallGroups\":\"NONE\",\"addressingMode\":\"NATIVE\",\"ibmClientSessions\":0,\"cicsRelease\":\"33\",\"enqueueRnl\":true,\"autoInstallExit\":\"DFHZATDX\",\"coldStartDumpTraceDatasets\":true,\"dumpOnAbend\":false,\"dumpOnSystemAbend\":true,\"localTraceTableEntryCount\":341,\"localAuxiliaryTraceTableEntryCount\":341,\"auxTraceActive\":true,\"externalShutdown\":\"ALLOWED\",\"externalShutdownKey\":64,\"tempStorage\":{\"coldStart\":true,\"fileshareServer\":\"\",\"nonRecoverablePath\":\"\",\"recoverableColdStart\":true,\"recoverableFileshareServer\":\"\",\"recoverablePath\":\"\"},\"transientData\":{\"coldStart\":true,\"fileshareServer\":\"\",\"requireDefined\":false,\"nonRecoverablePath\":\"\",\"recoverableColdStart\":true,\"recoverableFileshareServer\":\"\",\"recoverablePath\":\"\"},\"mappingPagingCommands\":{\"retrieve\":\"/P\",\"chain\":\"/C\",\"purge\":\"/T\",\"copy\":\"/D\"}}" %ESPROTOCOL%://%ESHOST%:%ESPORT%/v2/native/regions/127.0.0.1/86/CICS/sit/DEMOSIT
 
-curl -s -X POST -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -b "C:\Users\Public\Documents\cookieFile.txt" -d "{\"pplEnable\": \"Y\", \"pplRspWait\": \"DEFT\",\"pplCfgFile\": \"$MFROOT\\xml\\JSONConfig.xml\", \"pplWebDir\": \"$MFROOT\\loadlib\", \"statusCodes\": false}" %ESPROTOCOL%://%ESHOST%:%ESPORT%/native/v1/regions/127.0.0.1/86/CICS/pipeline/detail/DEMOSIT/JSONPIPE
+curl -s -X POST -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -b "%cookieFile%" -d "{\"pplEnable\": \"Y\", \"pplRspWait\": \"DEFT\",\"pplCfgFile\": \"$MFROOT\\xml\\JSONConfig.xml\", \"pplWebDir\": \"$MFROOT\\loadlib\", \"statusCodes\": false}" %ESPROTOCOL%://%ESHOST%:%ESPORT%/native/v1/regions/127.0.0.1/86/CICS/pipeline/detail/DEMOSIT/JSONPIPE
 
-curl -s -X PUT -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -b "C:\Users\Public\Documents\cookieFile.txt" -d "{\"description\": \"Example Startup List\", \"production\": false, \"groups\": [\"DFHBMS\", \"DFHCONS\", \"DFHEDF\", \"DFHHARDC\", \"DFHISC\", \"DFHOPER\", \"DFHSIGN\", \"DFHSPI\", \"DFHTYPE\", \"DFHVTAM\", \"DFH$ACCT\", \"DFH$IVP\", \"DFHTERM\", \"DFHWEB\", \"DFHPIPE\", \"DEMOSIT\"]}" %ESPROTOCOL%://%ESHOST%:%ESPORT%/v2/native/regions/127.0.0.1/86/CICS/sul/DEMOSTRT
+curl -s -X PUT -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -b "%cookieFile%" -d "{\"description\": \"Example Startup List\", \"production\": false, \"groups\": [\"DFHBMS\", \"DFHCONS\", \"DFHEDF\", \"DFHHARDC\", \"DFHISC\", \"DFHOPER\", \"DFHSIGN\", \"DFHSPI\", \"DFHTYPE\", \"DFHVTAM\", \"DFH$ACCT\", \"DFH$IVP\", \"DFHTERM\", \"DFHWEB\", \"DFHPIPE\", \"DEMOSIT\"]}" %ESPROTOCOL%://%ESHOST%:%ESPORT%/v2/native/regions/127.0.0.1/86/CICS/sul/DEMOSTRT
 
 casstop -rCICS -uSYSAD -pSYSAD
 casstart -rCICS -uSYSAD -pSYSAD
@@ -192,8 +195,9 @@ set ESPORT=10086
 set ESUSER=SYSAD
 set ESPASS=SYSAD
 set "regionDir=C:\MFSamples\CICS"
-
+set "cookieFile=%TEMP%\cookieFile.txt"
 set "demoSource=%PUBLIC%\Documents\Rocket Software\Enterprise Developer\Samples\Mainframe\CICS\Classic\CWS\JSON\Requester\TopDown"
+
 mkdir "%regionDir%\REQBNDL" "%regionDir%\RESPBNDL"
 copy "%demoSource%\invkRevJ.cbl" "%regionDir%"
 
@@ -210,15 +214,15 @@ cbllink -d -oloadlib\INVKREVJ invkRevJ.obj
 
 casstart -rCICS -uSYSAD -pSYSAD
 
-curl -s -X POST -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -c "C:\Users\Public\Documents\cookieFile.txt" -d "{\"mfUser\": \"%ESUSER%\",\"mfPassword\": \"%ESPASS%\"}" %ESPROTOCOL%://%ESHOST%:%ESPORT%/logon
+curl -s -X POST -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -c "%cookieFile%" -d "{\"mfUser\": \"%ESUSER%\",\"mfPassword\": \"%ESPASS%\"}" %ESPROTOCOL%://%ESHOST%:%ESPORT%/logon
 
-curl -s -X POST -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -b "C:\Users\Public\Documents\cookieFile.txt" -d "{\"bdlEnable\": \"Y\", \"bdlBundleDir\": \"$MFROOT\\REQBNDL\", \"statusCodes\": false}" %ESPROTOCOL%://%ESHOST%:%ESPORT%/native/v1/regions/127.0.0.1/86/CICS/bundle/detail/DEMOSIT/REQBNDL
+curl -s -X POST -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -b "%cookieFile%" -d "{\"bdlEnable\": \"Y\", \"bdlBundleDir\": \"$MFROOT\\REQBNDL\", \"statusCodes\": false}" %ESPROTOCOL%://%ESHOST%:%ESPORT%/native/v1/regions/127.0.0.1/86/CICS/bundle/detail/DEMOSIT/REQBNDL
 
-curl -s -X POST -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -b "C:\Users\Public\Documents\cookieFile.txt" -d "{\"bdlEnable\": \"Y\", \"bdlBundleDir\": \"$MFROOT\\RESPBNDL\", \"statusCodes\": false}" %ESPROTOCOL%://%ESHOST%:%ESPORT%/native/v1/regions/127.0.0.1/86/CICS/bundle/detail/DEMOSIT/RESPBNDL
+curl -s -X POST -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -b "%cookieFile%" -d "{\"bdlEnable\": \"Y\", \"bdlBundleDir\": \"$MFROOT\\RESPBNDL\", \"statusCodes\": false}" %ESPROTOCOL%://%ESHOST%:%ESPORT%/native/v1/regions/127.0.0.1/86/CICS/bundle/detail/DEMOSIT/RESPBNDL
 
-curl -s -X POST -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -b "C:\Users\Public\Documents\cookieFile.txt" -d "{\"uriStatus\":\"Y\",\"uriUsage\":\"2\",\"uriScheme1\":\"0\",\"uriPort\":\"5482\",\"uriHost\":\"localhost\",\"uriPath\":\"/cics/services/json/reverse\",\"statusCodes\":false}" %ESPROTOCOL%://%ESHOST%:%ESPORT%/native/v1/regions/127.0.0.1/86/CICS/urimap/detail/DEMOSIT/REVRSURI
+curl -s -X POST -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -b "%cookieFile%" -d "{\"uriStatus\":\"Y\",\"uriUsage\":\"2\",\"uriScheme1\":\"0\",\"uriPort\":\"5482\",\"uriHost\":\"localhost\",\"uriPath\":\"/cics/services/json/reverse\",\"statusCodes\":false}" %ESPROTOCOL%://%ESHOST%:%ESPORT%/native/v1/regions/127.0.0.1/86/CICS/urimap/detail/DEMOSIT/REVRSURI
 
-curl -s -X POST -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -b "C:\Users\Public\Documents\cookieFile.txt" -d "{\"name\":\"INVJ\",\"group\":\"DEMOSIT\",\"programName\":\"INVKREVJ\",\"enabled\":true,\"inDoubt\":\"BACKOUT\",\"upperCaseTranslate\":true,\"tracing\":\"STANDARD\",\"tn3270Screen\":\"DEFAULT\",\"inboundEnabled\":true,\"inputTimeoutSystemDefault\":true,\"runawayTimeoutSystemDefault\":true,\"deadlockTimeoutSystemDefault\":true,\"transactionThresholdSystemDefault\":true}" %ESPROTOCOL%://%ESHOST%:%ESPORT%/v2/native/regions/127.0.0.1/86/CICS/pct/defined
+curl -s -X POST -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -b "%cookieFile%" -d "{\"name\":\"INVJ\",\"group\":\"DEMOSIT\",\"programName\":\"INVKREVJ\",\"enabled\":true,\"inDoubt\":\"BACKOUT\",\"upperCaseTranslate\":true,\"tracing\":\"STANDARD\",\"tn3270Screen\":\"DEFAULT\",\"inboundEnabled\":true,\"inputTimeoutSystemDefault\":true,\"runawayTimeoutSystemDefault\":true,\"deadlockTimeoutSystemDefault\":true,\"transactionThresholdSystemDefault\":true}" %ESPROTOCOL%://%ESHOST%:%ESPORT%/v2/native/regions/127.0.0.1/86/CICS/pct/defined
 
 casstop -rCICS -uSYSAD -pSYSAD
 casstart -rCICS -uSYSAD -pSYSAD
