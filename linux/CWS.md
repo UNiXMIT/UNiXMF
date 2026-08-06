@@ -55,8 +55,9 @@ END {
     print "       copy \"RESTLogic.cpy\"."
 }' "$sourceCBL" > "$sourceCBL.tmp" && mv "$sourceCBL.tmp" "$sourceCBL"
 
-# WORKAROUND
+# WORKAROUND - Incorrect data item names
 # sed -i 's/Xtitle/title-1/g; s/Xformat/format-1/g' film01.CPY
+
 cob -C "cicsecm copyext(cpy,CPY)" -o loadlib/FILMREST.so -Z FILMREST.cbl
 
 casstart -rCICS -uSYSAD -pSYSAD
