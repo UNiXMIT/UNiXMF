@@ -23,6 +23,7 @@ set "demoSource=%PUBLIC%\Documents\Rocket Software\Enterprise Developer\Samples\
 
 :: Optional CICS directory cleanup
 :: powershell -NoProfile -Command "Get-ChildItem -LiteralPath '%regionDir%' -Force | Remove-Item -Recurse -Force"
+
 mkdir "%regionDir%\cache" "%regionDir%\catalog" "%regionDir%\loadlib" "%regionDir%\dataset" "%regionDir%\system"
 robocopy "%demoSource%" "%regionDir%" /E /IS /R:1 /W:1
 
@@ -86,6 +87,7 @@ set "demoSource=%PUBLIC%\Documents\Rocket Software\Enterprise Developer\Samples\
 
 :: Optional CICS directory cleanup
 :: powershell -NoProfile -Command "Get-ChildItem -LiteralPath '%regionDir%' -Force | Remove-Item -Recurse -Force"
+
 mkdir "%regionDir%\cache" "%regionDir%\catalog" "%regionDir%\loadlib" "%regionDir%\dataset" "%regionDir%\system"
 robocopy "%demoSource%" "%regionDir%" /E /IS /R:1 /W:1
 
@@ -136,7 +138,7 @@ curl -s -X PUT -H "accept: application/json" -H "X-Requested-With: API" -H "Orig
 casstop -rCICS -uSYSAD -pSYSAD
 casstart -rCICS -uSYSAD -pSYSAD
 
-curl -X POST -H "accept: application/json" -H "Content-Type: application/json" -d "{\"myStrings\":[\"olleH\"]}" %ESPROTOCOL%://%ESHOST%:9003/cics/services/json/reverse
+qe
 ```
 
 #### LoanDemoJSON
@@ -153,6 +155,7 @@ set "demoSource=%PUBLIC%\Documents\Rocket Software\Enterprise Developer\Samples\
 
 :: Optional CICS directory cleanup
 :: powershell -NoProfile -Command "Get-ChildItem -LiteralPath '%regionDir%' -Force | Remove-Item -Recurse -Force"
+
 mkdir "%regionDir%\cache" "%regionDir%\catalog" "%regionDir%\loadlib" "%regionDir%\dataset" "%regionDir%\system" "%regionDir%\schema"
 robocopy "%demoSource%" "%regionDir%" /E /IS /R:1 /W:1
 
@@ -181,7 +184,7 @@ curl -s -X PUT -H "accept: application/json" -H "X-Requested-With: API" -H "Orig
 casstop -rCICS -uSYSAD -pSYSAD
 casstart -rCICS -uSYSAD -pSYSAD
 
-curl -X POST -H "accept: application/json" -H "Content-Type: application/json" -d "{\"loanPaym\":{\"LOANINP\":{\"principal\":\"5000\",\"loanterm\":\"36\",\"rate\":\"5.5\"}}}" %ESPROTOCOL%://%ESHOST%:9003/cics/services/json/loanpaym
+curl -X POST -H "accept: application/json" -H "Content-Type: application/json" -d "{\"loanpaym\":{\"LOANINP\":{\"principal\":\"5000\",\"loanterm\":\"36\",\"rate\":\"5.5\"}}}" %ESPROTOCOL%://%ESHOST%:9003/cics/services/json/loanpaym
 ```
 
 ### Requester
@@ -220,10 +223,12 @@ curl -s -X POST -H "accept: application/json" -H "X-Requested-With: API" -H "Ori
 
 curl -s -X POST -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -b "%cookieFile%" -d "{\"bdlEnable\": \"Y\", \"bdlBundleDir\": \"$MFROOT\\RESPBNDL\", \"statusCodes\": false}" %ESPROTOCOL%://%ESHOST%:%ESPORT%/native/v1/regions/127.0.0.1/86/CICS/bundle/detail/DEMOSIT/RESPBNDL
 
-curl -s -X POST -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -b "%cookieFile%" -d "{\"uriStatus\":\"Y\",\"uriUsage\":\"2\",\"uriScheme1\":\"0\",\"uriPort\":\"5482\",\"uriHost\":\"localhost\",\"uriPath\":\"/cics/services/json/reverse\",\"statusCodes\":false}" %ESPROTOCOL%://%ESHOST%:%ESPORT%/native/v1/regions/127.0.0.1/86/CICS/urimap/detail/DEMOSIT/REVRSURI
+curl -s -X POST -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -b "%cookieFile%" -d "{\"uriStatus\":\"Y\",\"uriUsage\":\"2\",\"uriScheme1\":\"0\",\"uriPort\":\"9003\",\"uriHost\":\"localhost\",\"uriPath\":\"/cics/services/json/reverse\",\"statusCodes\":false}" %ESPROTOCOL%://%ESHOST%:%ESPORT%/native/v1/regions/127.0.0.1/86/CICS/urimap/detail/DEMOSIT/REVRSURI
 
 curl -s -X POST -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -b "%cookieFile%" -d "{\"name\":\"INVJ\",\"group\":\"DEMOSIT\",\"programName\":\"INVKREVJ\",\"enabled\":true,\"inDoubt\":\"BACKOUT\",\"upperCaseTranslate\":true,\"tracing\":\"STANDARD\",\"tn3270Screen\":\"DEFAULT\",\"inboundEnabled\":true,\"inputTimeoutSystemDefault\":true,\"runawayTimeoutSystemDefault\":true,\"deadlockTimeoutSystemDefault\":true,\"transactionThresholdSystemDefault\":true}" %ESPROTOCOL%://%ESHOST%:%ESPORT%/v2/native/regions/127.0.0.1/86/CICS/pct/defined
 
 casstop -rCICS -uSYSAD -pSYSAD
 casstart -rCICS -uSYSAD -pSYSAD
+
+# TN3270 - INVJ
 ```
