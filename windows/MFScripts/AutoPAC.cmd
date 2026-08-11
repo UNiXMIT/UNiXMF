@@ -113,15 +113,22 @@ IF "%choice%"=="4" GOTO :setupDB2
 GOTO :DBCHOICE
 
 :setupMSSQL
-SET DRIVERNAME="{ODBC Driver 17 for SQL Server}"
+SET DRIVERVER="17"
+SET DRIVERNAME="{ODBC Driver %DRIVERVER% for SQL Server}"
+
+IF %DRIVERVER% GEQ 18 (
+    SET "SQLSECURITY=Encrypt=True;TrustServerCertificate=True;"
+) ELSE (
+    SET "SQLSECURITY="
+)
 SET MFPROVIDER=SS
 
 :: Create the MFDBFH.cfg
 dbfhconfig -add -file:%MFDBFH_CONFIG% -server:MYSERVER -provider:%MFPROVIDER% -comment:"MSSQL"
-dbfhconfig -add -file:%MFDBFH_CONFIG% -server:MYSERVER -dsn:%MFPROVIDER%.MASTER -type:database -name:master -connect:""Driver=%DRIVERNAME%;Server=%USEDB%,%DBPORT%;Database=master;UID=%USERID%;PWD=%USERPASSWD%;Encrypt=True;TrustServerCertificate=True;""
-dbfhconfig -add -file:%MFDBFH_CONFIG% -server:MYSERVER -dsn:%MFPROVIDER%.VSAMDATA -type:datastore -name:VSAMDATA -connect:""Driver=%DRIVERNAME%;Server=%USEDB%,%DBPORT%;Database=VSAMDATA;UID=%USERID%;PWD=%USERPASSWD%;Encrypt=True;TrustServerCertificate=True;""
-dbfhconfig -add -file:%MFDBFH_CONFIG% -server:MYSERVER -dsn:%MFPROVIDER%.MYPAC -type:region -name:MYPAC -connect:""Driver=%DRIVERNAME%;Server=%USEDB%,%DBPORT%;Database=MYPAC;UID=%USERID%;PWD=%USERPASSWD%;Encrypt=True;TrustServerCertificate=True;""
-dbfhconfig -add -file:%MFDBFH_CONFIG% -server:MYSERVER -dsn:%MFPROVIDER%.CROSSREGION -type:crossRegion -connect:""Driver=%DRIVERNAME%;Server=%USEDB%,%DBPORT%;Database=_$XREGN$;UID=%USERID%;PWD=%USERPASSWD%;Encrypt=True;TrustServerCertificate=True;""
+dbfhconfig -add -file:%MFDBFH_CONFIG% -server:MYSERVER -dsn:%MFPROVIDER%.MASTER -type:database -name:master -connect:""Driver=%DRIVERNAME%;Server=%USEDB%,%DBPORT%;Database=master;UID=%USERID%;PWD=%USERPASSWD%;%SQLSECURITY%""
+dbfhconfig -add -file:%MFDBFH_CONFIG% -server:MYSERVER -dsn:%MFPROVIDER%.VSAMDATA -type:datastore -name:VSAMDATA -connect:""Driver=%DRIVERNAME%;Server=%USEDB%,%DBPORT%;Database=VSAMDATA;UID=%USERID%;PWD=%USERPASSWD%;%SQLSECURITY%""
+dbfhconfig -add -file:%MFDBFH_CONFIG% -server:MYSERVER -dsn:%MFPROVIDER%.MYPAC -type:region -name:MYPAC -connect:""Driver=%DRIVERNAME%;Server=%USEDB%,%DBPORT%;Database=MYPAC;UID=%USERID%;PWD=%USERPASSWD%;%SQLSECURITY%""
+dbfhconfig -add -file:%MFDBFH_CONFIG% -server:MYSERVER -dsn:%MFPROVIDER%.CROSSREGION -type:crossRegion -connect:""Driver=%DRIVERNAME%;Server=%USEDB%,%DBPORT%;Database=_$XREGN$;UID=%USERID%;PWD=%USERPASSWD%;%SQLSECURITY%""
 
 :: Create the datastore
 :: dbfhdeploy -configfile:%MFDBFH_CONFIG% data create sql://MYSERVER/VSAMDATA
