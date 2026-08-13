@@ -70,7 +70,7 @@ curl -s -X POST -H "accept: application/json" -H "X-Requested-With: API" -H "Ori
 
 curl -s -X POST -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: ${ESPROTOCOL}://${ESHOST}:${ESPORT}" -H "Content-Type: application/json" -b "$cookieFile" -d "{\"pplEnable\":\"Y\",\"pplRspWait\":\"DEFT\",\"pplCfgFile\":\"\$MFROOT/xml/JSONConfig.xml\",\"pplWebDir\":\"\$MFROOT/loadlib\",\"statusCodes\":false}" "${ESPROTOCOL}://${ESHOST}:${ESPORT}/native/v1/regions/127.0.0.1/86/CICS/pipeline/detail/DEMOSIT/RESTPIPE"
 
-curl -s -X PUT -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: ${ESPROTOCOL}://${ESHOST}:${ESPORT}" -H "Content-Type: application/json" -b "$cookieFile" -d "{\"pplEnable\":\"Y\",\"pplRspWait\":\"DEFT\",\"pplCfgFile\":\"\$MFROOT/xml/JSONConfig.xml\",\"pplWebDir\":\"\$MFROOT/loadlib\",\"statusCodes\":false}" "${ESPROTOCOL}://${ESHOST}:${ESPORT}/native/v1/regions/127.0.0.1/86/CICS/pipeline/detail/DEMOSIT/RESTPIPE"
+curl -s -X PUT -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: ${ESPROTOCOL}://${ESHOST}:${ESPORT}" -H "Content-Type: application/json" -b "$cookieFile" -d "{\"pplEnable\":\"Y\",\"pplRspWait\":\"DEFT\",\"pplCfgFile\":\"\$MFROOT/xml/JSONConfig.xml\",\"pplWebDir\":\"\$MFROOT/loadlib\",\"statusCodes\":false,\"ctlSubmit\":\"Install\"}" "${ESPROTOCOL}://${ESHOST}:${ESPORT}/native/v1/regions/127.0.0.1/86/CICS/pipeline/detail/DEMOSIT/RESTPIPE"
 
 curl -X POST -H "accept: application/json" -H "Content-Type: application/json" -d '{"film-details":[{"title":"jaws","year":"1975","director":"Steven Spielberg","format":"VHS"}]}' "${ESPROTOCOL}://${ESHOST}:55220/cics/services/json/film"
 
@@ -225,14 +225,19 @@ curl -s -X POST -H "accept: application/json" -H "X-Requested-With: API" -H "Ori
 
 curl -s -X POST -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: ${ESPROTOCOL}://${ESHOST}:${ESPORT}" -H "Content-Type: application/json" -b "$cookieFile" -d "{\"bdlEnable\":\"Y\",\"bdlBundleDir\":\"\$MFROOT/REQBNDL\",\"statusCodes\":false}" "${ESPROTOCOL}://${ESHOST}:${ESPORT}/native/v1/regions/127.0.0.1/86/CICS/bundle/detail/DEMOSIT/REQBNDL"
 
+curl -s -X PUT -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: ${ESPROTOCOL}://${ESHOST}:${ESPORT}" -H "Content-Type: application/json" -b "$cookieFile" -d "{\"bdlEnable\":\"Y\",\"bdlBundleDir\":\"\$MFROOT/REQBNDL\",\"statusCodes\":false,\"ctlSubmit\":\"Install\"}" "${ESPROTOCOL}://${ESHOST}:${ESPORT}/native/v1/regions/127.0.0.1/86/CICS/bundle/detail/DEMOSIT/REQBNDL"
+
 curl -s -X POST -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: ${ESPROTOCOL}://${ESHOST}:${ESPORT}" -H "Content-Type: application/json" -b "$cookieFile" -d "{\"bdlEnable\":\"Y\",\"bdlBundleDir\":\"\$MFROOT/RESPBNDL\",\"statusCodes\":false}" "${ESPROTOCOL}://${ESHOST}:${ESPORT}/native/v1/regions/127.0.0.1/86/CICS/bundle/detail/DEMOSIT/RESPBNDL"
+
+curl -s -X PUT -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: ${ESPROTOCOL}://${ESHOST}:${ESPORT}" -H "Content-Type: application/json" -b "$cookieFile" -d "{\"bdlEnable\":\"Y\",\"bdlBundleDir\":\"\$MFROOT/RESPBNDL\",\"statusCodes\":false,\"ctlSubmit\":\"Install\"}" "${ESPROTOCOL}://${ESHOST}:${ESPORT}/native/v1/regions/127.0.0.1/86/CICS/bundle/detail/DEMOSIT/RESPBNDL"
 
 curl -s -X POST -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: ${ESPROTOCOL}://${ESHOST}:${ESPORT}" -H "Content-Type: application/json" -b "$cookieFile" -d '{"uriStatus":"Y","uriUsage":"2","uriScheme1":"0","uriPort":"55220","uriHost":"localhost","uriPath":"/cics/services/json/reverse","statusCodes":false}' "${ESPROTOCOL}://${ESHOST}:${ESPORT}/native/v1/regions/127.0.0.1/86/CICS/urimap/detail/DEMOSIT/REVRSURI"
 
+curl -s -X PUT -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: ${ESPROTOCOL}://${ESHOST}:${ESPORT}" -H "Content-Type: application/json" -b "$cookieFile" -d '{"uriStatus":"Y","uriUsage":"2","uriScheme1":"0","uriPort":"55220","uriHost":"localhost","uriPath":"/cics/services/json/reverse","statusCodes":false,\"ctlSubmit\":\"Install\"}' "${ESPROTOCOL}://${ESHOST}:${ESPORT}/native/v1/regions/127.0.0.1/86/CICS/urimap/detail/DEMOSIT/REVRSURI"
+
 curl -s -X POST -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: ${ESPROTOCOL}://${ESHOST}:${ESPORT}" -H "Content-Type: application/json" -b "$cookieFile" -d '{"name":"INVJ","group":"DEMOSIT","programName":"invkRevJ","enabled":true,"inDoubt":"BACKOUT","upperCaseTranslate":true,"tracing":"STANDARD","tn3270Screen":"DEFAULT","inboundEnabled":true,"inputTimeoutSystemDefault":true,"runawayTimeoutSystemDefault":true,"deadlockTimeoutSystemDefault":true,"transactionThresholdSystemDefault":true}' "${ESPROTOCOL}://${ESHOST}:${ESPORT}/v2/native/regions/127.0.0.1/86/CICS/pct/defined"
 
-casstop -rCICS -uSYSAD -pSYSAD
-casstart -rCICS -uSYSAD -pSYSAD
+curl -s -X POST -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: ${ESPROTOCOL}://${ESHOST}:${ESPORT}" -H "Content-Type: application/json" -b "$cookieFile" "${ESPROTOCOL}://${ESHOST}:${ESPORT}/v2/native/regions/127.0.0.1/86/CICS/pct/defined/DEMOSIT/INVJ/install"
 
 # TN3270 - INVJ
 ```
