@@ -53,20 +53,16 @@ powershell -NoProfile -Command ^
 cobol filmREST.cbl cicsecm copyext(cpy,CPY);
 cbllink -d -oloadlib\FILMREST filmREST.obj
 
+curl -s -O https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/windows/CICS.rdt
+casrdtup /fCICS.rdt /op%regionDir%\system /o
+
 casstart -rCICS -uSYSAD -pSYSAD
 
 curl -s -X POST -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -c "%cookieFile%" -d "{\"mfUser\": \"%ESUSER%\",\"mfPassword\": \"%ESPASS%\"}" %ESPROTOCOL%://%ESHOST%:%ESPORT%/logon
 
-curl -s -X POST -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -b "%cookieFile%" -d "{\"name\": \"DEMOSIT\", \"description\": \"Demo Group\"}" %ESPROTOCOL%://%ESHOST%:%ESPORT%/v2/native/regions/127.0.0.1/86/CICS/groups
-
-curl -s -X PUT -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -b "%cookieFile%" -d "{\"name\":\"DEMOSIT\",\"description\":\"MFCICS demonstration SIT\",\"startupList\":\"DEMOSTRT\",\"development\":true,\"workArea\":512,\"minimumCommarea\":0,\"systemId\":\"DEMO\",\"initialTransactionId\":\"CESN\",\"localCcsid\":37,\"forceProgramPhaseIn\":true,\"deferInstallGroups\":\"NONE\",\"addressingMode\":\"NATIVE\",\"ibmClientSessions\":0,\"cicsRelease\":\"33\",\"enqueueRnl\":true,\"autoInstallExit\":\"DFHZATDX\",\"coldStartDumpTraceDatasets\":true,\"dumpOnAbend\":false,\"dumpOnSystemAbend\":true,\"localTraceTableEntryCount\":341,\"localAuxiliaryTraceTableEntryCount\":341,\"auxTraceActive\":true,\"externalShutdown\":\"ALLOWED\",\"externalShutdownKey\":64,\"tempStorage\":{\"coldStart\":true,\"fileshareServer\":\"\",\"nonRecoverablePath\":\"\",\"recoverableColdStart\":true,\"recoverableFileshareServer\":\"\",\"recoverablePath\":\"\"},\"transientData\":{\"coldStart\":true,\"fileshareServer\":\"\",\"requireDefined\":false,\"nonRecoverablePath\":\"\",\"recoverableColdStart\":true,\"recoverableFileshareServer\":\"\",\"recoverablePath\":\"\"},\"mappingPagingCommands\":{\"retrieve\":\"/P\",\"chain\":\"/C\",\"purge\":\"/T\",\"copy\":\"/D\"}}" %ESPROTOCOL%://%ESHOST%:%ESPORT%/v2/native/regions/127.0.0.1/86/CICS/sit/DEMOSIT
-
 curl -s -X POST -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -b "%cookieFile%" -d "{\"pplEnable\": \"Y\", \"pplRspWait\": \"DEFT\",\"pplCfgFile\": \"$MFROOT\\xml\\JSONConfig.xml\", \"pplWebDir\": \"$MFROOT\\loadlib\", \"statusCodes\": false}" %ESPROTOCOL%://%ESHOST%:%ESPORT%/native/v1/regions/127.0.0.1/86/CICS/pipeline/detail/DEMOSIT/RESTPIPE
 
-curl -s -X PUT -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -b "%cookieFile%" -d "{\"description\": \"Example Startup List\", \"production\": false, \"groups\": [\"DFHBMS\", \"DFHCONS\", \"DFHEDF\", \"DFHHARDC\", \"DFHISC\", \"DFHOPER\", \"DFHSIGN\", \"DFHSPI\", \"DFHTYPE\", \"DFHVTAM\", \"DFH$ACCT\", \"DFH$IVP\", \"DFHTERM\", \"DFHWEB\", \"DFHPIPE\", \"DEMOSIT\"]}" %ESPROTOCOL%://%ESHOST%:%ESPORT%/v2/native/regions/127.0.0.1/86/CICS/sul/DEMOSTRT
-
-casstop -rCICS -uSYSAD -pSYSAD
-casstart -rCICS -uSYSAD -pSYSAD
+curl -s -X POST -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -b "%cookieFile%" %ESPROTOCOL%://%ESHOST%:%ESPORT%/native/v1/regions/127.0.0.1/86/CICS/pipeline/detail/DEMOSIT/RESTPIPE/install
 
 curl -X POST -H "accept: application/json" -H "Content-Type: application/json" -d "{\"film-details\": [{\"title\": \"jaws\", \"year\": \"1975\", \"director\": \"Steven Spielberg\", \"format\": \"VHS\"}]}" %ESPROTOCOL%://%ESHOST%:9003/cics/services/json/film
 
