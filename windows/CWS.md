@@ -17,6 +17,7 @@ set ESPROTOCOL=http
 set ESPORT=10086
 set ESUSER=SYSAD
 set ESPASS=SYSAD
+set ESREGION=CICS
 set "regionDir=C:\MFSamples\CICS"
 set "cookieFile=%TEMP%\cookieFile.txt"
 set "demoSource=%PUBLIC%\Documents\Rocket Software\Enterprise Developer\Samples\Mainframe\CICS\Classic\CWS\JSON\Provider\REST"
@@ -56,13 +57,13 @@ cbllink -d -oloadlib\FILMREST filmREST.obj
 curl -s -O https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/windows/CICS.rdt
 casrdtup /fCICS.rdt /op%regionDir%\system /o
 
-casstart -rCICS -uSYSAD -pSYSAD
+casstart -r%ESREGION% -uSYSAD -pSYSAD
 
 curl -s -X POST -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -c "%cookieFile%" -d "{\"mfUser\": \"%ESUSER%\",\"mfPassword\": \"%ESPASS%\"}" %ESPROTOCOL%://%ESHOST%:%ESPORT%/logon
 
-curl -s -X POST -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -b "%cookieFile%" -d "{\"pplEnable\": \"Y\", \"pplRspWait\": \"DEFT\",\"pplCfgFile\": \"$MFROOT\\xml\\JSONConfig.xml\", \"pplWebDir\": \"$MFROOT\\loadlib\", \"statusCodes\": false}" %ESPROTOCOL%://%ESHOST%:%ESPORT%/native/v1/regions/127.0.0.1/86/CICS/pipeline/detail/DEMOSIT/RESTPIPE
+curl -s -X POST -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -b "%cookieFile%" -d "{\"pplEnable\": \"Y\", \"pplRspWait\": \"DEFT\",\"pplCfgFile\": \"$MFROOT\\xml\\JSONConfig.xml\", \"pplWebDir\": \"$MFROOT\\loadlib\", \"statusCodes\": false}" %ESPROTOCOL%://%ESHOST%:%ESPORT%/native/v1/regions/127.0.0.1/86/%ESREGION%/pipeline/detail/DEMOSIT/RESTPIPE
 
-curl -s -X PUT -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -b "%cookieFile%" -d "{\"pplEnable\": \"Y\", \"pplRspWait\": \"DEFT\",\"pplCfgFile\": \"$MFROOT\\xml\\JSONConfig.xml\", \"pplWebDir\": \"$MFROOT\\loadlib\", \"statusCodes\": false, \"ctlSubmit\":\"Install\"}" %ESPROTOCOL%://%ESHOST%:%ESPORT%/native/v1/regions/127.0.0.1/86/CICS/pipeline/detail/DEMOSIT/RESTPIPE
+curl -s -X PUT -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -b "%cookieFile%" -d "{\"pplEnable\": \"Y\", \"pplRspWait\": \"DEFT\",\"pplCfgFile\": \"$MFROOT\\xml\\JSONConfig.xml\", \"pplWebDir\": \"$MFROOT\\loadlib\", \"statusCodes\": false, \"ctlSubmit\":\"Install\"}" %ESPROTOCOL%://%ESHOST%:%ESPORT%/native/v1/regions/127.0.0.1/86/%ESREGION%/pipeline/detail/DEMOSIT/RESTPIPE
 
 curl -X POST -H "accept: application/json" -H "Content-Type: application/json" -d "{\"film-details\": [{\"title\": \"jaws\", \"year\": \"1975\", \"director\": \"Steven Spielberg\", \"format\": \"VHS\"}]}" %ESPROTOCOL%://%ESHOST%:9003/cics/services/json/film
 
@@ -77,6 +78,7 @@ set ESPROTOCOL=http
 set ESPORT=10086
 set ESUSER=SYSAD
 set ESPASS=SYSAD
+set ESREGION=CICS
 set "regionDir=C:\MFSamples\CICS"
 set "cookieFile=%TEMP%\cookieFile.txt"
 set "demoSource=%PUBLIC%\Documents\Rocket Software\Enterprise Developer\Samples\Mainframe\CICS\Classic\CWS\JSON\Provider\TopDown"
@@ -122,13 +124,13 @@ cbllink -d -oloadlib\REVERSEJ reverseJ.obj
 curl -s -O https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/windows/CICS.rdt
 casrdtup /fCICS.rdt /op%regionDir%\system /o
 
-casstart -rCICS -uSYSAD -pSYSAD
+casstart -r%ESREGION% -uSYSAD -pSYSAD
 
 curl -s -X POST -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -c "%cookieFile%" -d "{\"mfUser\": \"%ESUSER%\",\"mfPassword\": \"%ESPASS%\"}" %ESPROTOCOL%://%ESHOST%:%ESPORT%/logon
 
-curl -s -X POST -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -b "%cookieFile%" -d "{\"pplEnable\": \"Y\", \"pplRspWait\": \"DEFT\",\"pplCfgFile\": \"$MFROOT\\xml\\JSONConfig.xml\", \"pplWebDir\": \"$MFROOT\\loadlib\", \"statusCodes\": false}" %ESPROTOCOL%://%ESHOST%:%ESPORT%/native/v1/regions/127.0.0.1/86/CICS/pipeline/detail/DEMOSIT/JSONPIPE
+curl -s -X POST -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -b "%cookieFile%" -d "{\"pplEnable\": \"Y\", \"pplRspWait\": \"DEFT\",\"pplCfgFile\": \"$MFROOT\\xml\\JSONConfig.xml\", \"pplWebDir\": \"$MFROOT\\loadlib\", \"statusCodes\": false}" %ESPROTOCOL%://%ESHOST%:%ESPORT%/native/v1/regions/127.0.0.1/86/%ESREGION%/pipeline/detail/DEMOSIT/JSONPIPE
 
-curl -s -X PUT -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -b "%cookieFile%" -d "{\"pplEnable\": \"Y\", \"pplRspWait\": \"DEFT\",\"pplCfgFile\": \"$MFROOT\\xml\\JSONConfig.xml\", \"pplWebDir\": \"$MFROOT\\loadlib\", \"statusCodes\": false, \"ctlSubmit\":\"Install\"}" %ESPROTOCOL%://%ESHOST%:%ESPORT%/native/v1/regions/127.0.0.1/86/CICS/pipeline/detail/DEMOSIT/JSONPIPE
+curl -s -X PUT -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -b "%cookieFile%" -d "{\"pplEnable\": \"Y\", \"pplRspWait\": \"DEFT\",\"pplCfgFile\": \"$MFROOT\\xml\\JSONConfig.xml\", \"pplWebDir\": \"$MFROOT\\loadlib\", \"statusCodes\": false, \"ctlSubmit\":\"Install\"}" %ESPROTOCOL%://%ESHOST%:%ESPORT%/native/v1/regions/127.0.0.1/86/%ESREGION%/pipeline/detail/DEMOSIT/JSONPIPE
 
 curl -X POST -H "accept: application/json" -H "Content-Type: application/json" -d "{\"film-details\": [{\"title\": \"jaws\", \"year\": \"1975\", \"director\": \"Steven Spielberg\", \"format\": \"VHS\"}]}" %ESPROTOCOL%://%ESHOST%:9003/cics/services/json/film
 
@@ -143,6 +145,7 @@ set ESPROTOCOL=http
 set ESPORT=10086
 set ESUSER=SYSAD
 set ESPASS=SYSAD
+set ESREGION=CICS
 set "regionDir=C:\MFSamples\CICS"
 set "cookieFile=%TEMP%\cookieFile.txt"
 set "demoSource=%PUBLIC%\Documents\Rocket Software\Enterprise Developer\Samples\Mainframe\CICS\Classic\CWS\JSON\Provider\BottomUp"
@@ -166,13 +169,13 @@ ls2js pgmint=commarea pgmname=LOANPAYM ^
 curl -s -O https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/windows/CICS.rdt
 casrdtup /fCICS.rdt /op%regionDir%\system /o
 
-casstart -rCICS -uSYSAD -pSYSAD
+casstart -r%ESREGION% -uSYSAD -pSYSAD
 
 curl -s -X POST -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -c "%cookieFile%" -d "{\"mfUser\": \"%ESUSER%\",\"mfPassword\": \"%ESPASS%\"}" %ESPROTOCOL%://%ESHOST%:%ESPORT%/logon
 
-curl -s -X POST -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -b "%cookieFile%" -d "{\"pplEnable\": \"Y\", \"pplRspWait\": \"DEFT\",\"pplCfgFile\": \"$MFROOT\\xml\\JSONConfig.xml\", \"pplWebDir\": \"$MFROOT\\loadlib\", \"statusCodes\": false}" %ESPROTOCOL%://%ESHOST%:%ESPORT%/native/v1/regions/127.0.0.1/86/CICS/pipeline/detail/DEMOSIT/JSONPIPE
+curl -s -X POST -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -b "%cookieFile%" -d "{\"pplEnable\": \"Y\", \"pplRspWait\": \"DEFT\",\"pplCfgFile\": \"$MFROOT\\xml\\JSONConfig.xml\", \"pplWebDir\": \"$MFROOT\\loadlib\", \"statusCodes\": false}" %ESPROTOCOL%://%ESHOST%:%ESPORT%/native/v1/regions/127.0.0.1/86/%ESREGION%/pipeline/detail/DEMOSIT/JSONPIPE
 
-curl -s -X PUT -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -b "%cookieFile%" -d "{\"pplEnable\": \"Y\", \"pplRspWait\": \"DEFT\",\"pplCfgFile\": \"$MFROOT\\xml\\JSONConfig.xml\", \"pplWebDir\": \"$MFROOT\\loadlib\", \"statusCodes\": false, \"ctlSubmit\":\"Install\"}" %ESPROTOCOL%://%ESHOST%:%ESPORT%/native/v1/regions/127.0.0.1/86/CICS/pipeline/detail/DEMOSIT/JSONPIPE
+curl -s -X PUT -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -b "%cookieFile%" -d "{\"pplEnable\": \"Y\", \"pplRspWait\": \"DEFT\",\"pplCfgFile\": \"$MFROOT\\xml\\JSONConfig.xml\", \"pplWebDir\": \"$MFROOT\\loadlib\", \"statusCodes\": false, \"ctlSubmit\":\"Install\"}" %ESPROTOCOL%://%ESHOST%:%ESPORT%/native/v1/regions/127.0.0.1/86/%ESREGION%/pipeline/detail/DEMOSIT/JSONPIPE
 
 curl -X POST -H "accept: application/json" -H "Content-Type: application/json" -d "{\"loanpaym\":{\"LOANINP\":{\"principal\":\"5000\",\"loanterm\":\"36\",\"rate\":\"5.5\"}}}" %ESPROTOCOL%://%ESHOST%:9003/cics/services/json/loanpaym
 ```
@@ -187,6 +190,7 @@ set ESPROTOCOL=http
 set ESPORT=10086
 set ESUSER=SYSAD
 set ESPASS=SYSAD
+set ESREGION=CICS
 set "regionDir=C:\MFSamples\CICS"
 set "cookieFile=%TEMP%\cookieFile.txt"
 set "demoSource=%PUBLIC%\Documents\Rocket Software\Enterprise Developer\Samples\Mainframe\CICS\Classic\CWS\JSON\Requester\TopDown"
@@ -205,25 +209,25 @@ js2ls default-char-maxlength=255 inline-maxoccurs-limit=255 ^
 cobol invkRevJ.cbl cicsecm copyext(cpy,CPY);
 cbllink -d -oloadlib\INVKREVJ invkRevJ.obj
 
-casstart -rCICS -uSYSAD -pSYSAD
+casstart -r%ESREGION% -uSYSAD -pSYSAD
 
 curl -s -X POST -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -c "%cookieFile%" -d "{\"mfUser\": \"%ESUSER%\",\"mfPassword\": \"%ESPASS%\"}" %ESPROTOCOL%://%ESHOST%:%ESPORT%/logon
 
-curl -s -X POST -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -b "%cookieFile%" -d "{\"bdlEnable\": \"Y\", \"bdlBundleDir\": \"$MFROOT\\REQBNDL\", \"statusCodes\": false}" %ESPROTOCOL%://%ESHOST%:%ESPORT%/native/v1/regions/127.0.0.1/86/CICS/bundle/detail/DEMOSIT/REQBNDL
+curl -s -X POST -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -b "%cookieFile%" -d "{\"bdlEnable\": \"Y\", \"bdlBundleDir\": \"$MFROOT\\REQBNDL\", \"statusCodes\": false}" %ESPROTOCOL%://%ESHOST%:%ESPORT%/native/v1/regions/127.0.0.1/86/%ESREGION%/bundle/detail/DEMOSIT/REQBNDL
 
-curl -s -X PUT -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -b "%cookieFile%" -d "{\"bdlEnable\": \"Y\", \"bdlBundleDir\": \"$MFROOT\\REQBNDL\", \"statusCodes\": false, \"ctlSubmit\":\"Install\"}" %ESPROTOCOL%://%ESHOST%:%ESPORT%/native/v1/regions/127.0.0.1/86/CICS/bundle/detail/DEMOSIT/REQBNDL
+curl -s -X PUT -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -b "%cookieFile%" -d "{\"bdlEnable\": \"Y\", \"bdlBundleDir\": \"$MFROOT\\REQBNDL\", \"statusCodes\": false, \"ctlSubmit\":\"Install\"}" %ESPROTOCOL%://%ESHOST%:%ESPORT%/native/v1/regions/127.0.0.1/86/%ESREGION%/bundle/detail/DEMOSIT/REQBNDL
 
-curl -s -X POST -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -b "%cookieFile%" -d "{\"bdlEnable\": \"Y\", \"bdlBundleDir\": \"$MFROOT\\RESPBNDL\", \"statusCodes\": false}" %ESPROTOCOL%://%ESHOST%:%ESPORT%/native/v1/regions/127.0.0.1/86/CICS/bundle/detail/DEMOSIT/RESPBNDL
+curl -s -X POST -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -b "%cookieFile%" -d "{\"bdlEnable\": \"Y\", \"bdlBundleDir\": \"$MFROOT\\RESPBNDL\", \"statusCodes\": false}" %ESPROTOCOL%://%ESHOST%:%ESPORT%/native/v1/regions/127.0.0.1/86/%ESREGION%/bundle/detail/DEMOSIT/RESPBNDL
 
-curl -s -X PUT -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -b "%cookieFile%" -d "{\"bdlEnable\": \"Y\", \"bdlBundleDir\": \"$MFROOT\\RESPBNDL\", \"statusCodes\": false, \"ctlSubmit\":\"Install\"}" %ESPROTOCOL%://%ESHOST%:%ESPORT%/native/v1/regions/127.0.0.1/86/CICS/bundle/detail/DEMOSIT/RESPBNDL
+curl -s -X PUT -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -b "%cookieFile%" -d "{\"bdlEnable\": \"Y\", \"bdlBundleDir\": \"$MFROOT\\RESPBNDL\", \"statusCodes\": false, \"ctlSubmit\":\"Install\"}" %ESPROTOCOL%://%ESHOST%:%ESPORT%/native/v1/regions/127.0.0.1/86/%ESREGION%/bundle/detail/DEMOSIT/RESPBNDL
 
-curl -s -X POST -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -b "%cookieFile%" -d "{\"uriStatus\":\"Y\",\"uriUsage\":\"2\",\"uriScheme1\":\"0\",\"uriPort\":\"9003\",\"uriHost\":\"localhost\",\"uriPath\":\"/cics/services/json/reverse\",\"statusCodes\":false}" %ESPROTOCOL%://%ESHOST%:%ESPORT%/native/v1/regions/127.0.0.1/86/CICS/urimap/detail/DEMOSIT/REVRSURI
+curl -s -X POST -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -b "%cookieFile%" -d "{\"uriStatus\":\"Y\",\"uriUsage\":\"2\",\"uriScheme1\":\"0\",\"uriPort\":\"9003\",\"uriHost\":\"localhost\",\"uriPath\":\"/cics/services/json/reverse\",\"statusCodes\":false}" %ESPROTOCOL%://%ESHOST%:%ESPORT%/native/v1/regions/127.0.0.1/86/%ESREGION%/urimap/detail/DEMOSIT/REVRSURI
 
-curl -s -X PUT -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -b "%cookieFile%" -d "{\"uriStatus\":\"Y\",\"uriUsage\":\"2\",\"uriScheme1\":\"0\",\"uriPort\":\"9003\",\"uriHost\":\"localhost\",\"uriPath\":\"/cics/services/json/reverse\",\"statusCodes\":false, \"ctlSubmit\":\"Install\"}" %ESPROTOCOL%://%ESHOST%:%ESPORT%/native/v1/regions/127.0.0.1/86/CICS/urimap/detail/DEMOSIT/REVRSURI
+curl -s -X PUT -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -b "%cookieFile%" -d "{\"uriStatus\":\"Y\",\"uriUsage\":\"2\",\"uriScheme1\":\"0\",\"uriPort\":\"9003\",\"uriHost\":\"localhost\",\"uriPath\":\"/cics/services/json/reverse\",\"statusCodes\":false, \"ctlSubmit\":\"Install\"}" %ESPROTOCOL%://%ESHOST%:%ESPORT%/native/v1/regions/127.0.0.1/86/%ESREGION%/urimap/detail/DEMOSIT/REVRSURI
 
-curl -s -X POST -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -b "%cookieFile%" -d "{\"name\":\"INVJ\",\"group\":\"DEMOSIT\",\"programName\":\"INVKREVJ\",\"enabled\":true,\"inDoubt\":\"BACKOUT\",\"upperCaseTranslate\":true,\"tracing\":\"STANDARD\",\"tn3270Screen\":\"DEFAULT\",\"inboundEnabled\":true,\"inputTimeoutSystemDefault\":true,\"runawayTimeoutSystemDefault\":true,\"deadlockTimeoutSystemDefault\":true,\"transactionThresholdSystemDefault\":true}" %ESPROTOCOL%://%ESHOST%:%ESPORT%/v2/native/regions/127.0.0.1/86/CICS/pct/defined
+curl -s -X POST -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -b "%cookieFile%" -d "{\"name\":\"INVJ\",\"group\":\"DEMOSIT\",\"programName\":\"INVKREVJ\",\"enabled\":true,\"inDoubt\":\"BACKOUT\",\"upperCaseTranslate\":true,\"tracing\":\"STANDARD\",\"tn3270Screen\":\"DEFAULT\",\"inboundEnabled\":true,\"inputTimeoutSystemDefault\":true,\"runawayTimeoutSystemDefault\":true,\"deadlockTimeoutSystemDefault\":true,\"transactionThresholdSystemDefault\":true}" %ESPROTOCOL%://%ESHOST%:%ESPORT%/v2/native/regions/127.0.0.1/86/%ESREGION%/pct/defined
 
-curl -s -X POST -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -b "%cookieFile%" %ESPROTOCOL%://%ESHOST%:%ESPORT%/v2/native/regions/127.0.0.1/86/CICS/pct/defined/DEMOSIT/INVJ/install
+curl -s -X POST -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -b "%cookieFile%" %ESPROTOCOL%://%ESHOST%:%ESPORT%/v2/native/regions/127.0.0.1/86/%ESREGION%/pct/defined/DEMOSIT/INVJ/install
 
 # TN3270 - INVJ
 ```

@@ -15,7 +15,7 @@
         RETCODE (EXCI-EXEC-RETURN-CODE)
     END-EXEC
     ```
-    [Documentation](https://docs.rocketsoftware.com/bundle/enterprisedeveloper_dg2_100_html/page/HCOMCMVIEWS003.html)  
+    [Documentation](https://docs.rocketsoftware.com/search?labelkey=prod_enterprise_developer&q=Coding+the+EXEC+CICS+LINK+Statement)  
 
 3. Compile the calling program using the following compiler directive.  
     ```
