@@ -2,8 +2,8 @@
 - [JSON](#json)
     - [Provider](#provider)
         - [filmRest - RESTful](#filmrest)
-        - [ReverseJSON - Top-down Method](#reversejson)
         - [LoanDemoJSON - Bottom-up Method](#loandemojson)
+        - [ReverseJSON - Top-down Method](#reversejson)
     - [Requester](#requester)
         - [InvokeReverseJSON - Top-down Method](#invokereversejson)
 
@@ -68,6 +68,49 @@ curl -s -X PUT -H "accept: application/json" -H "X-Requested-With: API" -H "Orig
 curl -X POST -H "accept: application/json" -H "Content-Type: application/json" -d "{\"film-details\": [{\"title\": \"jaws\", \"year\": \"1975\", \"director\": \"Steven Spielberg\", \"format\": \"VHS\"}]}" %ESPROTOCOL%://%ESHOST%:9003/cics/services/json/film
 
 curl -X GET -H "accept: application/json" %ESPROTOCOL%://%ESHOST%:9003/cics/services/json/film/jaws
+```
+
+#### LoanDemoJSON
+[Tutorial: CICS Web Service Provider from JSON, Request-Response Bottom-up Method](https://docs.rocketsoftware.com/search?labelkey=prod_enterprise_developer&q=Tutorial%3A+CICS+Web+Service+Provider+from+JSON%2C+Request-Response+Bottom-up+Method)  
+```
+set ESHOST=localhost
+set ESPROTOCOL=http
+set ESPORT=10086
+set ESUSER=SYSAD
+set ESPASS=SYSAD
+set ESREGION=CICS
+set "regionDir=C:\MFSamples\CICS"
+set "cookieFile=%TEMP%\cookieFile.txt"
+set "demoSource=%PUBLIC%\Documents\Rocket Software\Enterprise Developer\Samples\Mainframe\CICS\Classic\CWS\JSON\Provider\BottomUp"
+
+:: Optional CICS directory cleanup
+:: powershell -NoProfile -Command "Get-ChildItem -LiteralPath '%regionDir%' -Force | Remove-Item -Recurse -Force"
+
+mkdir "%regionDir%\cache" "%regionDir%\catalog" "%regionDir%\loadlib" "%regionDir%\dataset" "%regionDir%\system" "%regionDir%\schema"
+robocopy "%demoSource%" "%regionDir%" /E /IS /R:1 /W:1
+
+cd %regionDir%/
+cobol loanPaym.cbl cicsecm copyext(cpy,CPY);
+cbllink -d -oloadlib\LOANPAYM loanPaym.obj
+
+ls2js pgmint=commarea pgmname=LOANPAYM ^
+    reqmem=LOANINP.cpy respmem=LOANOUT.cpy ^
+    uri=/cics/services/json/loanpaym modsvi=loadlib\loanpaym.modsvi ^
+    logfile=loanPaym.log json-schema-request=schema\loanReq.json ^
+    json-schema-response=schema\loanResp.json
+
+curl -s -O https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/windows/CICS.rdt
+casrdtup /fCICS.rdt /op%regionDir%\system /o
+
+casstart -r%ESREGION% -uSYSAD -pSYSAD
+
+curl -s -X POST -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -c "%cookieFile%" -d "{\"mfUser\": \"%ESUSER%\",\"mfPassword\": \"%ESPASS%\"}" %ESPROTOCOL%://%ESHOST%:%ESPORT%/logon
+
+curl -s -X POST -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -b "%cookieFile%" -d "{\"pplEnable\": \"Y\", \"pplRspWait\": \"DEFT\",\"pplCfgFile\": \"$MFROOT\\xml\\JSONConfig.xml\", \"pplWebDir\": \"$MFROOT\\loadlib\", \"statusCodes\": false}" %ESPROTOCOL%://%ESHOST%:%ESPORT%/native/v1/regions/127.0.0.1/86/%ESREGION%/pipeline/detail/DEMOSIT/JSONPIPE
+
+curl -s -X PUT -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -b "%cookieFile%" -d "{\"pplEnable\": \"Y\", \"pplRspWait\": \"DEFT\",\"pplCfgFile\": \"$MFROOT\\xml\\JSONConfig.xml\", \"pplWebDir\": \"$MFROOT\\loadlib\", \"statusCodes\": false, \"ctlSubmit\":\"Install\"}" %ESPROTOCOL%://%ESHOST%:%ESPORT%/native/v1/regions/127.0.0.1/86/%ESREGION%/pipeline/detail/DEMOSIT/JSONPIPE
+
+curl -X POST -H "accept: application/json" -H "Content-Type: application/json" -d "{\"loanpaym\":{\"LOANINP\":{\"principal\":\"5000\",\"loanterm\":\"36\",\"rate\":\"5.5\"}}}" %ESPROTOCOL%://%ESHOST%:9003/cics/services/json/loanpaym
 ```
 
 #### ReverseJSON
@@ -135,49 +178,6 @@ curl -s -X PUT -H "accept: application/json" -H "X-Requested-With: API" -H "Orig
 curl -X POST -H "accept: application/json" -H "Content-Type: application/json" -d "{\"film-details\": [{\"title\": \"jaws\", \"year\": \"1975\", \"director\": \"Steven Spielberg\", \"format\": \"VHS\"}]}" %ESPROTOCOL%://%ESHOST%:9003/cics/services/json/film
 
 curl -X GET -H "accept: application/json" %ESPROTOCOL%://%ESHOST%:9003/cics/services/json/film/jaws
-```
-
-#### LoanDemoJSON
-[Tutorial: CICS Web Service Provider from JSON, Request-Response Bottom-up Method](https://docs.rocketsoftware.com/search?labelkey=prod_enterprise_developer&q=Tutorial%3A+CICS+Web+Service+Provider+from+JSON%2C+Request-Response+Bottom-up+Method)  
-```
-set ESHOST=localhost
-set ESPROTOCOL=http
-set ESPORT=10086
-set ESUSER=SYSAD
-set ESPASS=SYSAD
-set ESREGION=CICS
-set "regionDir=C:\MFSamples\CICS"
-set "cookieFile=%TEMP%\cookieFile.txt"
-set "demoSource=%PUBLIC%\Documents\Rocket Software\Enterprise Developer\Samples\Mainframe\CICS\Classic\CWS\JSON\Provider\BottomUp"
-
-:: Optional CICS directory cleanup
-:: powershell -NoProfile -Command "Get-ChildItem -LiteralPath '%regionDir%' -Force | Remove-Item -Recurse -Force"
-
-mkdir "%regionDir%\cache" "%regionDir%\catalog" "%regionDir%\loadlib" "%regionDir%\dataset" "%regionDir%\system" "%regionDir%\schema"
-robocopy "%demoSource%" "%regionDir%" /E /IS /R:1 /W:1
-
-cd %regionDir%/
-cobol loanPaym.cbl cicsecm copyext(cpy,CPY);
-cbllink -d -oloadlib\LOANPAYM loanPaym.obj
-
-ls2js pgmint=commarea pgmname=LOANPAYM ^
-    reqmem=LOANINP.cpy respmem=LOANOUT.cpy ^
-    uri=/cics/services/json/loanpaym modsvi=loadlib\loanpaym.modsvi ^
-    logfile=loanPaym.log json-schema-request=schema\loanReq.json ^
-    json-schema-response=schema\loanResp.json
-
-curl -s -O https://raw.githubusercontent.com/UNiXMIT/UNiXMF/main/windows/CICS.rdt
-casrdtup /fCICS.rdt /op%regionDir%\system /o
-
-casstart -r%ESREGION% -uSYSAD -pSYSAD
-
-curl -s -X POST -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -c "%cookieFile%" -d "{\"mfUser\": \"%ESUSER%\",\"mfPassword\": \"%ESPASS%\"}" %ESPROTOCOL%://%ESHOST%:%ESPORT%/logon
-
-curl -s -X POST -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -b "%cookieFile%" -d "{\"pplEnable\": \"Y\", \"pplRspWait\": \"DEFT\",\"pplCfgFile\": \"$MFROOT\\xml\\JSONConfig.xml\", \"pplWebDir\": \"$MFROOT\\loadlib\", \"statusCodes\": false}" %ESPROTOCOL%://%ESHOST%:%ESPORT%/native/v1/regions/127.0.0.1/86/%ESREGION%/pipeline/detail/DEMOSIT/JSONPIPE
-
-curl -s -X PUT -H "accept: application/json" -H "X-Requested-With: API" -H "Origin: %ESPROTOCOL%://%ESHOST%:%ESPORT%" -H "Content-Type: application/json" -b "%cookieFile%" -d "{\"pplEnable\": \"Y\", \"pplRspWait\": \"DEFT\",\"pplCfgFile\": \"$MFROOT\\xml\\JSONConfig.xml\", \"pplWebDir\": \"$MFROOT\\loadlib\", \"statusCodes\": false, \"ctlSubmit\":\"Install\"}" %ESPROTOCOL%://%ESHOST%:%ESPORT%/native/v1/regions/127.0.0.1/86/%ESREGION%/pipeline/detail/DEMOSIT/JSONPIPE
-
-curl -X POST -H "accept: application/json" -H "Content-Type: application/json" -d "{\"loanpaym\":{\"LOANINP\":{\"principal\":\"5000\",\"loanterm\":\"36\",\"rate\":\"5.5\"}}}" %ESPROTOCOL%://%ESHOST%:9003/cics/services/json/loanpaym
 ```
 
 ### Requester
