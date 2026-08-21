@@ -1,19 +1,18 @@
 # RTS 105 When Running COBOL Program via Windows Task Scheduler
 ## Environment
-Enterprise Developer  
 Visual COBOL  
 COBOL Server  
 Windows  
 
 ## Symptoms
-A COBOL program launched by `run.exe` via a Windows Task Scheduler task exits immediately with an RTS 105 error — without executing the program — after having run successfully earlier in the day. The same batch file, executed manually from a Windows console on the same machine, runs without error. Rebooting the machine temporarily resolves the issue.  
+A COBOL program launched via a Windows Task Scheduler task exits immediately with an RTS 105 error — without executing the program — after having run successfully earlier in the day. The same COBOL program, executed manually from a Windows console on the same machine, runs without error. Rebooting the machine temporarily resolves the issue.  
 
 RTS 105: *The run-time system is unable to allocate sufficient memory space to successfully carry out the tried operation.*  
 
 ## Resolution
 Windows Task Scheduler executes tasks in a non-interactive session. Non-interactive Windows sessions have a significantly smaller desktop heap than interactive (console) sessions. The default desktop heap for non-interactive sessions is 768 KB, compared to 20480 KB for interactive sessions (By default, based on Windows 11 64 bit).  
 
-When the program is invoked repeatedly throughout the day, the non-interactive desktop heap becomes exhausted. At that point, `run.exe` cannot allocate the memory required to initialise the runtime, and exits with RTS 105. Interactive console sessions draw from a separate heap and are therefore unaffected.  
+When the program is invoked repeatedly throughout the day, the non-interactive desktop heap becomes exhausted. At that point, the runtime cannot allocate the memory required to initialize, and exits with RTS 105. Interactive console sessions draw from a separate heap and are therefore unaffected.  
 
 Increase the desktop heap size for non-interactive sessions by modifying the following registry value:  
 
