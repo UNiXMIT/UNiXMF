@@ -14,6 +14,10 @@ Windows Task Scheduler executes tasks in a non-interactive session. Non-interact
 
 When the program is invoked repeatedly throughout the day, the non-interactive desktop heap becomes exhausted. At that point, the runtime cannot allocate the memory required to initialize, and exits with RTS 105. Interactive console sessions draw from a separate heap and are therefore unaffected.  
 
+> **Important**  
+> - Back up the registry before modifying it. The registry can then be restored, if a problem occurs.  
+> - Under normal circumstances, don't increase the size of the desktop heap. Only increase it when necessary.
+
 Increase the desktop heap size for non-interactive sessions by modifying the following registry value:  
 
 **Key:** `HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\SubSystems`    
@@ -32,7 +36,7 @@ where:
 
 Increase the third value (`cccc`) to reduce the likelihood of exhaustion. A common starting point is `1024` (1 MB) or higher, depending on the number of concurrent scheduled tasks. A reboot is required for the change to take effect.  
 
-> **Note:** 
+> **Note**   
 > - Alternatively, the task can be configured to run in an interactive session, though this is generally not recommended for production environments.  
 > - Don't set a value that is over 20480 KB for the second SharedSection value.  
 > - The physical RAM on the computer doesn't affect the desktop heap size. You can't improve the performance by adding physical RAM.  
