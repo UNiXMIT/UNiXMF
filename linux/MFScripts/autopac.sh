@@ -133,9 +133,15 @@ DBDetails() {
 }
 
 setupMSSQL() {
-    export DRIVERNAME="{ODBC Driver 17 for SQL Server}"
+    read -e -p "SQL Server ODBC Driver Version [17]: " -i "17" DRIVERVER
+    export DRIVERNAME="{ODBC Driver $DRIVERVER for SQL Server}"
+    if [[ $DRIVERVER -ge 18 ]]; then
+        export SQLSECURITY="Encrypt=True;TrustServerCertificate=True;"
+    else
+        export SQLSECURITY=""
+    fi
     export MFPROVIDER=SS
-    export connString="Driver=$DRIVERNAME;Server=$USEDB,$DBPORT;Database=master;UID=$USERID;PWD=$USERPASSWD;Encrypt=True;TrustServerCertificate=True;"
+    export connString="Driver=$DRIVERNAME;Server=$USEDB,$DBPORT;Database=master;UID=$USERID;PWD=$USERPASSWD;$SQLSECURITY"
 
     # Create the MFDBFH.cfg
     dbfhconfig -add -file:$MFDBFH_CONFIG -server:MYSERVER -provider:$MFPROVIDER -comment:"MSSQL"
