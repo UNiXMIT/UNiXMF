@@ -1,0 +1,2 @@
+C:\Users\FARadmin\Support\3126479\Ncbl2Cs\cblMainProg\bin\x86\Debug\cblMainProg.exe.manifest
+C:\Users\FARadmin\Support\3126479\Ncbl2Cs\cblMainProg\bin\x86\Debug\cblMainProg.exe

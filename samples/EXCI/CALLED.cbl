@@ -1,0 +1,18 @@
+      $SET FCDCAT OUTDD(SYSOUT 121 R)
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. CALLED.
+      * cobol CALLED.cbl noobj;
+      * cob CALLED.cbl  
+
+       ENVIRONMENT DIVISION.
+       CONFIGURATION SECTION.
+
+       DATA DIVISION.
+       WORKING-STORAGE SECTION.
+       
+       LINKAGE SECTION.
+       01  DFHCOMMAREA                     PIC X(254).
+		  
+       PROCEDURE DIVISION.
+           MOVE "CALLED SUCCESSFULLY" TO DFHCOMMAREA
+           GOBACK.

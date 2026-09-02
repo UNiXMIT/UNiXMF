@@ -1,0 +1,5 @@
+//MFI???AL JOB (0),'COMMENT',MSGCLASS=X,CLASS=A,
+//    NOTIFY=MFI???
+//*
+//* JOB DESCRIPTION
+//*

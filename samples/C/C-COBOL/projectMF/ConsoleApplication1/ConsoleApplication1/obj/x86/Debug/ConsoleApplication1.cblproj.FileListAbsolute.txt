@@ -1,0 +1,9 @@
+C:\Users\kimh\Desktop\Raque\folder\raquels\testnative\ConsoleApplication1\ConsoleApplication1\bin\x86\Debug\ConsoleApplication1.exe
+C:\Users\kimh\Desktop\Raque\folder\raquels\testnative\ConsoleApplication1\ConsoleApplication1\bin\x86\Debug\projectMF.idy
+C:\Users\kimh\Desktop\Raque\folder\raquels\testnative\ConsoleApplication1\ConsoleApplication1\obj\x86\Debug\projectMF.idy
+C:\Users\kimh\Desktop\Raque\folder\raquels\testnative\ConsoleApplication1\ConsoleApplication1\obj\x86\Debug\ConsoleApplication1.exe
+C:\temp\C-COBOL\raquels\testnative\ConsoleApplication1\ConsoleApplication1\bin\x86\Debug\ConsoleApplication1.exe
+C:\temp\C-COBOL\raquels\testnative\ConsoleApplication1\ConsoleApplication1\bin\x86\Debug\projectMF.idy
+C:\temp\C-COBOL\raquels\testnative\ConsoleApplication1\ConsoleApplication1\obj\x86\Debug\ConsoleApplication1.exe
+C:\temp\C-COBOL\raquels\testnative\ConsoleApplication1\ConsoleApplication1\obj\x86\Debug\projectMF.idy
+C:\temp\C-COBOL\raquels\testnative\ConsoleApplication1\ConsoleApplication1\obj\x86\Debug\projectMF.obj

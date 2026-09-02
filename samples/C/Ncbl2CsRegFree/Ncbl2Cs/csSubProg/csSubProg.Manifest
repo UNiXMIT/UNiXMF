@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<assembly manifestVersion="1.0" xmlns="urn:schemas-microsoft-com:asm.v1" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3">
+
+<assemblyIdentity name="csSubProg" version="1.0.0.0" type="win32" processorArchitecture="x86"/>
+
+<clrClass
+   name="csSubProg.csSubProg"
+   clsid="{3501AD6E-2D0C-3A2B-B7E5-96E899A6114B}"
+   progid="csSubProg.csSubProg"
+   runtimeVersion="v4.0.30319"
+   threadingModel="Both"/>
+
+<file name="csSubProg.tlb">
+ <typelib
+     tlbid="{2622CBC8-D0BD-3EFB-AC23-FE16F6484180}"
+     version="1.0"
+     helpdir=""
+     flags="hasdiskimage"/>
+</file>
+
+</assembly>

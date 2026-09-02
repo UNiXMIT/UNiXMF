@@ -1,0 +1,73 @@
+The native COBOL program cblMainProg needs to: 
+
+1. be compiled with $SET OOCTRL(+P) 
+
+2. have the .NET class library defined as a COM object 
+       class-control. 
+           csSubProgClass is class '$OLE$csSubProg.csSubProg'. 
+		   *> where the 1st csSubProg the namespace 
+		   *> where the 2nd csSubProg the class name 
+
+3. use INVOKE statements to interact with the COM object 
+
+4. be built with a manifest file (e.g. cblMainProg.exe.manifest) with the following 
+content: 
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?> 
+<assembly manifestVersion="1.0" xmlns="urn:schemas-microsoft-com:asm.v1" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3"> 
+ 
+<assemblyIdentity name="cblMainProg.exe" version="0.0.0.0" type="win32" processorArchitecture="x86"/> 
+ 
+<dependency> 
+ <dependentAssembly> 
+  <assemblyIdentity name="csSubProg" version="1.0.0.0" type="win32" processorArchitecture="x86"/> 
+ </dependentAssembly> 
+</dependency> 
+ 
+</assembly> 
+
+5. have the platform set to x86 
+
+6. have the run-time model set to Dynamic under the COBOL Link properties 
+ 
+You need to do the following with your .NET class library: 
+
+1. turn the "Register for COM Interop" setting on from the project properties 
+
+2. set the platform to be x86 
+
+3. rebuild the project 
+
+4. open the .tlb file that was generated at the output folder with oleviewer 
+
+5. make note of the following: 
+   a. the long string specified with uuid below // typelib filename: csSubProg.tlb 
+   b. the long string specified with uuid few lines below coclass csSubProg 
+
+6. create a manifest file (e.g. csSubProg.manifest) with the following content: 
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?> 
+<assembly manifestVersion="1.0" xmlns="urn:schemas-microsoft-com:asm.v1" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3"> 
+ 
+<assemblyIdentity name="csSubProg" version="1.0.0.0" type="win32" processorArchitecture="x86"/> 
+ 
+<clrClass 
+   name="csSubProg.csSubProg" 
+   clsid="{string noted from step 5.b}" 
+   progid="csSubProg.csSubProg" 
+   runtimeVersion="v4.0.30319" 
+   threadingModel="Both"/> 
+ 
+<file name="csSubProg.tlb"> 
+ <typelib 
+     tlbid="{string noted from step 5.a}" 
+     version="1.0" 
+     helpdir="" 
+     flags="hasdiskimage"/> 
+</file> 
+ 
+</assembly> 
+
+7. add the manifest file to the project 
+
+8. set the manifest file to be copied to the output folder (Copy if newer) 
+
+9. rebuild the project

@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{535C04D7-A2A5-47C7-83E0-B340A995CD1F}") = "Maintenance", "Maintenance\Maintenance.cblproj", "{34209DEA-1C8E-4EAC-8C92-E4B0A7C1F3A4}"
+EndProject
+Project("{535C04D7-A2A5-47C7-83E0-B340A995CD1F}") = "ATM", "ATM\ATM.cblproj", "{D1128D6B-D69B-4073-B8D8-1A3D1F386C5C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{34209DEA-1C8E-4EAC-8C92-E4B0A7C1F3A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34209DEA-1C8E-4EAC-8C92-E4B0A7C1F3A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34209DEA-1C8E-4EAC-8C92-E4B0A7C1F3A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34209DEA-1C8E-4EAC-8C92-E4B0A7C1F3A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1128D6B-D69B-4073-B8D8-1A3D1F386C5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1128D6B-D69B-4073-B8D8-1A3D1F386C5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1128D6B-D69B-4073-B8D8-1A3D1F386C5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1128D6B-D69B-4073-B8D8-1A3D1F386C5C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

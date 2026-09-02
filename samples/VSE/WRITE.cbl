@@ -1,0 +1,31 @@
+      $SET DIALECT(ENTCOBOL)
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID.         MFWRITE.
+       AUTHOR.  MIT. 
+      * cbllink -d MFWRITE.cbl
+      * cob -z MFWRITE.cbl 
+
+       ENVIRONMENT DIVISION.
+       CONFIGURATION SECTION.
+       SPECIAL-NAMES.
+
+       INPUT-OUTPUT SECTION.
+       FILE-CONTROL.
+	       SELECT  PRINT-FILE
+			   ASSIGN  TO  SYS030.
+
+       DATA DIVISION.
+       FILE SECTION.
+       FD  PRINT-FILE.
+       01  PRINT-FILE-REC                     PIC  X(133).
+
+       WORKING-STORAGE SECTION.
+	   
+       LINKAGE SECTION.
+
+       PROCEDURE DIVISION.
+		   OPEN  OUTPUT  PRINT-FILE
+		   MOVE "TEST" TO PRINT-FILE-REC
+		   WRITE PRINT-FILE-REC
+		   CLOSE  PRINT-FILE.
+           GOBACK.
