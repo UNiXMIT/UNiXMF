@@ -11,7 +11,7 @@ $COBDIR/etc/ccsid
 ```
 
 ### CCSID Download
-[http://download.boulder.ibm.com/ibmdl/pub/software/dw/java/cdctables.zip](http://download.boulder.ibm.com/ibmdl/pub/software/dw/java/cdctables.zip)
+[https://download.boulder.ibm.com/ibmdl/pub/software/dw/java/cdctables.zip](https://download.boulder.ibm.com/ibmdl/pub/software/dw/java/cdctables.zip)
 
 ### Instructions
 1. Use the tabindex.txt file (located in the intro.zip file of the extracted package) to identify the package number and filename for each CCSID translation table you need to install.
