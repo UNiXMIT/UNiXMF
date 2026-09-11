@@ -1,8 +1,13 @@
 # Install a CCSID Translation Table
 
 ### Default CCSID directory
+#### Windows  
 ```
 %ProgramFiles(x86)%\Micro Focus\Enterprise Developer\etc\ccsid
+```
+#### Linux
+```
+$COBDIR/etc/ccsid
 ```
 
 ### CCSID Download
