@@ -1,2 +1,0 @@
-       01  EXAMPLE-WS.                                                                                                                                                            
-           05 FILLER                 PIC X(10) VALUE SPACES.
