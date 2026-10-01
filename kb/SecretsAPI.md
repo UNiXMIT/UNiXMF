@@ -17,7 +17,7 @@ AM CEST Secrets API (179E): Config failed to load from path "".
 What do these messages mean, and do they indicate a problem?  
 
 ## Resolution
-The "Secrets API" messages are referring to the Vault Facility, which is used to store and retrieve sensitive data such as passwords.  
+The "Secrets API" messages refer to the Vault Facility, which stores and retrieves sensitive data such as passwords.  
 
 `CEST 2026 Secrets API (206W): File open failed.`  
 The user running the program or job does not have permission to read the `secrets.cfg` file in the default location.  
