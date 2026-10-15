@@ -1,36 +1,21 @@
 @ECHO OFF
 set MYDIR=%CD%
-IF EXIST "C:\Program Files (x86)\Micro Focus\Enterprise Developer" CALL "C:\Program Files (x86)\Micro Focus\Enterprise Developer\createenv.bat" %1
-IF EXIST "C:\Program Files (x86)\Micro Focus\Enterprise Server" CALL "C:\Program Files (x86)\Micro Focus\Enterprise Server\createenv.bat" %1
-cd %MYDIR%
+FOR %%V IN ("Rocket Software" "Micro Focus") DO (
+    FOR %%P IN ("Enterprise Developer" "Enterprise Server") DO (
+        IF EXIST "C:\Program Files (x86)\%%~V\%%~P\createenv.bat" CALL "C:\Program Files (x86)\%%~V\%%~P\createenv.bat" %1
+    )
+)
+cd /d "%MYDIR%"
 set DUMPS=0
-IF EXIST casdumpa.rec (
-    set DUMPS=1
-    ECHO Formatting casdumpa...
-    casdup /icasdumpa.rec /fcasdumpa.txt /w /d
+FOR %%F IN (casdumpa casdumpb casdumpx casauxta casauxtb) DO (
+    IF EXIST "%%F.rec" (
+        set DUMPS=1
+        ECHO Formatting %%F...
+        casdup /i%%F.rec /f%%F.txt /w /d
+    )
 )
-IF EXIST casdumpb.rec (
-    set DUMPS=1
-    ECHO Formatting casdumpb...
-    casdup /icasdumpb.rec /fcasdumpb.txt /w /d
-)
-IF EXIST casdumpx.rec (
-    set DUMPS=1
-    ECHO Formatting casdumpx...
-    casdup /icasdumpx.rec /fcasdumpx.txt /w /d
-)
-IF EXIST casauxta.rec (
-    set DUMPS=1
-    ECHO Formatting casauxta...
-    casdup /icasauxta.rec /fcasauxta.txt /w /d
-)
-IF EXIST casauxtb.rec (
-    set DUMPS=1
-    ECHO Formatting casauxtb...
-    casdup /icasauxtb.rec /fcasauxtb.txt /w /d
-)
-IF %DUMPS%==1 (
+IF "%DUMPS%"=="1" (
     ECHO Formatting Complete!
-) ELSE IF %DUMPS%==0 (
+) ELSE (
     ECHO No Files Found!
 )
